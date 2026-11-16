@@ -81,6 +81,34 @@ touching real device storage or the file system. The photos folder is
 resolved once through a cached `FutureProvider` (`photosFolderProvider`),
 not re-resolved on every rebuild of a photo tile.
 
+## Why these choices (checked against real user feedback)
+
+Public Play Store reviews for a comparable daycare app (read for research,
+not copied from) repeat a handful of complaints across several years.
+Several of them are symptoms of architecture, not one-off bugs, and
+DayCheck's design avoids that exact class of problem by construction:
+
+| Repeated complaint | Why it happens | How DayCheck avoids it |
+| --- | --- | --- |
+| "Stuck on last week," app needs a manual refresh or clearing local data to show new activity | The View doesn't automatically react to new data; something stale is cached and nothing tells the UI to re-read it | Every View uses `ref.watch` on the ViewModel's state. There's no refresh button anywhere, because there's nothing to refresh — the state changes, the View rebuilds, same frame |
+| "I see in the log that a photo was added, but it doesn't show under Media" | Two separate stores (an activity log and a media index) that are supposed to agree, and don't | There's only one store: a photo is a field on the same `DayEvent` that's already in the log. If the event exists, the photo is right there with it — not a second thing that can drift out of sync |
+| Same icon for chat and messages; no way to tell when a gallery photo was taken without opening the timeline | Content is split across separate surfaces (a chat screen, a media gallery, a timeline) that don't share context | One per-child feed: status, check-ins, check-outs and notes-with-photos are all the same list, same timestamps, nothing split out |
+| Language locked to the phone's locale, missing translations, broken templated strings ("changed a one # diaper") | String interpolation done by hand instead of through a real localization system | Not yet relevant to DayCheck (English only so far), but this is exactly the discipline already in my other Flutter project — [MetJou](https://github.com/adam-bouafia/metjou) ships 5 languages through Flutter's `gen-l10n`, with typed arguments, not string concatenation |
+| No push notifications, reported for years | Out of scope for a local-only demo | Would carry over the same approach MetJou already uses (`flutter_local_notifications`) if this grew a background component |
+
+What this table does *not* claim: that DayCheck is a finished product, or
+that these are the only reasons a real app has reliability problems
+(network conditions, server-side bugs and platform fragmentation matter
+too, and the Android-specifically-buggier-than-iOS/web complaints in those
+reviews point at exactly that). The point is narrower: a few of the most
+repeated complaints map cleanly onto decisions this demo happened to get
+right, and that's worth knowing before assuming every bug is "fix it in
+QA" rather than "fix the shape of the state."
+
+One review also specifically praised one-click absence reporting — which
+lines up with the leave/absence/extra-hours request workflow below, left
+out of this demo on purpose rather than by oversight.
+
 ## What's deliberately not built
 
 Real daycare apps (this one included, as a reference point) also handle
