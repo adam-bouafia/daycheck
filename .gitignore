@@ -52,3 +52,7 @@ app.*.map.json
 
 # Gradle output inside android/
 /android/build/
+
+# MkDocs
+/site/
+/docs/.venv/
