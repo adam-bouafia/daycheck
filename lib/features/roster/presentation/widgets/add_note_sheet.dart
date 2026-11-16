@@ -1,5 +1,6 @@
 import 'package:daycheck/core/localization/app_locale.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -25,6 +26,7 @@ class _AddNoteSheet extends ConsumerStatefulWidget {
 class _AddNoteSheetState extends ConsumerState<_AddNoteSheet> {
   final _note = TextEditingController();
   String? _photoPath;
+  String? _attachmentPath;
 
   @override
   void dispose() {
@@ -41,12 +43,26 @@ class _AddNoteSheetState extends ConsumerState<_AddNoteSheet> {
     if (picked != null) setState(() => _photoPath = picked.path);
   }
 
+  Future<void> _pickAttachment() async {
+    final picked = await FilePicker.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    );
+    final path = picked.isEmpty ? null : picked.single.path;
+    if (path != null) setState(() => _attachmentPath = path);
+  }
+
   Future<void> _save() async {
     final text = _note.text.trim();
     if (text.isEmpty) return;
     await ref
         .read(rosterViewModelProvider.notifier)
-        .addActivityNote(widget.childId, text, photoSourcePath: _photoPath);
+        .addActivityNote(
+          widget.childId,
+          text,
+          photoSourcePath: _photoPath,
+          attachmentSourcePath: _attachmentPath,
+        );
     if (mounted) Navigator.pop(context);
   }
 
@@ -81,10 +97,25 @@ class _AddNoteSheetState extends ConsumerState<_AddNoteSheet> {
               ),
             ),
             const SizedBox(height: 12),
-            OutlinedButton.icon(
-              onPressed: _pickPhoto,
-              icon: const Icon(Icons.add_a_photo_outlined),
-              label: Text(_photoPath == null ? l10n.addPhoto : l10n.photoAdded),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                OutlinedButton.icon(
+                  onPressed: _pickPhoto,
+                  icon: const Icon(Icons.add_a_photo_outlined),
+                  label: Text(
+                    _photoPath == null ? l10n.addPhoto : l10n.photoAdded,
+                  ),
+                ),
+                OutlinedButton.icon(
+                  onPressed: _pickAttachment,
+                  icon: const Icon(Icons.picture_as_pdf_outlined),
+                  label: Text(
+                    _attachmentPath == null ? l10n.addPdf : l10n.pdfAdded,
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 16),
             SizedBox(

@@ -113,9 +113,14 @@ class RosterRepository {
 
   /// Where photos are kept. A `FutureProvider` caches this for the View,
   /// instead of resolving it again on every rebuild.
-  Future<Directory> photosFolder() async {
+  Future<Directory> photosFolder() async => _ownFolder('photos');
+
+  /// Where PDF attachments are kept, for the same reason.
+  Future<Directory> attachmentsFolder() async => _ownFolder('attachments');
+
+  Future<Directory> _ownFolder(String name) async {
     final base = await getApplicationDocumentsDirectory();
-    final folder = Directory('${base.path}/photos');
+    final folder = Directory('${base.path}/$name');
     await folder.create(recursive: true);
     return folder;
   }
@@ -123,11 +128,22 @@ class RosterRepository {
   /// Copies a picked photo into the app's own folder and returns its name,
   /// so a photo stays available even if the user deletes it from their
   /// gallery afterwards.
-  Future<String> addPhoto(String sourcePath) async {
-    final folder = await photosFolder();
+  Future<String> addPhoto(String sourcePath) async =>
+      _copyInto(await photosFolder(), sourcePath, defaultExt: '.jpg');
+
+  /// Copies a picked PDF into the app's own folder and returns its name,
+  /// for the same reason.
+  Future<String> addAttachment(String sourcePath) async =>
+      _copyInto(await attachmentsFolder(), sourcePath, defaultExt: '.pdf');
+
+  Future<String> _copyInto(
+    Directory folder,
+    String sourcePath, {
+    required String defaultExt,
+  }) async {
     final ext = sourcePath.contains('.')
         ? sourcePath.substring(sourcePath.lastIndexOf('.'))
-        : '.jpg';
+        : defaultExt;
     final name = '${DateTime.now().microsecondsSinceEpoch}$ext';
     await File(sourcePath).copy('${folder.path}/$name');
     return name;

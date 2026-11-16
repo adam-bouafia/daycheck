@@ -1,9 +1,11 @@
+import 'package:daycheck/features/inbox/presentation/inbox_viewmodel.dart';
 import 'package:daycheck/features/requests/data/leave_request.dart';
 import 'package:daycheck/features/requests/presentation/requests_viewmodel.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../inbox/fake_inbox_repository.dart';
 import '../../roster/fake_notification_service.dart';
 import '../../roster/support.dart';
 import '../fake_request_repository.dart';
@@ -12,17 +14,20 @@ void main() {
   late FakeRosterRepository roster;
   late FakeRequestRepository requests;
   late FakeNotificationService notifications;
+  late FakeInboxRepository inbox;
   late ProviderContainer container;
 
   setUp(() {
     roster = FakeRosterRepository();
     requests = FakeRequestRepository();
     notifications = FakeNotificationService();
+    inbox = FakeInboxRepository();
     container = ProviderContainer(
       overrides: [
         rosterRepositoryProvider.overrideWithValue(roster),
         requestRepositoryProvider.overrideWithValue(requests),
         notificationServiceProvider.overrideWithValue(notifications),
+        inboxRepositoryProvider.overrideWithValue(inbox),
       ],
     );
     addTearDown(container.dispose);

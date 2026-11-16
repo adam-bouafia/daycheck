@@ -1,23 +1,28 @@
+import 'package:daycheck/features/inbox/presentation/inbox_viewmodel.dart';
 import 'package:daycheck/features/roster/data/day_status.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../inbox/fake_inbox_repository.dart';
 import '../fake_notification_service.dart';
 import '../support.dart';
 
 void main() {
   late FakeRosterRepository repo;
   late FakeNotificationService notifications;
+  late FakeInboxRepository inbox;
   late ProviderContainer container;
 
   setUp(() {
     repo = FakeRosterRepository();
     notifications = FakeNotificationService();
+    inbox = FakeInboxRepository();
     container = ProviderContainer(
       overrides: [
         rosterRepositoryProvider.overrideWithValue(repo),
         notificationServiceProvider.overrideWithValue(notifications),
+        inboxRepositoryProvider.overrideWithValue(inbox),
       ],
     );
     addTearDown(container.dispose);
@@ -71,6 +76,8 @@ void main() {
     expect(notifications.sent, hasLength(1));
     expect(notifications.sent.single.$1, contains('Mila de Vries'));
     expect(notifications.sent.single.$2, 'Played outside');
+    expect(inbox.items, hasLength(1));
+    expect(inbox.items.single.childId, '1');
   });
 
   test(

@@ -128,5 +128,25 @@
 
   "photosTooltip": "Photos",
   "photosTitle": "Photos",
-  "noPhotosYet": "No photos yet."
+  "noPhotosYet": "No photos yet.",
+
+  "addPdf": "Add a PDF",
+  "pdfAdded": "PDF added",
+  "attachmentLabel": "Attachment",
+  "openAttachment": "Open",
+  "shareAttachment": "Share",
+  "couldNotOpenAttachment": "Couldn't open this file.",
+
+  "inboxTitle": "Notifications",
+  "inboxTooltip": "Notifications",
+  "noNotificationsYet": "No notifications yet.",
+  "markAllRead": "Mark all read",
+  "requestApprovedNotificationTitle": "Request approved for {name}",
+  "@requestApprovedNotificationTitle": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "requestCancelledNotificationTitle": "Request cancelled for {name}",
+  "@requestCancelledNotificationTitle": {
+    "placeholders": { "name": { "type": "String" } }
+  }
 }

@@ -1,9 +1,10 @@
 enum EventKind { checkIn, checkOut, activityNote }
 
 /// One thing that happened for a child today: a check-in, a check-out, or
-/// a staff activity note (with an optional photo). The roster's status
-/// for a child is always derived from these events (see [statusFor]),
-/// never stored separately, so the log and the status can never disagree.
+/// a staff activity note (with an optional photo and/or PDF attachment).
+/// The roster's status for a child is always derived from these events
+/// (see [statusFor]), never stored separately, so the log and the status
+/// can never disagree.
 class DayEvent {
   const DayEvent({
     required this.childId,
@@ -12,6 +13,7 @@ class DayEvent {
     required this.by,
     this.note,
     this.photoName,
+    this.attachmentName,
   });
 
   final String childId;
@@ -21,12 +23,18 @@ class DayEvent {
   /// Guardian name for a check-in/out, staff name for an activity note.
   final String by;
 
-  /// Free text for an activity note; null for a check-in/out.
+  /// Free text for an activity note; also doubles as the photo's caption
+  /// when one is attached, so a photo is never shown with no description
+  /// of what it's a photo of.
   final String? note;
 
   /// File name inside the app's own photos folder; null when there is no
   /// photo attached.
   final String? photoName;
+
+  /// File name inside the app's own attachments folder (a PDF staff
+  /// shared); null when there is none.
+  final String? attachmentName;
 
   Map<String, Object?> toJson() => {
     'childId': childId,
@@ -35,6 +43,7 @@ class DayEvent {
     'by': by,
     'note': note,
     'photoName': photoName,
+    'attachmentName': attachmentName,
   };
 
   factory DayEvent.fromJson(Map<String, dynamic> json) => DayEvent(
@@ -44,5 +53,6 @@ class DayEvent {
     by: json['by'] as String,
     note: json['note'] as String?,
     photoName: json['photoName'] as String?,
+    attachmentName: json['attachmentName'] as String?,
   );
 }

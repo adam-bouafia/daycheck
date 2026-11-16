@@ -1,3 +1,4 @@
+import 'package:daycheck/features/inbox/presentation/inbox_viewmodel.dart';
 import 'package:daycheck/features/roster/data/day_event.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
 import 'package:daycheck/features/session/presentation/sign_in_screen.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../inbox/fake_inbox_repository.dart';
 import '../fake_notification_service.dart';
 import '../support.dart';
 
@@ -17,6 +19,7 @@ void main() {
     overrides: [
       rosterRepositoryProvider.overrideWithValue(repo),
       notificationServiceProvider.overrideWithValue(notifications),
+      inboxRepositoryProvider.overrideWithValue(FakeInboxRepository()),
     ],
     child: MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,

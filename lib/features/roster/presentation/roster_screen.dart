@@ -1,5 +1,7 @@
 import 'package:daycheck/core/localization/app_locale.dart';
 import 'package:daycheck/core/widgets/glass.dart';
+import 'package:daycheck/features/inbox/presentation/inbox_screen.dart';
+import 'package:daycheck/features/inbox/presentation/inbox_viewmodel.dart';
 import 'package:daycheck/features/roster/data/day_event.dart';
 import 'package:daycheck/features/roster/presentation/child_detail_screen.dart';
 import 'package:daycheck/features/roster/presentation/daily_log_screen.dart';
@@ -26,6 +28,12 @@ class RosterScreen extends ConsumerWidget {
         : state.children
               .where((c) => c.guardians.contains(session.guardianName))
               .toList();
+    final myChildIds = visibleChildren.map((c) => c.id).toSet();
+    final unreadCount = visibleInboxItems(
+      ref.watch(inboxViewModelProvider),
+      isStaff,
+      myChildIds,
+    ).where((i) => !i.read).length;
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
@@ -35,6 +43,18 @@ class RosterScreen extends ConsumerWidget {
               : l10n.appBarParent(session.guardianName ?? ''),
         ),
         actions: [
+          IconButton(
+            tooltip: l10n.inboxTooltip,
+            icon: Badge(
+              label: Text('$unreadCount'),
+              isLabelVisible: unreadCount > 0,
+              child: const Icon(Icons.notifications_outlined),
+            ),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const InboxScreen()),
+            ),
+          ),
           if (isStaff)
             IconButton(
               tooltip: l10n.todaysLogTooltip,

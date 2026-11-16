@@ -41,13 +41,14 @@ class PhotoGalleryScreen extends ConsumerWidget {
                     crossAxisCount: 2,
                     mainAxisSpacing: 10,
                     crossAxisSpacing: 10,
-                    childAspectRatio: 0.85,
+                    childAspectRatio: 0.68,
                   ),
                   itemCount: events.length,
                   itemBuilder: (context, index) {
                     final event = events[index];
                     final date = MaterialLocalizations.of(context)
                         .formatMediumDate(event.at);
+                    final caption = event.note;
                     return GlassPanel(
                       radius: 14,
                       child: Column(
@@ -65,10 +66,24 @@ class PhotoGalleryScreen extends ConsumerWidget {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(6),
-                            child: Text(
-                              date,
-                              style: Theme.of(context).textTheme.bodySmall,
+                            padding: const EdgeInsets.fromLTRB(8, 6, 8, 8),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  date,
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
+                                if (caption != null && caption.isNotEmpty)
+                                  Text(
+                                    caption,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall,
+                                  ),
+                              ],
                             ),
                           ),
                         ],

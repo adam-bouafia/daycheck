@@ -243,4 +243,44 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get noPhotosYet => 'Nog geen foto\'s.';
+
+  @override
+  String get addPdf => 'PDF toevoegen';
+
+  @override
+  String get pdfAdded => 'PDF toegevoegd';
+
+  @override
+  String get attachmentLabel => 'Bijlage';
+
+  @override
+  String get openAttachment => 'Openen';
+
+  @override
+  String get shareAttachment => 'Delen';
+
+  @override
+  String get couldNotOpenAttachment => 'Dit bestand kon niet worden geopend.';
+
+  @override
+  String get inboxTitle => 'Meldingen';
+
+  @override
+  String get inboxTooltip => 'Meldingen';
+
+  @override
+  String get noNotificationsYet => 'Nog geen meldingen.';
+
+  @override
+  String get markAllRead => 'Alles als gelezen markeren';
+
+  @override
+  String requestApprovedNotificationTitle(String name) {
+    return 'Aanvraag goedgekeurd voor $name';
+  }
+
+  @override
+  String requestCancelledNotificationTitle(String name) {
+    return 'Aanvraag geannuleerd voor $name';
+  }
 }

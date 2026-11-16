@@ -22,6 +22,9 @@ class FakeRosterRepository implements RosterRepository {
   /// Names fed to [addPhoto], in order, instead of real file copies.
   final addedPhotos = <String>[];
 
+  /// Names fed to [addAttachment], in order, instead of real file copies.
+  final addedAttachments = <String>[];
+
   @override
   Future<List<Child>> loadChildren() async => children;
 
@@ -42,6 +45,15 @@ class FakeRosterRepository implements RosterRepository {
 
   @override
   Future<Directory> photosFolder() async => Directory.systemTemp;
+
+  @override
+  Future<String> addAttachment(String sourcePath) async {
+    addedAttachments.add(sourcePath);
+    return 'fake-attachment.pdf';
+  }
+
+  @override
+  Future<Directory> attachmentsFolder() async => Directory.systemTemp;
 
   @override
   Future<List<Schedule>> loadSchedules() async => schedules;

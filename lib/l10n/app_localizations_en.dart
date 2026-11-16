@@ -243,4 +243,44 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noPhotosYet => 'No photos yet.';
+
+  @override
+  String get addPdf => 'Add a PDF';
+
+  @override
+  String get pdfAdded => 'PDF added';
+
+  @override
+  String get attachmentLabel => 'Attachment';
+
+  @override
+  String get openAttachment => 'Open';
+
+  @override
+  String get shareAttachment => 'Share';
+
+  @override
+  String get couldNotOpenAttachment => 'Couldn\'t open this file.';
+
+  @override
+  String get inboxTitle => 'Notifications';
+
+  @override
+  String get inboxTooltip => 'Notifications';
+
+  @override
+  String get noNotificationsYet => 'No notifications yet.';
+
+  @override
+  String get markAllRead => 'Mark all read';
+
+  @override
+  String requestApprovedNotificationTitle(String name) {
+    return 'Request approved for $name';
+  }
+
+  @override
+  String requestCancelledNotificationTitle(String name) {
+    return 'Request cancelled for $name';
+  }
 }

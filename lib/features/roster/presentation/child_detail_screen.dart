@@ -14,6 +14,8 @@ import 'package:daycheck/features/session/data/role.dart';
 import 'package:daycheck/features/session/presentation/session_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:open_filex/open_filex.dart';
+import 'package:share_plus/share_plus.dart';
 
 /// One child's full day: status, check-in/out, and the activity feed
 /// (notes and photos) shared by staff. Staff can check in/out and add
@@ -171,6 +173,7 @@ class _EventTile extends StatelessWidget {
       EventKind.activityNote => (Icons.edit_note, l10n.noteBy(event.by)),
     };
     final photoName = event.photoName;
+    final attachmentName = event.attachmentName;
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: GlassPanel(
@@ -200,9 +203,61 @@ class _EventTile extends StatelessWidget {
                 const SizedBox(height: 8),
                 _EventPhoto(name: photoName),
               ],
+              if (attachmentName != null) ...[
+                const SizedBox(height: 8),
+                _EventAttachment(name: attachmentName),
+              ],
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _EventAttachment extends ConsumerWidget {
+  const _EventAttachment({required this.name});
+
+  final String name;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final folder = ref.watch(attachmentsFolderProvider).value;
+    final scheme = Theme.of(context).colorScheme;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: scheme.surfaceContainerHighest.withValues(alpha: 0.5),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.picture_as_pdf_outlined, color: scheme.error),
+          const SizedBox(width: 8),
+          Expanded(child: Text(l10n.attachmentLabel)),
+          if (folder != null) ...[
+            IconButton(
+              tooltip: l10n.openAttachment,
+              icon: const Icon(Icons.open_in_new),
+              onPressed: () async {
+                final result = await OpenFilex.open('${folder.path}/$name');
+                if (result.type != ResultType.done && context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(l10n.couldNotOpenAttachment)),
+                  );
+                }
+              },
+            ),
+            IconButton(
+              tooltip: l10n.shareAttachment,
+              icon: const Icon(Icons.ios_share),
+              onPressed: () => SharePlus.instance.share(
+                ShareParams(files: [XFile('${folder.path}/$name')]),
+              ),
+            ),
+          ],
+        ],
       ),
     );
   }

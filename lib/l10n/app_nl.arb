@@ -74,5 +74,19 @@
 
   "photosTooltip": "Foto's",
   "photosTitle": "Foto's",
-  "noPhotosYet": "Nog geen foto's."
+  "noPhotosYet": "Nog geen foto's.",
+
+  "addPdf": "PDF toevoegen",
+  "pdfAdded": "PDF toegevoegd",
+  "attachmentLabel": "Bijlage",
+  "openAttachment": "Openen",
+  "shareAttachment": "Delen",
+  "couldNotOpenAttachment": "Dit bestand kon niet worden geopend.",
+
+  "inboxTitle": "Meldingen",
+  "inboxTooltip": "Meldingen",
+  "noNotificationsYet": "Nog geen meldingen.",
+  "markAllRead": "Alles als gelezen markeren",
+  "requestApprovedNotificationTitle": "Aanvraag goedgekeurd voor {name}",
+  "requestCancelledNotificationTitle": "Aanvraag geannuleerd voor {name}"
 }

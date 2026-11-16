@@ -481,6 +481,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No photos yet.'**
   String get noPhotosYet;
+
+  /// No description provided for @addPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a PDF'**
+  String get addPdf;
+
+  /// No description provided for @pdfAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF added'**
+  String get pdfAdded;
+
+  /// No description provided for @attachmentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Attachment'**
+  String get attachmentLabel;
+
+  /// No description provided for @openAttachment.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get openAttachment;
+
+  /// No description provided for @shareAttachment.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get shareAttachment;
+
+  /// No description provided for @couldNotOpenAttachment.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t open this file.'**
+  String get couldNotOpenAttachment;
+
+  /// No description provided for @inboxTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get inboxTitle;
+
+  /// No description provided for @inboxTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get inboxTooltip;
+
+  /// No description provided for @noNotificationsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No notifications yet.'**
+  String get noNotificationsYet;
+
+  /// No description provided for @markAllRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark all read'**
+  String get markAllRead;
+
+  /// No description provided for @requestApprovedNotificationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Request approved for {name}'**
+  String requestApprovedNotificationTitle(String name);
+
+  /// No description provided for @requestCancelledNotificationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Request cancelled for {name}'**
+  String requestCancelledNotificationTitle(String name);
 }
 
 class _AppLocalizationsDelegate

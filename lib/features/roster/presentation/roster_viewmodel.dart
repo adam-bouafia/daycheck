@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:daycheck/core/localization/app_locale.dart';
 import 'package:daycheck/core/notifications/notification_service.dart';
+import 'package:daycheck/features/inbox/presentation/inbox_viewmodel.dart';
 import 'package:daycheck/features/roster/data/child.dart';
 import 'package:daycheck/features/roster/data/day_event.dart';
 import 'package:daycheck/features/roster/data/day_status.dart';
@@ -24,6 +25,11 @@ final notificationServiceProvider = Provider<NotificationService>(
 /// Resolved once and cached, instead of on every rebuild of a photo tile.
 final photosFolderProvider = FutureProvider<Directory>(
   (ref) => ref.read(rosterRepositoryProvider).photosFolder(),
+);
+
+/// Same idea, for PDF attachments.
+final attachmentsFolderProvider = FutureProvider<Directory>(
+  (ref) => ref.read(rosterRepositoryProvider).attachmentsFolder(),
 );
 
 class RosterState {
@@ -91,17 +97,23 @@ class RosterViewModel extends Notifier<RosterState> {
     ),
   );
 
-  /// [photoSourcePath] is a path on the device (e.g. from the image
-  /// picker); it gets copied into the app's own photos folder.
+  /// [photoSourcePath] and [attachmentSourcePath] are paths on the device
+  /// (from the image/file picker); each gets copied into the app's own
+  /// folder. [note] also serves as the photo's caption, so a photo is
+  /// never shown with no description of what it's a photo of.
   Future<void> addActivityNote(
     String childId,
     String note, {
     String by = 'Staff',
     String? photoSourcePath,
+    String? attachmentSourcePath,
   }) async {
     final photoName = photoSourcePath == null
         ? null
         : await _repo.addPhoto(photoSourcePath);
+    final attachmentName = attachmentSourcePath == null
+        ? null
+        : await _repo.addAttachment(attachmentSourcePath);
     await _record(
       DayEvent(
         childId: childId,
@@ -110,16 +122,18 @@ class RosterViewModel extends Notifier<RosterState> {
         by: by,
         note: note,
         photoName: photoName,
+        attachmentName: attachmentName,
       ),
     );
     final childName = state.children.firstWhere((c) => c.id == childId).name;
     final l10n = deviceLocalizations();
+    final title = l10n.newActivityNotificationTitle(childName);
     await ref
         .read(notificationServiceProvider)
-        .showActivityNotification(
-          l10n.newActivityNotificationTitle(childName),
-          note,
-        );
+        .showActivityNotification(title, note);
+    await ref
+        .read(inboxViewModelProvider.notifier)
+        .add(title, note, childId: childId);
   }
 
   Future<void> _record(DayEvent event) async {
