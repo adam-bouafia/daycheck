@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 
-import 'package:daycheck/features/roster/data/check_event.dart';
 import 'package:daycheck/features/roster/data/child.dart';
+import 'package:daycheck/features/roster/data/day_event.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const _childrenKey = 'children';
@@ -22,10 +24,10 @@ const _seedChildren = [
   ),
 ];
 
-/// Children and their check-in/out events, kept on the device. A real app
-/// would sync this with a server; this demo keeps everything local, the
-/// same way MetJou does, so there is no account and no server that can be
-/// down.
+/// Children, their events, and the photos attached to activity notes, all
+/// kept on the device. A real app would sync this with a server; this demo
+/// keeps everything local, the same way MetJou does, so there is no
+/// account and no server that can be down.
 class RosterRepository {
   Future<List<Child>> loadChildren() async {
     final prefs = await SharedPreferences.getInstance();
@@ -47,20 +49,42 @@ class RosterRepository {
     );
   }
 
-  Future<List<CheckEvent>> loadEvents() async {
+  Future<List<DayEvent>> loadEvents() async {
     final prefs = await SharedPreferences.getInstance();
     final raw = prefs.getStringList(_eventsKey) ?? [];
     return raw
-        .map((s) => CheckEvent.fromJson(jsonDecode(s) as Map<String, dynamic>))
+        .map((s) => DayEvent.fromJson(jsonDecode(s) as Map<String, dynamic>))
         .toList();
   }
 
-  Future<void> appendEvent(CheckEvent event) async {
+  Future<void> appendEvent(DayEvent event) async {
     final events = await loadEvents();
     final prefs = await SharedPreferences.getInstance();
     await prefs.setStringList(
       _eventsKey,
       [...events, event].map((e) => jsonEncode(e.toJson())).toList(),
     );
+  }
+
+  /// Where photos are kept. A `FutureProvider` caches this for the View,
+  /// instead of resolving it again on every rebuild.
+  Future<Directory> photosFolder() async {
+    final base = await getApplicationDocumentsDirectory();
+    final folder = Directory('${base.path}/photos');
+    await folder.create(recursive: true);
+    return folder;
+  }
+
+  /// Copies a picked photo into the app's own folder and returns its name,
+  /// so a photo stays available even if the user deletes it from their
+  /// gallery afterwards.
+  Future<String> addPhoto(String sourcePath) async {
+    final folder = await photosFolder();
+    final ext = sourcePath.contains('.')
+        ? sourcePath.substring(sourcePath.lastIndexOf('.'))
+        : '.jpg';
+    final name = '${DateTime.now().microsecondsSinceEpoch}$ext';
+    await File(sourcePath).copy('${folder.path}/$name');
+    return name;
   }
 }

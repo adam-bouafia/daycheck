@@ -51,4 +51,34 @@ void main() {
     expect(state.statusOf('1'), DayStatus.departed);
     expect(state.eventsOf('1'), hasLength(2));
   });
+
+  test('an activity note is recorded but does not affect attendance', () async {
+    final notifier = container.read(rosterViewModelProvider.notifier);
+    await Future<void>.delayed(Duration.zero);
+
+    await notifier.addActivityNote('1', 'Played outside');
+
+    final state = container.read(rosterViewModelProvider);
+    expect(state.statusOf('1'), DayStatus.notArrived);
+    expect(state.eventsOf('1').single.note, 'Played outside');
+    expect(repo.addedPhotos, isEmpty);
+  });
+
+  test(
+    'an activity note with a photo copies it through the repository',
+    () async {
+      final notifier = container.read(rosterViewModelProvider.notifier);
+      await Future<void>.delayed(Duration.zero);
+
+      await notifier.addActivityNote(
+        '1',
+        'Painting',
+        photoSourcePath: '/tmp/picked.jpg',
+      );
+
+      expect(repo.addedPhotos, ['/tmp/picked.jpg']);
+      final state = container.read(rosterViewModelProvider);
+      expect(state.eventsOf('1').single.photoName, 'fake-photo.jpg');
+    },
+  );
 }

@@ -1,6 +1,7 @@
+import 'package:daycheck/features/roster/data/day_event.dart';
+import 'package:daycheck/features/roster/presentation/child_detail_screen.dart';
 import 'package:daycheck/features/roster/presentation/daily_log_screen.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
-import 'package:daycheck/features/roster/presentation/widgets/check_sheet.dart';
 import 'package:daycheck/features/roster/presentation/widgets/child_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,11 +35,16 @@ class RosterScreen extends ConsumerWidget {
                   ChildTile(
                     child: child,
                     status: state.statusOf(child.id),
-                    lastEvent: state.eventsOf(child.id).firstOrNull,
-                    onTap: () => openCheckSheet(
+                    lastAttendance: state.attendanceOf(child.id).firstOrNull,
+                    noteCount: state
+                        .eventsOf(child.id)
+                        .where((e) => e.kind == EventKind.activityNote)
+                        .length,
+                    onTap: () => Navigator.push(
                       context,
-                      child,
-                      state.statusOf(child.id),
+                      MaterialPageRoute(
+                        builder: (_) => ChildDetailScreen(child: child),
+                      ),
                     ),
                   ),
               ],

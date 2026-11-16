@@ -1,5 +1,5 @@
-import 'package:daycheck/features/roster/data/check_event.dart';
 import 'package:daycheck/features/roster/data/child.dart';
+import 'package:daycheck/features/roster/data/day_event.dart';
 import 'package:daycheck/features/roster/data/day_status.dart';
 import 'package:flutter/material.dart';
 
@@ -8,17 +8,21 @@ class ChildTile extends StatelessWidget {
     super.key,
     required this.child,
     required this.status,
-    required this.lastEvent,
+    required this.lastAttendance,
+    required this.noteCount,
     required this.onTap,
   });
 
   final Child child;
   final DayStatus status;
-  final CheckEvent? lastEvent;
+
+  /// The most recent check-in/out event, if any.
+  final DayEvent? lastAttendance;
+  final int noteCount;
   final VoidCallback onTap;
 
   String get _subtitle {
-    final event = lastEvent;
+    final event = lastAttendance;
     if (event == null) return 'Not arrived yet';
     final time = TimeOfDay.fromDateTime(event.at).format24();
     return switch (status) {
@@ -41,7 +45,11 @@ class ChildTile extends StatelessWidget {
         onTap: onTap,
         leading: CircleAvatar(child: Text(child.name.characters.first)),
         title: Text(child.name),
-        subtitle: Text(_subtitle),
+        subtitle: Text(
+          noteCount == 0
+              ? _subtitle
+              : '$_subtitle · $noteCount ${noteCount == 1 ? 'note' : 'notes'} today',
+        ),
         trailing: Chip(
           label: Text(label),
           backgroundColor: color.withValues(alpha: 0.12),
