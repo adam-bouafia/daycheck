@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:daycheck/core/localization/app_locale.dart';
+import 'package:daycheck/core/widgets/glass.dart';
 import 'package:daycheck/features/roster/data/child.dart';
 import 'package:daycheck/features/roster/data/day_event.dart';
 import 'package:daycheck/features/roster/data/day_status.dart';
@@ -34,88 +35,96 @@ class ChildDetailScreen extends ConsumerWidget {
       DayStatus.departed => (l10n.statusDeparted, scheme.tertiary),
     };
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(title: Text(child.name)),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
-        children: [
-          Row(
+      body: GlassBackground(
+        child: SafeArea(
+          top: false,
+          child: ListView(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
             children: [
-              CircleAvatar(
-                radius: 28,
-                child: Text(
-                  child.name.characters.first,
-                  style: const TextStyle(fontSize: 22),
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Chip(
-                      label: Text(label),
-                      backgroundColor: color.withValues(alpha: 0.12),
-                      labelStyle: TextStyle(
-                        color: color,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      side: BorderSide.none,
+              Row(
+                children: [
+                  CircleAvatar(
+                    radius: 28,
+                    child: Text(
+                      child.name.characters.first,
+                      style: const TextStyle(fontSize: 22),
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      l10n.eventsToday(events.length),
-                      style: TextStyle(color: scheme.onSurfaceVariant),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Chip(
+                          label: Text(label),
+                          backgroundColor: color.withValues(alpha: 0.12),
+                          labelStyle: TextStyle(
+                            color: color,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          side: BorderSide.none,
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          l10n.eventsToday(events.length),
+                          style: TextStyle(color: scheme.onSurfaceVariant),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              if (isStaff) ...[
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        onPressed: () => openCheckSheet(context, child, status),
+                        icon: Icon(
+                          status == DayStatus.present
+                              ? Icons.logout
+                              : Icons.login,
+                        ),
+                        label: Text(
+                          status == DayStatus.present
+                              ? l10n.checkOut
+                              : l10n.checkIn,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: FilledButton.tonalIcon(
+                        onPressed: () => openAddNoteSheet(context, child.id),
+                        icon: const Icon(Icons.edit_note),
+                        label: Text(l10n.addNote),
+                      ),
                     ),
                   ],
                 ),
+              ],
+              const SizedBox(height: 20),
+              Text(
+                l10n.todaysActivity,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
+              const SizedBox(height: 8),
+              if (events.isEmpty)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 24),
+                  child: Text(
+                    l10n.nothingYetToday,
+                    style: TextStyle(color: scheme.onSurfaceVariant),
+                  ),
+                )
+              else
+                for (final event in events) _EventTile(event: event),
             ],
           ),
-          if (isStaff) ...[
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton.icon(
-                    onPressed: () => openCheckSheet(context, child, status),
-                    icon: Icon(
-                      status == DayStatus.present ? Icons.logout : Icons.login,
-                    ),
-                    label: Text(
-                      status == DayStatus.present
-                          ? l10n.checkOut
-                          : l10n.checkIn,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: FilledButton.tonalIcon(
-                    onPressed: () => openAddNoteSheet(context, child.id),
-                    icon: const Icon(Icons.edit_note),
-                    label: Text(l10n.addNote),
-                  ),
-                ),
-              ],
-            ),
-          ],
-          const SizedBox(height: 20),
-          Text(
-            l10n.todaysActivity,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          const SizedBox(height: 8),
-          if (events.isEmpty)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 24),
-              child: Text(
-                l10n.nothingYetToday,
-                style: TextStyle(color: scheme.onSurfaceVariant),
-              ),
-            )
-          else
-            for (final event in events) _EventTile(event: event),
-        ],
+        ),
       ),
     );
   }
@@ -138,21 +147,37 @@ class _EventTile extends StatelessWidget {
       EventKind.activityNote => (Icons.edit_note, l10n.noteBy(event.by)),
     };
     final photoName = event.photoName;
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: Icon(icon),
-              title: Text(title),
-              subtitle: event.note == null ? null : Text(event.note!),
-              trailing: Text(clock),
-            ),
-            if (photoName != null) _EventPhoto(name: photoName),
-          ],
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: GlassPanel(
+        radius: 14,
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(icon),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(title),
+                        if (event.note != null) Text(event.note!),
+                      ],
+                    ),
+                  ),
+                  Text(clock),
+                ],
+              ),
+              if (photoName != null) ...[
+                const SizedBox(height: 8),
+                _EventPhoto(name: photoName),
+              ],
+            ],
+          ),
         ),
       ),
     );

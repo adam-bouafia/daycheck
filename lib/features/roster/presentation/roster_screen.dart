@@ -1,4 +1,5 @@
 import 'package:daycheck/core/localization/app_locale.dart';
+import 'package:daycheck/core/widgets/glass.dart';
 import 'package:daycheck/features/roster/data/day_event.dart';
 import 'package:daycheck/features/roster/presentation/child_detail_screen.dart';
 import 'package:daycheck/features/roster/presentation/daily_log_screen.dart';
@@ -25,6 +26,7 @@ class RosterScreen extends ConsumerWidget {
               .where((c) => c.guardians.contains(session.guardianName))
               .toList();
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: Text(
           isStaff
@@ -53,31 +55,41 @@ class RosterScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: state.children.isEmpty
-          ? const Center(child: CircularProgressIndicator())
-          : visibleChildren.isEmpty
-          ? Center(child: Text(l10n.noChildForGuardian))
-          : ListView(
-              padding: const EdgeInsets.all(12),
-              children: [
-                for (final child in visibleChildren)
-                  ChildTile(
-                    child: child,
-                    status: state.statusOf(child.id),
-                    lastAttendance: state.attendanceOf(child.id).firstOrNull,
-                    noteCount: state
-                        .eventsOf(child.id)
-                        .where((e) => e.kind == EventKind.activityNote)
-                        .length,
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => ChildDetailScreen(child: child),
+      body: GlassBackground(
+        child: SafeArea(
+          top: false,
+          child: state.children.isEmpty
+              ? const Center(child: CircularProgressIndicator())
+              : visibleChildren.isEmpty
+              ? Center(child: Text(l10n.noChildForGuardian))
+              : ListView(
+                  padding: const EdgeInsets.all(12),
+                  children: [
+                    for (final child in visibleChildren)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: ChildTile(
+                          child: child,
+                          status: state.statusOf(child.id),
+                          lastAttendance: state
+                              .attendanceOf(child.id)
+                              .firstOrNull,
+                          noteCount: state
+                              .eventsOf(child.id)
+                              .where((e) => e.kind == EventKind.activityNote)
+                              .length,
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => ChildDetailScreen(child: child),
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-              ],
-            ),
+                  ],
+                ),
+        ),
+      ),
     );
   }
 }

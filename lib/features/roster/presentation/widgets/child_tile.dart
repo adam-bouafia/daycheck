@@ -1,4 +1,5 @@
 import 'package:daycheck/core/localization/app_locale.dart';
+import 'package:daycheck/core/widgets/glass.dart';
 import 'package:daycheck/features/roster/data/child.dart';
 import 'package:daycheck/features/roster/data/day_event.dart';
 import 'package:daycheck/features/roster/data/day_status.dart';
@@ -44,21 +45,40 @@ class ChildTile extends StatelessWidget {
       DayStatus.departed => (l10n.statusDeparted, scheme.tertiary),
     };
     final attendanceLine = _attendanceLine(l10n);
-    return Card(
-      child: ListTile(
-        onTap: onTap,
-        leading: CircleAvatar(child: Text(child.name.characters.first)),
-        title: Text(child.name),
-        subtitle: Text(
-          noteCount == 0
-              ? attendanceLine
-              : '$attendanceLine · ${l10n.notesToday(noteCount)}',
-        ),
-        trailing: Chip(
-          label: Text(label),
-          backgroundColor: color.withValues(alpha: 0.12),
-          labelStyle: TextStyle(color: color, fontWeight: FontWeight.w600),
-          side: BorderSide.none,
+    return GlassPanel(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.all(14),
+        child: Row(
+          children: [
+            CircleAvatar(child: Text(child.name.characters.first)),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    child.name,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    noteCount == 0
+                        ? attendanceLine
+                        : '$attendanceLine · ${l10n.notesToday(noteCount)}',
+                    style: TextStyle(color: scheme.onSurfaceVariant),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            Chip(
+              label: Text(label),
+              backgroundColor: color.withValues(alpha: 0.12),
+              labelStyle: TextStyle(color: color, fontWeight: FontWeight.w600),
+              side: BorderSide.none,
+            ),
+          ],
         ),
       ),
     );
