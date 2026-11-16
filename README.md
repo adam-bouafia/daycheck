@@ -23,10 +23,28 @@ a generic daycare administration problem, built from scratch.
   when deriving attendance.
 - A log screen lists every check-in, check-out and activity note for today,
   across all children (staff only — see below).
-- Everything is stored on the device (`shared_preferences` for the log,
+- A **Requests** screen: a parent submits a leave or extra-hours request
+  for their child (date, optional note); staff approve or cancel it. This
+  is a genuinely different pattern from the event log above — a request
+  has a state that *transitions* (pending → approved/cancelled), so it's
+  stored and updated in place, not appended to forever.
+- A **Schedule** calendar per child: a month view with a dot on the days
+  they normally attend, and the hours for whichever day is selected. Reads
+  the same data the roster loads; there's no separate schedule-only store.
+- A **Photos** gallery per child: every photo attached to an activity
+  note, newest first. A view over the same event log as the activity feed
+  — see "Why these choices" below for why that matters.
+- Everything is stored on the device (`shared_preferences` for the data,
   the app's own documents folder for photos). There is no backend and no
   account, the same local-first choice as my other Flutter project,
   [MetJou](https://github.com/adam-bouafia/metjou).
+
+## Design
+
+Glassmorphism, Catppuccin Latte (light) / Mocha (dark), following the
+system theme automatically — the same `GlassPanel`/`GlassBackground`
+pattern and palette as MetJou, so both apps share one visual language
+(`core/theme/app_theme.dart`, `core/widgets/glass.dart`).
 
 ## Two roles, not one
 
@@ -52,26 +70,37 @@ Feature-first, layered inside each feature:
 
 ```
 lib/
-  core/theme/            shared theme
+  core/theme/            Catppuccin palette, light/dark ThemeData
+  core/widgets/glass.dart   GlassPanel, GlassBackground
   core/localization/     context.l10n extension, device-locale lookup for
                           code with no BuildContext (e.g. a notification)
   core/notifications/    local notification when staff post an activity
+                          or a request is submitted
   l10n/                  app_en.arb, app_nl.arb and the generated code
   features/roster/
     data/                  Model: Child, DayEvent (check-in/out or an
-                            activity note), the status rule, the
-                            repository (SharedPreferences + photos folder)
+                            activity note), Schedule, the status rule,
+                            the repository (SharedPreferences + photos)
     presentation/
       roster_viewmodel.dart     ViewModel: a Riverpod Notifier holding the
-                                  roster and today's events
+                                  roster, today's events and schedules
       roster_screen.dart        View: the roster list, filtered by role
       child_detail_screen.dart  View: one child's status, actions and feed
       daily_log_screen.dart     View: every event today, across children
+      calendar_screen.dart      View: one child's month schedule
+      photo_gallery_screen.dart View: one child's photos, derived from events
       widgets/
         check_sheet.dart        View: the check-in/out form (its own local
                                   state - who is picked, not shared elsewhere)
         add_note_sheet.dart     View: the activity-note form (text + photo)
         child_tile.dart         View: one row in the roster
+  features/requests/
+    data/                  Model: LeaveRequest (pending/approved/cancelled),
+                            the repository
+    presentation/
+      requests_viewmodel.dart   ViewModel: submit/approve/cancel
+      requests_screen.dart      View: every request, filtered by role
+      widgets/new_request_sheet.dart  View: the new-request form
   features/session/
     data/role.dart             Model: Role (staff or parent)
     presentation/
@@ -110,17 +139,18 @@ right, and that's worth knowing before assuming every bug is "fix it in
 QA" rather than "fix the shape of the state."
 
 One review also specifically praised one-click absence reporting — which
-lines up with the leave/absence/extra-hours request workflow below, left
-out of this demo on purpose rather than by oversight.
+is why the Requests feature above was built rather than left as a
+placeholder.
 
 ## What's deliberately not built
 
-Real daycare apps (this one included, as a reference point) also handle
-leave/absence/extra-hours requests with an approve/cancel workflow. That is
-a genuinely different pattern from this app's event log — a request has a
-state that transitions (requested → approved/cancelled) rather than an
-append-only history — and was left out on purpose to keep this demo
-finishable and coherent around one pattern, rather than half-building two.
+**Chat.** Real-time messaging between staff and parents is a different
+problem again (delivery, read receipts, presence) and would be its own
+demo, not a feature bolted onto this one.
+
+**Admin** (billing, staff scheduling, org-level settings) is a different
+concern from both the staff and parent roles modelled here — see "Two
+roles, not one" above.
 
 ## Running it
 
@@ -135,13 +165,14 @@ flutter run
 flutter test
 ```
 
-Covers the status rule as pure logic (including that activity notes don't
-affect attendance), the ViewModel's behaviour with a fake repository and a
-fake notification service (check-in, check-out, activity notes with and
-without a photo, the notification sent), widget tests that drive the full
-check-in/check-out and add-note flows end to end for both roles, and a
-locale test that renders the sign-in screen in Dutch and checks the real
-translated text, not just that it compiles.
+35 tests. Covers the status rule and the schedule rule as pure logic,
+both ViewModels' behaviour with fake repositories and a fake notification
+service (check-in, check-out, activity notes with and without a photo,
+submit/approve/cancel, every notification sent), widget tests that drive
+the full check-in/check-out, add-note, calendar and photo-gallery flows
+end to end for both roles, and a locale test that renders the sign-in
+screen in Dutch and checks the real translated text, not just that it
+compiles.
 
 ## CI
 

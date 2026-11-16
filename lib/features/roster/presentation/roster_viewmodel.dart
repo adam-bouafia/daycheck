@@ -6,6 +6,7 @@ import 'package:daycheck/features/roster/data/child.dart';
 import 'package:daycheck/features/roster/data/day_event.dart';
 import 'package:daycheck/features/roster/data/day_status.dart';
 import 'package:daycheck/features/roster/data/roster_repository.dart';
+import 'package:daycheck/features/roster/data/schedule.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// DI seam: tests override this with a fake repository instead of the real
@@ -26,10 +27,15 @@ final photosFolderProvider = FutureProvider<Directory>(
 );
 
 class RosterState {
-  const RosterState({this.children = const [], this.events = const []});
+  const RosterState({
+    this.children = const [],
+    this.events = const [],
+    this.schedules = const [],
+  });
 
   final List<Child> children;
   final List<DayEvent> events;
+  final List<Schedule> schedules;
 
   DayStatus statusOf(String childId) => statusFor(childId, events);
 
@@ -38,6 +44,10 @@ class RosterState {
 
   /// Only this child's check-in/out events, newest first.
   List<DayEvent> attendanceOf(String childId) => attendanceFor(childId, events);
+
+  /// This child's weekly schedule, if one is set.
+  Schedule? scheduleOf(String childId) =>
+      schedules.where((s) => s.childId == childId).firstOrNull;
 }
 
 /// Holds the roster and today's events. The View only reads [RosterState]
@@ -55,7 +65,12 @@ class RosterViewModel extends Notifier<RosterState> {
   Future<void> _load() async {
     final children = await _repo.loadChildren();
     final events = await _repo.loadEvents();
-    state = RosterState(children: children, events: events);
+    final schedules = await _repo.loadSchedules();
+    state = RosterState(
+      children: children,
+      events: events,
+      schedules: schedules,
+    );
   }
 
   Future<void> checkIn(String childId, String by) => _record(
@@ -112,6 +127,7 @@ class RosterViewModel extends Notifier<RosterState> {
     state = RosterState(
       children: state.children,
       events: [...state.events, event],
+      schedules: state.schedules,
     );
   }
 }

@@ -3,11 +3,13 @@ import 'dart:io';
 
 import 'package:daycheck/features/roster/data/child.dart';
 import 'package:daycheck/features/roster/data/day_event.dart';
+import 'package:daycheck/features/roster/data/schedule.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const _childrenKey = 'children';
 const _eventsKey = 'events';
+const _schedulesKey = 'schedules';
 
 /// A handful of children to open the app with, instead of an empty list.
 const _seedChildren = [
@@ -21,6 +23,29 @@ const _seedChildren = [
     id: '3',
     name: 'Yusuf El Amrani',
     guardians: ['Amina El Amrani', 'Karim El Amrani'],
+  ),
+];
+
+/// A different weekly schedule per seeded child, so the calendar has
+/// something real to show.
+const _seedSchedules = [
+  Schedule(
+    childId: '1',
+    weekdays: {1, 2, 3, 4, 5},
+    startMinutes: 7 * 60,
+    endMinutes: 18 * 60,
+  ),
+  Schedule(
+    childId: '2',
+    weekdays: {1, 3, 5},
+    startMinutes: 8 * 60,
+    endMinutes: 17 * 60,
+  ),
+  Schedule(
+    childId: '3',
+    weekdays: {2, 4},
+    startMinutes: 7 * 60 + 30,
+    endMinutes: 17 * 60 + 30,
   ),
 ];
 
@@ -63,6 +88,26 @@ class RosterRepository {
     await prefs.setStringList(
       _eventsKey,
       [...events, event].map((e) => jsonEncode(e.toJson())).toList(),
+    );
+  }
+
+  Future<List<Schedule>> loadSchedules() async {
+    final prefs = await SharedPreferences.getInstance();
+    final raw = prefs.getStringList(_schedulesKey);
+    if (raw == null) {
+      await saveSchedules(_seedSchedules);
+      return _seedSchedules;
+    }
+    return raw
+        .map((s) => Schedule.fromJson(jsonDecode(s) as Map<String, dynamic>))
+        .toList();
+  }
+
+  Future<void> saveSchedules(List<Schedule> schedules) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(
+      _schedulesKey,
+      schedules.map((s) => jsonEncode(s.toJson())).toList(),
     );
   }
 

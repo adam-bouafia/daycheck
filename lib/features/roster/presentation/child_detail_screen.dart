@@ -5,6 +5,8 @@ import 'package:daycheck/core/widgets/glass.dart';
 import 'package:daycheck/features/roster/data/child.dart';
 import 'package:daycheck/features/roster/data/day_event.dart';
 import 'package:daycheck/features/roster/data/day_status.dart';
+import 'package:daycheck/features/roster/presentation/calendar_screen.dart';
+import 'package:daycheck/features/roster/presentation/photo_gallery_screen.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
 import 'package:daycheck/features/roster/presentation/widgets/add_note_sheet.dart';
 import 'package:daycheck/features/roster/presentation/widgets/check_sheet.dart';
@@ -36,7 +38,29 @@ class ChildDetailScreen extends ConsumerWidget {
     };
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: AppBar(title: Text(child.name)),
+      appBar: AppBar(
+        title: Text(child.name),
+        actions: [
+          IconButton(
+            tooltip: l10n.scheduleTooltip,
+            icon: const Icon(Icons.calendar_month_outlined),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => CalendarScreen(child: child)),
+            ),
+          ),
+          IconButton(
+            tooltip: l10n.photosTooltip,
+            icon: const Icon(Icons.photo_library_outlined),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => PhotoGalleryScreen(child: child),
+              ),
+            ),
+          ),
+        ],
+      ),
       body: GlassBackground(
         child: SafeArea(
           top: false,

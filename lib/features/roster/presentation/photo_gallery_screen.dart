@@ -1,0 +1,83 @@
+import 'dart:io';
+
+import 'package:daycheck/core/localization/app_locale.dart';
+import 'package:daycheck/core/widgets/glass.dart';
+import 'package:daycheck/features/roster/data/child.dart';
+import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+/// Every photo attached to one child's activity notes, newest first. A
+/// view over the same event log as the activity feed - there is no
+/// separate photo store to fall out of sync with it, unlike the
+/// "I see a photo in the log but it doesn't show under Media" complaint
+/// this is a direct answer to (see the README).
+class PhotoGalleryScreen extends ConsumerWidget {
+  const PhotoGalleryScreen({super.key, required this.child});
+
+  final Child child;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final folder = ref.watch(photosFolderProvider).value;
+    final events = ref
+        .watch(rosterViewModelProvider)
+        .eventsOf(child.id)
+        .where((e) => e.photoName != null)
+        .toList();
+
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      appBar: AppBar(title: Text('${l10n.photosTitle} · ${child.name}')),
+      body: GlassBackground(
+        child: SafeArea(
+          top: false,
+          child: events.isEmpty || folder == null
+              ? Center(child: Text(l10n.noPhotosYet))
+              : GridView.builder(
+                  padding: const EdgeInsets.all(12),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    childAspectRatio: 0.85,
+                  ),
+                  itemCount: events.length,
+                  itemBuilder: (context, index) {
+                    final event = events[index];
+                    final date = MaterialLocalizations.of(context)
+                        .formatMediumDate(event.at);
+                    return GlassPanel(
+                      radius: 14,
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.vertical(
+                                top: Radius.circular(14),
+                              ),
+                              child: Image.file(
+                                File('${folder.path}/${event.photoName}'),
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(6),
+                            child: Text(
+                              date,
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+        ),
+      ),
+    );
+  }
+}
