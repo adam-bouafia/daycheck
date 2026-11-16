@@ -26,10 +26,11 @@ each gets their own home with its own tabs:
 
 | Staff (daycare) | Parent (family) |
 | --- | --- |
-| **Children**: attendance count (present, not arrived, picked up) and every child; tap to check in or out and post notes, photos and PDFs | **Today**: where their child is right now (dropped off at 08:12 by ...), today's hours, and everything staff shared today |
+| **Children**: attendance count (present, not arrived, picked up, absent) and every child; tap to check in or out, mark absent, take a photo, post notes and PDFs | **Today**: where their child is right now (dropped off at 08:12 by ...), today's hours, and everything staff shared today |
 | **Log**: every check-in, check-out and note today | **Photos**: all photos of their children |
 | **Requests**: approve or cancel, with a badge for pending ones | **Requests**: ask for leave or extra hours |
-| **Notifications** | **Notifications**, only about their own children |
+| **Documents** | **Documents** |
+| **Inbox**: new requests | **Inbox**: arrival, pick-up, absence, notes and request decisions, only about their own children |
 
 Notes are signed with the staff member who posted them, so parents see
 "Note by Sara Bakker".
@@ -51,6 +52,18 @@ departed. The status is never stored. It is derived each time from the
 log of check-in and check-out events, so the status and the log cannot
 disagree.
 
+## Absent
+
+When a child does not come, staff tap **Mark absent** and can add a
+reason ("sick, fever"). The status becomes Absent until the child is
+checked in after all.
+
+Every guardian of the child is notified on arrival, pick-up and absence,
+each on their own account. Separated parents both know whether their
+child is at the daycare, whoever dropped them off. Before arrival, the
+parent's Today card says "Expected at 07:00, not checked in yet" once the
+scheduled time has passed.
+
 ## Check in and check out
 
 Staff pick who dropped the child off or picked them up from the child's
@@ -67,6 +80,27 @@ Staff post what a child did today. A note can carry:
 
 Parents see the note in their child's feed. A PDF opens in the phone's
 own viewer, or can be shared or saved through the share sheet.
+
+## Taking photos
+
+**Take photo** on a child's screen opens the camera at once; the caption
+can be typed afterwards, and a photo can go out without one. The add-note
+sheet also has **Choose photo** for the gallery. A photo is only shown to
+the parents of the child it was posted for.
+
+## Documents
+
+A Documents tab, on both homes, lists what the daycare shares with every
+family. The demo ships three mock PDFs with fictional content, built by
+`tool/make_demo_pdfs.py`:
+
+- Newsletter November 2026 (2 pages)
+- Weekly menu, week 47
+- Permission form: petting zoo visit
+
+Each one can be **opened** in the phone's PDF viewer, **downloaded**
+through the system save dialog (so the app needs no storage permission),
+or **shared**. PDFs attached to notes in the feed have the same buttons.
 
 ## Photo viewer
 
@@ -93,6 +127,8 @@ in-app notification list:
 - the bell in the roster shows the unread count;
 - the list keeps every entry on the device, so swiping away a pop-up
   loses nothing;
+- tap an entry to open what it is about: a request opens the request
+  list, a child update opens that child;
 - mark one or all as read;
 - parents only see entries about their own children.
 

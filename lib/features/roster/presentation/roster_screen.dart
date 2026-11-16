@@ -107,6 +107,7 @@ class _Summary extends StatelessWidget {
               scheme.onSurfaceVariant,
             ),
             cell(DayStatus.departed, l10n.statusDeparted, scheme.tertiary),
+            cell(DayStatus.absent, l10n.statusAbsent, scheme.error),
           ],
         ),
       ),

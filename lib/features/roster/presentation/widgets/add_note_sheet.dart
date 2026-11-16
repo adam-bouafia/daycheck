@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:daycheck/core/localization/app_locale.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
 import 'package:file_picker/file_picker.dart';
@@ -6,19 +8,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
-Future<void> openAddNoteSheet(BuildContext context, String childId) async {
+/// [startWithCamera] opens the camera as soon as the sheet appears, for
+/// the "Take photo" button: staff are usually holding the phone up
+/// already, and the caption can be typed after.
+Future<void> openAddNoteSheet(
+  BuildContext context,
+  String childId, {
+  bool startWithCamera = false,
+}) async {
   await showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
     showDragHandle: true,
-    builder: (_) => _AddNoteSheet(childId: childId),
+    builder: (_) =>
+        _AddNoteSheet(childId: childId, startWithCamera: startWithCamera),
   );
 }
 
 class _AddNoteSheet extends ConsumerStatefulWidget {
-  const _AddNoteSheet({required this.childId});
+  const _AddNoteSheet({required this.childId, this.startWithCamera = false});
 
   final String childId;
+  final bool startWithCamera;
 
   @override
   ConsumerState<_AddNoteSheet> createState() => _AddNoteSheetState();
@@ -30,14 +41,24 @@ class _AddNoteSheetState extends ConsumerState<_AddNoteSheet> {
   String? _attachmentPath;
 
   @override
+  void initState() {
+    super.initState();
+    if (widget.startWithCamera) {
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => _pickPhoto(ImageSource.camera),
+      );
+    }
+  }
+
+  @override
   void dispose() {
     _note.dispose();
     super.dispose();
   }
 
-  Future<void> _pickPhoto() async {
+  Future<void> _pickPhoto(ImageSource source) async {
     final picked = await ImagePicker().pickImage(
-      source: ImageSource.gallery,
+      source: source,
       maxWidth: 1600,
       imageQuality: 85,
     );
@@ -55,7 +76,8 @@ class _AddNoteSheetState extends ConsumerState<_AddNoteSheet> {
 
   Future<void> _save() async {
     final text = _note.text.trim();
-    if (text.isEmpty) return;
+    // A photo can go out on its own; a note needs words or a file.
+    if (text.isEmpty && _photoPath == null && _attachmentPath == null) return;
     await ref
         .read(rosterViewModelProvider.notifier)
         .addActivityNote(
@@ -104,11 +126,14 @@ class _AddNoteSheetState extends ConsumerState<_AddNoteSheet> {
               runSpacing: 8,
               children: [
                 OutlinedButton.icon(
-                  onPressed: _pickPhoto,
-                  icon: const Icon(Icons.add_a_photo_outlined),
-                  label: Text(
-                    _photoPath == null ? l10n.addPhoto : l10n.photoAdded,
-                  ),
+                  onPressed: () => _pickPhoto(ImageSource.camera),
+                  icon: const Icon(Icons.photo_camera_outlined),
+                  label: Text(l10n.takePhoto),
+                ),
+                OutlinedButton.icon(
+                  onPressed: () => _pickPhoto(ImageSource.gallery),
+                  icon: const Icon(Icons.photo_library_outlined),
+                  label: Text(l10n.choosePhoto),
                 ),
                 OutlinedButton.icon(
                   onPressed: _pickAttachment,
@@ -119,6 +144,23 @@ class _AddNoteSheetState extends ConsumerState<_AddNoteSheet> {
                 ),
               ],
             ),
+            if (_photoPath != null) ...[
+              const SizedBox(height: 12),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.file(
+                  File(_photoPath!),
+                  height: 140,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  cacheWidth: 600,
+                ),
+              ),
+            ],
+            if (_attachmentPath != null) ...[
+              const SizedBox(height: 8),
+              Text('${l10n.pdfAdded}: ${_attachmentPath!.split('/').last}'),
+            ],
             const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,

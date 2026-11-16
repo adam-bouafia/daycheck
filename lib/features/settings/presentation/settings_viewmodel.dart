@@ -35,6 +35,9 @@ class SettingsViewModel extends Notifier<AppSettings> {
   Future<void> setActivityPopups(bool on) =>
       _update(state.copyWith(activityPopups: on));
 
+  Future<void> setAttendancePopups(bool on) =>
+      _update(state.copyWith(attendancePopups: on));
+
   Future<void> setRequestPopups(bool on) =>
       _update(state.copyWith(requestPopups: on));
 

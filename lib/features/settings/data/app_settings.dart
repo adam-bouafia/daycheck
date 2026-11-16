@@ -20,6 +20,7 @@ class AppSettings {
     this.themeMode = ThemeMode.system,
     this.languageCode,
     this.activityPopups = true,
+    this.attendancePopups = true,
     this.requestPopups = true,
     this.reduceEffects = false,
   });
@@ -32,6 +33,9 @@ class AppSettings {
   /// Whether a new activity note also shows a pop-up on the phone. The
   /// in-app notification list gets the entry either way.
   final bool activityPopups;
+
+  /// Check-in, pick-up and absent.
+  final bool attendancePopups;
   final bool requestPopups;
 
   /// Solid panels instead of blurred glass: the blur is the most
@@ -42,12 +46,14 @@ class AppSettings {
     ThemeMode? themeMode,
     String? Function()? languageCode,
     bool? activityPopups,
+    bool? attendancePopups,
     bool? requestPopups,
     bool? reduceEffects,
   }) => AppSettings(
     themeMode: themeMode ?? this.themeMode,
     languageCode: languageCode != null ? languageCode() : this.languageCode,
     activityPopups: activityPopups ?? this.activityPopups,
+    attendancePopups: attendancePopups ?? this.attendancePopups,
     requestPopups: requestPopups ?? this.requestPopups,
     reduceEffects: reduceEffects ?? this.reduceEffects,
   );
@@ -56,6 +62,7 @@ class AppSettings {
     'themeMode': themeMode.name,
     'languageCode': languageCode,
     'activityPopups': activityPopups,
+    'attendancePopups': attendancePopups,
     'requestPopups': requestPopups,
     'reduceEffects': reduceEffects,
   };
@@ -67,6 +74,7 @@ class AppSettings {
     ),
     languageCode: json['languageCode'] as String?,
     activityPopups: json['activityPopups'] as bool? ?? true,
+    attendancePopups: json['attendancePopups'] as bool? ?? true,
     requestPopups: json['requestPopups'] as bool? ?? true,
     reduceEffects: json['reduceEffects'] as bool? ?? false,
   );

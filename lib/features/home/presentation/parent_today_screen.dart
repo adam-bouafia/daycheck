@@ -108,10 +108,17 @@ class _StatusCard extends ConsumerWidget {
         scheme.tertiary,
         Icons.directions_walk,
       ),
+      DayStatus.absent => (l10n.statusAbsent, scheme.error, Icons.event_busy),
     };
+    final expected =
+        schedule != null &&
+        schedule.isScheduledOn(today) &&
+        today.hour * 60 + today.minute > schedule.startMinutes;
     final detail = switch (last?.kind) {
       EventKind.checkIn => l10n.checkedInAtBy(clock(last!.at), last.by),
       EventKind.checkOut => l10n.checkedOutAtBy(clock(last!.at), last.by),
+      EventKind.absent => last!.note ?? l10n.markedAbsentBy(last.by),
+      _ when expected => l10n.expectedAt(minutes(schedule.startMinutes)),
       _ => l10n.notArrivedYet,
     };
 

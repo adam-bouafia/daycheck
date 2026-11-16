@@ -60,4 +60,16 @@ void main() {
     ]);
     expect(visibleInboxItems(items, true, {}), hasLength(3));
   });
+
+  test('staff do not see family news they caused themselves', () {
+    final at = DateTime(2026, 11, 16);
+    final items = [
+      InboxItem(id: 'a', title: 'Arrived', body: '', at: at, forStaff: false),
+      InboxItem(id: 'b', title: 'New request', body: '', at: at),
+    ];
+
+    expect(visibleInboxItems(items, true, {}).map((i) => i.title), [
+      'New request',
+    ]);
+  });
 }

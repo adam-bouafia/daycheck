@@ -41,6 +41,10 @@ class DailyLogScreen extends ConsumerWidget {
                         Icons.logout,
                         l10n.checkedOutBy(event.by),
                       ),
+                      EventKind.absent => (
+                        Icons.event_busy,
+                        l10n.markedAbsentBy(event.by),
+                      ),
                       EventKind.activityNote => (
                         Icons.edit_note,
                         l10n.noteBy(event.by),

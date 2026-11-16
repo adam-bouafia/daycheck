@@ -675,6 +675,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Signed in as {name}'**
   String signedInAs(String name);
+
+  /// No description provided for @statusAbsent.
+  ///
+  /// In en, this message translates to:
+  /// **'Absent'**
+  String get statusAbsent;
+
+  /// No description provided for @markAbsent.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark absent'**
+  String get markAbsent;
+
+  /// No description provided for @markAbsentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark {name} absent today'**
+  String markAbsentTitle(String name);
+
+  /// No description provided for @absentReasonHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason, for example sick (optional)'**
+  String get absentReasonHint;
+
+  /// No description provided for @absentInformsGuardians.
+  ///
+  /// In en, this message translates to:
+  /// **'Every parent of this child gets a notification.'**
+  String get absentInformsGuardians;
+
+  /// No description provided for @markedAbsentBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Marked absent by {name}'**
+  String markedAbsentBy(String name);
+
+  /// No description provided for @absentNotificationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is absent today'**
+  String absentNotificationTitle(String name);
+
+  /// No description provided for @checkedInNotificationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} has arrived'**
+  String checkedInNotificationTitle(String name);
+
+  /// No description provided for @checkedOutNotificationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} has been picked up'**
+  String checkedOutNotificationTitle(String name);
+
+  /// No description provided for @expectedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Expected at {time}, not checked in yet'**
+  String expectedAt(String time);
+
+  /// No description provided for @attendancePopupsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Pop-ups for arrival, pick-up and absence'**
+  String get attendancePopupsLabel;
+
+  /// No description provided for @takePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Take photo'**
+  String get takePhoto;
+
+  /// No description provided for @choosePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose photo'**
+  String get choosePhoto;
+
+  /// No description provided for @documentsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Documents'**
+  String get documentsTitle;
+
+  /// No description provided for @downloadPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Download'**
+  String get downloadPdf;
+
+  /// No description provided for @savedToDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get savedToDevice;
+
+  /// No description provided for @pagesCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 page} other{{count} pages}}'**
+  String pagesCount(int count);
+
+  /// No description provided for @tabInbox.
+  ///
+  /// In en, this message translates to:
+  /// **'Inbox'**
+  String get tabInbox;
 }
 
 class _AppLocalizationsDelegate

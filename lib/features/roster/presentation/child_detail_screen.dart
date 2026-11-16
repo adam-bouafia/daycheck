@@ -5,6 +5,7 @@ import 'package:daycheck/features/roster/data/day_status.dart';
 import 'package:daycheck/features/roster/presentation/calendar_screen.dart';
 import 'package:daycheck/features/roster/presentation/photo_gallery_screen.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
+import 'package:daycheck/features/roster/presentation/widgets/absent_sheet.dart';
 import 'package:daycheck/features/roster/presentation/widgets/add_note_sheet.dart';
 import 'package:daycheck/features/roster/presentation/widgets/check_sheet.dart';
 import 'package:daycheck/features/roster/presentation/widgets/event_tile.dart';
@@ -30,6 +31,7 @@ class ChildDetailScreen extends ConsumerWidget {
       DayStatus.notArrived => (l10n.statusNotArrived, scheme.onSurfaceVariant),
       DayStatus.present => (l10n.statusPresent, scheme.primary),
       DayStatus.departed => (l10n.statusDeparted, scheme.tertiary),
+      DayStatus.absent => (l10n.statusAbsent, scheme.error),
     };
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -95,36 +97,60 @@ class ChildDetailScreen extends ConsumerWidget {
                   ),
                 ],
               ),
-              ...[
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        onPressed: () => openCheckSheet(context, child, status),
-                        icon: Icon(
-                          status == DayStatus.present
-                              ? Icons.logout
-                              : Icons.login,
-                        ),
-                        label: Text(
-                          status == DayStatus.present
-                              ? l10n.checkOut
-                              : l10n.checkIn,
-                        ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: () => openCheckSheet(context, child, status),
+                      icon: Icon(
+                        status == DayStatus.present
+                            ? Icons.logout
+                            : Icons.login,
+                      ),
+                      label: Text(
+                        status == DayStatus.present
+                            ? l10n.checkOut
+                            : l10n.checkIn,
                       ),
                     ),
+                  ),
+                  if (status == DayStatus.notArrived) ...[
                     const SizedBox(width: 12),
                     Expanded(
-                      child: FilledButton.tonalIcon(
-                        onPressed: () => openAddNoteSheet(context, child.id),
-                        icon: const Icon(Icons.edit_note),
-                        label: Text(l10n.addNote),
+                      child: OutlinedButton.icon(
+                        onPressed: () => openAbsentSheet(context, child),
+                        icon: const Icon(Icons.event_busy_outlined),
+                        label: Text(l10n.markAbsent),
                       ),
                     ),
                   ],
-                ),
-              ],
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(
+                    child: FilledButton.icon(
+                      onPressed: () => openAddNoteSheet(
+                        context,
+                        child.id,
+                        startWithCamera: true,
+                      ),
+                      icon: const Icon(Icons.photo_camera_outlined),
+                      label: Text(l10n.takePhoto),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: FilledButton.tonalIcon(
+                      onPressed: () => openAddNoteSheet(context, child.id),
+                      icon: const Icon(Icons.edit_note),
+                      label: Text(l10n.addNote),
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox(height: 20),
               Text(
                 l10n.todaysActivity,

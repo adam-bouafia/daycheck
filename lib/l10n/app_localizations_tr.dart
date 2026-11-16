@@ -343,4 +343,80 @@ class AppLocalizationsTr extends AppLocalizations {
   String signedInAs(String name) {
     return '$name olarak giriş yapıldı';
   }
+
+  @override
+  String get statusAbsent => 'Yok';
+
+  @override
+  String get markAbsent => 'Gelmedi olarak işaretle';
+
+  @override
+  String markAbsentTitle(String name) {
+    return '$name bugün gelmedi olarak işaretle';
+  }
+
+  @override
+  String get absentReasonHint => 'Neden, örneğin hasta (isteğe bağlı)';
+
+  @override
+  String get absentInformsGuardians =>
+      'Bu çocuğun her velisine bildirim gider.';
+
+  @override
+  String markedAbsentBy(String name) {
+    return 'Gelmedi olarak işaretleyen: $name';
+  }
+
+  @override
+  String absentNotificationTitle(String name) {
+    return '$name bugün gelmiyor';
+  }
+
+  @override
+  String checkedInNotificationTitle(String name) {
+    return '$name geldi';
+  }
+
+  @override
+  String checkedOutNotificationTitle(String name) {
+    return '$name alındı';
+  }
+
+  @override
+  String expectedAt(String time) {
+    return 'Saat $time bekleniyor, henüz giriş yapılmadı';
+  }
+
+  @override
+  String get attendancePopupsLabel =>
+      'Geliş, alınma ve devamsızlık için açılır bildirim';
+
+  @override
+  String get takePhoto => 'Fotoğraf çek';
+
+  @override
+  String get choosePhoto => 'Fotoğraf seç';
+
+  @override
+  String get documentsTitle => 'Belgeler';
+
+  @override
+  String get downloadPdf => 'İndir';
+
+  @override
+  String get savedToDevice => 'Kaydedildi';
+
+  @override
+  String pagesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count sayfa',
+      one: '1 sayfa',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get tabInbox => 'Bildirim';
 }

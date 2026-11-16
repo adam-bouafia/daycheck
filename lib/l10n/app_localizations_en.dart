@@ -343,4 +343,80 @@ class AppLocalizationsEn extends AppLocalizations {
   String signedInAs(String name) {
     return 'Signed in as $name';
   }
+
+  @override
+  String get statusAbsent => 'Absent';
+
+  @override
+  String get markAbsent => 'Mark absent';
+
+  @override
+  String markAbsentTitle(String name) {
+    return 'Mark $name absent today';
+  }
+
+  @override
+  String get absentReasonHint => 'Reason, for example sick (optional)';
+
+  @override
+  String get absentInformsGuardians =>
+      'Every parent of this child gets a notification.';
+
+  @override
+  String markedAbsentBy(String name) {
+    return 'Marked absent by $name';
+  }
+
+  @override
+  String absentNotificationTitle(String name) {
+    return '$name is absent today';
+  }
+
+  @override
+  String checkedInNotificationTitle(String name) {
+    return '$name has arrived';
+  }
+
+  @override
+  String checkedOutNotificationTitle(String name) {
+    return '$name has been picked up';
+  }
+
+  @override
+  String expectedAt(String time) {
+    return 'Expected at $time, not checked in yet';
+  }
+
+  @override
+  String get attendancePopupsLabel =>
+      'Pop-ups for arrival, pick-up and absence';
+
+  @override
+  String get takePhoto => 'Take photo';
+
+  @override
+  String get choosePhoto => 'Choose photo';
+
+  @override
+  String get documentsTitle => 'Documents';
+
+  @override
+  String get downloadPdf => 'Download';
+
+  @override
+  String get savedToDevice => 'Saved';
+
+  @override
+  String pagesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pages',
+      one: '1 page',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get tabInbox => 'Inbox';
 }

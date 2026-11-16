@@ -32,7 +32,7 @@ class PhotoGalleryScreen extends ConsumerWidget {
     final roster = ref.watch(rosterViewModelProvider);
     final events = [
       for (final c in children)
-        ...roster.eventsOf(c.id).where((e) => e.photoName != null),
+        ...roster.allEventsOf(c.id).where((e) => e.photoName != null),
     ]..sort((a, b) => b.at.compareTo(a.at));
     final title = children.length == 1
         ? '${l10n.photosTitle} · ${children.single.name}'

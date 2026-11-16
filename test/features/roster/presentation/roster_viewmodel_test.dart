@@ -2,6 +2,7 @@ import 'package:daycheck/features/settings/presentation/settings_viewmodel.dart'
 
 import '../../settings/fake_settings_repository.dart';
 
+import 'package:daycheck/features/inbox/data/inbox_item.dart';
 import 'package:daycheck/features/inbox/presentation/inbox_viewmodel.dart';
 import 'package:daycheck/features/roster/data/day_status.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
@@ -83,6 +84,39 @@ void main() {
     expect(notifications.sent.single.$2, 'Played outside');
     expect(inbox.items, hasLength(1));
     expect(inbox.items.single.childId, '1');
+  });
+
+  test(
+    'a check-in tells the family, not staff, and links to the child',
+    () async {
+      container.read(rosterViewModelProvider);
+      await Future<void>.delayed(Duration.zero);
+
+      await container
+          .read(rosterViewModelProvider.notifier)
+          .checkIn('1', 'Sanne de Vries');
+
+      final item = inbox.items.single;
+      expect(item.title, 'Mila de Vries has arrived');
+      expect(item.childId, '1');
+      expect(item.forStaff, isFalse);
+      expect(item.link, InboxLink.child);
+      expect(notifications.sent, hasLength(1));
+    },
+  );
+
+  test('marking absent sets the status and sends the reason', () async {
+    container.read(rosterViewModelProvider);
+    await Future<void>.delayed(Duration.zero);
+
+    await container
+        .read(rosterViewModelProvider.notifier)
+        .markAbsent('1', 'Sara Bakker', reason: 'Fever since last night');
+
+    final state = container.read(rosterViewModelProvider);
+    expect(state.statusOf('1'), DayStatus.absent);
+    expect(inbox.items.single.title, 'Mila de Vries is absent today');
+    expect(inbox.items.single.body, 'Fever since last night');
   });
 
   test('with activity pop-ups off, the note still reaches the inbox', () async {

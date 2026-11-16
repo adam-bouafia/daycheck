@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:daycheck/core/files/pdf_actions.dart';
 import 'package:daycheck/core/localization/app_locale.dart';
 import 'package:daycheck/core/widgets/glass.dart';
 import 'package:daycheck/features/roster/data/day_event.dart';
@@ -7,8 +8,6 @@ import 'package:daycheck/features/roster/presentation/photo_viewer_screen.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:open_filex/open_filex.dart';
-import 'package:share_plus/share_plus.dart';
 
 /// One row of a child's day: a check-in, check-out or activity note, with
 /// its photo (tap for the viewer) and PDF (open or share).
@@ -26,6 +25,7 @@ class EventTile extends StatelessWidget {
     final (icon, title) = switch (event.kind) {
       EventKind.checkIn => (Icons.login, l10n.checkedInBy(event.by)),
       EventKind.checkOut => (Icons.logout, l10n.checkedOutBy(event.by)),
+      EventKind.absent => (Icons.event_busy, l10n.markedAbsentBy(event.by)),
       EventKind.activityNote => (Icons.edit_note, l10n.noteBy(event.by)),
     };
     final photoName = event.photoName;
@@ -92,27 +92,8 @@ class _EventAttachment extends ConsumerWidget {
           Icon(Icons.picture_as_pdf_outlined, color: scheme.error),
           const SizedBox(width: 8),
           Expanded(child: Text(l10n.attachmentLabel)),
-          if (folder != null) ...[
-            IconButton(
-              tooltip: l10n.openAttachment,
-              icon: const Icon(Icons.open_in_new),
-              onPressed: () async {
-                final result = await OpenFilex.open('${folder.path}/$name');
-                if (result.type != ResultType.done && context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(l10n.couldNotOpenAttachment)),
-                  );
-                }
-              },
-            ),
-            IconButton(
-              tooltip: l10n.shareAttachment,
-              icon: const Icon(Icons.ios_share),
-              onPressed: () => SharePlus.instance.share(
-                ShareParams(files: [XFile('${folder.path}/$name')]),
-              ),
-            ),
-          ],
+          if (folder != null)
+            PdfActions(path: '${folder.path}/$name', fileName: name),
         ],
       ),
     );

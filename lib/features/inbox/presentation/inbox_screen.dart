@@ -6,6 +6,9 @@ import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
 import 'package:daycheck/features/session/data/role.dart';
 import 'package:daycheck/features/session/presentation/session_viewmodel.dart';
 import 'package:daycheck/core/widgets/settings_button.dart';
+import 'package:daycheck/features/home/presentation/parent_today_screen.dart';
+import 'package:daycheck/features/requests/presentation/requests_screen.dart';
+import 'package:daycheck/features/roster/presentation/child_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,13 +19,35 @@ List<InboxItem> visibleInboxItems(
   bool isStaff,
   Set<String> myChildIds,
 ) => isStaff
-    ? items
+    ? items.where((i) => i.forStaff).toList()
     : items
           .where((i) => i.childId == null || myChildIds.contains(i.childId))
           .toList();
 
 class InboxScreen extends ConsumerWidget {
   const InboxScreen({super.key});
+
+  /// Marks the item read and opens what it is about: the request list
+  /// for a request, the child (staff) or that child's day (parent).
+  void _open(BuildContext context, WidgetRef ref, InboxItem item, bool staff) {
+    ref.read(inboxViewModelProvider.notifier).markRead(item.id);
+    final child = ref
+        .read(rosterViewModelProvider)
+        .children
+        .where((c) => c.id == item.childId)
+        .firstOrNull;
+    final Widget? target = switch (item.link) {
+      InboxLink.request => const RequestsScreen(),
+      InboxLink.child when child != null =>
+        staff
+            ? ChildDetailScreen(child: child)
+            : ParentTodayScreen(children: [child]),
+      _ => null,
+    };
+    if (target != null) {
+      Navigator.push(context, MaterialPageRoute(builder: (_) => target));
+    }
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -71,11 +96,7 @@ class InboxScreen extends ConsumerWidget {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 10),
                       child: GlassPanel(
-                        onTap: item.read
-                            ? null
-                            : () => ref
-                                  .read(inboxViewModelProvider.notifier)
-                                  .markRead(item.id),
+                        onTap: () => _open(context, ref, item, isStaff),
                         child: Padding(
                           padding: const EdgeInsets.all(14),
                           child: Row(
@@ -111,6 +132,8 @@ class InboxScreen extends ConsumerWidget {
                               Text(
                                 '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}',
                               ),
+                              if (item.link != InboxLink.none)
+                                const Icon(Icons.chevron_right),
                             ],
                           ),
                         ),

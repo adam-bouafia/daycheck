@@ -32,6 +32,7 @@ class ChildTile extends StatelessWidget {
       DayStatus.present => l10n.checkedInAtBy(time, event.by),
       DayStatus.departed => l10n.checkedOutAtBy(time, event.by),
       DayStatus.notArrived => l10n.notArrivedYet,
+      DayStatus.absent => event.note ?? l10n.markedAbsentBy(event.by),
     };
   }
 
@@ -43,6 +44,7 @@ class ChildTile extends StatelessWidget {
       DayStatus.notArrived => (l10n.statusNotArrived, scheme.onSurfaceVariant),
       DayStatus.present => (l10n.statusPresent, scheme.primary),
       DayStatus.departed => (l10n.statusDeparted, scheme.tertiary),
+      DayStatus.absent => (l10n.statusAbsent, scheme.error),
     };
     final attendanceLine = _attendanceLine(l10n);
     return GlassPanel(

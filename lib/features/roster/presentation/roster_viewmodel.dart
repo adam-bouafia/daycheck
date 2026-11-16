@@ -2,13 +2,16 @@ import 'dart:io';
 
 import 'package:daycheck/core/localization/app_locale.dart';
 import 'package:daycheck/core/notifications/notification_service.dart';
+import 'package:daycheck/features/inbox/data/inbox_item.dart';
 import 'package:daycheck/features/inbox/presentation/inbox_viewmodel.dart';
 import 'package:daycheck/features/roster/data/child.dart';
 import 'package:daycheck/features/roster/data/day_event.dart';
 import 'package:daycheck/features/roster/data/day_status.dart';
 import 'package:daycheck/features/roster/data/roster_repository.dart';
 import 'package:daycheck/features/roster/data/schedule.dart';
+import 'package:daycheck/features/settings/data/app_settings.dart';
 import 'package:daycheck/features/settings/presentation/settings_viewmodel.dart';
+import 'package:daycheck/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// DI seam: tests override this with a fake repository instead of the real
@@ -49,6 +52,9 @@ class RosterState {
   /// Every event for this child today, newest first.
   List<DayEvent> eventsOf(String childId) => eventsFor(childId, events);
 
+  /// Every event for this child on any day, for the photo gallery.
+  List<DayEvent> allEventsOf(String childId) => allEventsFor(childId, events);
+
   /// Only this child's check-in/out events, newest first.
   List<DayEvent> attendanceOf(String childId) => attendanceFor(childId, events);
 
@@ -80,23 +86,94 @@ class RosterViewModel extends Notifier<RosterState> {
     );
   }
 
-  Future<void> checkIn(String childId, String by) => _record(
-    DayEvent(
-      childId: childId,
-      at: DateTime.now(),
-      kind: EventKind.checkIn,
-      by: by,
-    ),
-  );
+  Future<void> checkIn(String childId, String by) async {
+    await _record(
+      DayEvent(
+        childId: childId,
+        at: DateTime.now(),
+        kind: EventKind.checkIn,
+        by: by,
+      ),
+    );
+    final l10n = _l10n;
+    await _notifyFamily(
+      childId,
+      l10n.checkedInNotificationTitle(_nameOf(childId)),
+      l10n.checkedInAtBy(_clock(DateTime.now()), by),
+      popup: _settings.attendancePopups,
+    );
+  }
 
-  Future<void> checkOut(String childId, String by) => _record(
-    DayEvent(
-      childId: childId,
-      at: DateTime.now(),
-      kind: EventKind.checkOut,
-      by: by,
-    ),
-  );
+  Future<void> checkOut(String childId, String by) async {
+    await _record(
+      DayEvent(
+        childId: childId,
+        at: DateTime.now(),
+        kind: EventKind.checkOut,
+        by: by,
+      ),
+    );
+    final l10n = _l10n;
+    await _notifyFamily(
+      childId,
+      l10n.checkedOutNotificationTitle(_nameOf(childId)),
+      l10n.checkedOutAtBy(_clock(DateTime.now()), by),
+      popup: _settings.attendancePopups,
+    );
+  }
+
+  /// Staff record that a child is not coming today. Every guardian is
+  /// told, so a parent who did not drop the child off still knows.
+  Future<void> markAbsent(String childId, String by, {String? reason}) async {
+    final text = reason?.trim();
+    await _record(
+      DayEvent(
+        childId: childId,
+        at: DateTime.now(),
+        kind: EventKind.absent,
+        by: by,
+        note: text == null || text.isEmpty ? null : text,
+      ),
+    );
+    final l10n = _l10n;
+    await _notifyFamily(
+      childId,
+      l10n.absentNotificationTitle(_nameOf(childId)),
+      text == null || text.isEmpty ? l10n.markedAbsentBy(by) : text,
+      popup: _settings.attendancePopups,
+    );
+  }
+
+  AppSettings get _settings => ref.read(settingsViewModelProvider);
+  AppLocalizations get _l10n => localizationsFor(_settings.languageCode);
+  String _nameOf(String childId) =>
+      state.children.firstWhere((c) => c.id == childId).name;
+  String _clock(DateTime t) =>
+      '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}';
+
+  /// One entry in the in-app list for the child's family (both parents
+  /// read it, on their own accounts), and a pop-up when switched on.
+  Future<void> _notifyFamily(
+    String childId,
+    String title,
+    String body, {
+    required bool popup,
+  }) async {
+    if (popup) {
+      await ref
+          .read(notificationServiceProvider)
+          .showActivityNotification(title, body);
+    }
+    await ref
+        .read(inboxViewModelProvider.notifier)
+        .add(
+          title,
+          body,
+          childId: childId,
+          forStaff: false,
+          link: InboxLink.child,
+        );
+  }
 
   /// [photoSourcePath] and [attachmentSourcePath] are paths on the device
   /// (from the image/file picker); each gets copied into the app's own
@@ -121,24 +198,17 @@ class RosterViewModel extends Notifier<RosterState> {
         at: DateTime.now(),
         kind: EventKind.activityNote,
         by: by,
-        note: note,
+        note: note.isEmpty ? null : note,
         photoName: photoName,
         attachmentName: attachmentName,
       ),
     );
-    final childName = state.children.firstWhere((c) => c.id == childId).name;
-    final l10n = localizationsFor(
-      ref.read(settingsViewModelProvider).languageCode,
+    await _notifyFamily(
+      childId,
+      _l10n.newActivityNotificationTitle(_nameOf(childId)),
+      note.isEmpty ? _l10n.photoAdded : note,
+      popup: _settings.activityPopups,
     );
-    final title = l10n.newActivityNotificationTitle(childName);
-    if (ref.read(settingsViewModelProvider).activityPopups) {
-      await ref
-          .read(notificationServiceProvider)
-          .showActivityNotification(title, note);
-    }
-    await ref
-        .read(inboxViewModelProvider.notifier)
-        .add(title, note, childId: childId);
   }
 
   Future<void> _record(DayEvent event) async {

@@ -1,4 +1,8 @@
+import 'package:daycheck/features/home/presentation/home_gate.dart';
+import 'package:daycheck/features/requests/data/leave_request.dart';
+import 'package:daycheck/features/requests/presentation/requests_viewmodel.dart';
 import 'package:daycheck/features/roster/data/day_event.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -134,5 +138,78 @@ void main() {
 
     expect(find.widgetWithText(FilledButton, 'Sign in'), findsOneWidget);
     expect(t.session.username, isNull);
+  });
+
+  testWidgets('staff marks a child absent; both separated parents see it', (
+    tester,
+  ) async {
+    await start(tester, 'sara');
+    await tester.tap(find.text('Mila de Vries'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Mark absent'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), 'Sick, fever');
+    await tester.tap(find.text('Mark absent').last);
+    await tester.pumpAndSettle();
+    expect(find.text('Absent'), findsOneWidget);
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+
+    for (final parent in ['sanne', 'tom']) {
+      await t.logOutIn(tester, parent);
+      expect(find.text('Absent'), findsOneWidget, reason: parent);
+      expect(find.text('Sick, fever'), findsWidgets, reason: parent);
+      await tester.tap(find.text('Inbox'));
+      await tester.pumpAndSettle();
+      expect(find.text('Mila de Vries is absent today'), findsOneWidget);
+    }
+
+    await t.logOutIn(tester, 'lotte');
+    await tester.tap(find.text('Inbox'));
+    await tester.pumpAndSettle();
+    expect(find.text('Mila de Vries is absent today'), findsNothing);
+  });
+
+  testWidgets('a request notification opens the requests for staff', (
+    tester,
+  ) async {
+    await start(tester, 'sara');
+    final container = ProviderScope.containerOf(
+      tester.element(find.byType(HomeGate)),
+    );
+    await container
+        .read(requestsViewModelProvider.notifier)
+        .submit(
+          '1',
+          RequestType.leave,
+          DateTime(2026, 12, 1),
+          requestedBy: 'Sanne de Vries',
+        );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Inbox'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Leave request for Mila de Vries'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Approve'), findsOneWidget);
+    expect(find.byType(BackButton), findsOneWidget);
+  });
+
+  testWidgets('both homes list the daycare documents', (tester) async {
+    for (final user in ['sara', 'amina']) {
+      await tester.pumpWidget(t.build());
+      await tester.pumpAndSettle();
+      if (find.byKey(const Key('username')).evaluate().isEmpty) {
+        await t.signOut(tester);
+      }
+      await t.logIn(tester, user, '${user}123');
+      await tester.tap(find.text('Documents'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Newsletter November 2026'), findsOneWidget);
+      expect(find.text('Weekly menu, week 47'), findsOneWidget);
+      expect(find.byIcon(Icons.download_outlined), findsNWidgets(3));
+    }
   });
 }

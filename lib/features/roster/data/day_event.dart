@@ -1,6 +1,7 @@
-enum EventKind { checkIn, checkOut, activityNote }
+enum EventKind { checkIn, checkOut, absent, activityNote }
 
-/// One thing that happened for a child today: a check-in, a check-out, or
+/// One thing that happened for a child: a check-in, a check-out, a
+/// staff member marking them absent (with the reason in [note]), or
 /// a staff activity note (with an optional photo and/or PDF attachment).
 /// The roster's status for a child is always derived from these events
 /// (see [statusFor]), never stored separately, so the log and the status

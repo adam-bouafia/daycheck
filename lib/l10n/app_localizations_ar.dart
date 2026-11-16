@@ -350,4 +350,82 @@ class AppLocalizationsAr extends AppLocalizations {
   String signedInAs(String name) {
     return 'تم تسجيل الدخول باسم $name';
   }
+
+  @override
+  String get statusAbsent => 'غائب';
+
+  @override
+  String get markAbsent => 'تسجيل غياب';
+
+  @override
+  String markAbsentTitle(String name) {
+    return 'تسجيل غياب $name اليوم';
+  }
+
+  @override
+  String get absentReasonHint => 'السبب، مثلًا مرض (اختياري)';
+
+  @override
+  String get absentInformsGuardians => 'يصل إشعار إلى كل ولي أمر لهذا الطفل.';
+
+  @override
+  String markedAbsentBy(String name) {
+    return 'سجّل الغياب: $name';
+  }
+
+  @override
+  String absentNotificationTitle(String name) {
+    return '$name غائب اليوم';
+  }
+
+  @override
+  String checkedInNotificationTitle(String name) {
+    return 'وصل $name';
+  }
+
+  @override
+  String checkedOutNotificationTitle(String name) {
+    return 'تم استلام $name';
+  }
+
+  @override
+  String expectedAt(String time) {
+    return 'متوقع الساعة $time، لم يصل بعد';
+  }
+
+  @override
+  String get attendancePopupsLabel => 'نوافذ منبثقة للوصول والاستلام والغياب';
+
+  @override
+  String get takePhoto => 'التقاط صورة';
+
+  @override
+  String get choosePhoto => 'اختيار صورة';
+
+  @override
+  String get documentsTitle => 'المستندات';
+
+  @override
+  String get downloadPdf => 'تنزيل';
+
+  @override
+  String get savedToDevice => 'تم الحفظ';
+
+  @override
+  String pagesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count صفحة',
+      many: '$count صفحة',
+      few: '$count صفحات',
+      two: 'صفحتان',
+      one: 'صفحة واحدة',
+      zero: 'لا صفحات',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get tabInbox => 'الإشعارات';
 }

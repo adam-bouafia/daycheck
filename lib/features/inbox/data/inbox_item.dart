@@ -1,3 +1,6 @@
+/// What tapping a notification opens.
+enum InboxLink { none, child, request }
+
 /// One entry in the in-app notification inbox: an activity note posted,
 /// or a request submitted/approved/cancelled. Unlike a plain OS
 /// notification popup, this is a real screen the user can come back to -
@@ -12,6 +15,8 @@ class InboxItem {
     required this.at,
     this.childId,
     this.read = false,
+    this.forStaff = true,
+    this.link = InboxLink.none,
   });
 
   final String id;
@@ -24,6 +29,11 @@ class InboxItem {
   final String? childId;
   final bool read;
 
+  /// False for news meant for a family (a check-in, a photo staff posted):
+  /// staff did that themselves and don't need telling.
+  final bool forStaff;
+  final InboxLink link;
+
   InboxItem copyWith({bool? read}) => InboxItem(
     id: id,
     title: title,
@@ -31,6 +41,8 @@ class InboxItem {
     at: at,
     childId: childId,
     read: read ?? this.read,
+    forStaff: forStaff,
+    link: link,
   );
 
   Map<String, Object?> toJson() => {
@@ -40,6 +52,8 @@ class InboxItem {
     'at': at.toIso8601String(),
     'childId': childId,
     'read': read,
+    'forStaff': forStaff,
+    'link': link.name,
   };
 
   factory InboxItem.fromJson(Map<String, dynamic> json) => InboxItem(
@@ -49,5 +63,7 @@ class InboxItem {
     at: DateTime.parse(json['at'] as String),
     childId: json['childId'] as String?,
     read: json['read'] as bool? ?? false,
+    forStaff: json['forStaff'] as bool? ?? true,
+    link: InboxLink.values.asNameMap()[json['link']] ?? InboxLink.none,
   );
 }

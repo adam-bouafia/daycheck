@@ -1,5 +1,6 @@
 import 'package:daycheck/core/localization/app_locale.dart';
 import 'package:daycheck/core/widgets/settings_button.dart';
+import 'package:daycheck/features/documents/presentation/documents_screen.dart';
 import 'package:daycheck/features/home/presentation/home_scaffold.dart';
 import 'package:daycheck/features/home/presentation/parent_today_screen.dart';
 import 'package:daycheck/features/inbox/presentation/inbox_screen.dart';
@@ -50,6 +51,12 @@ class ParentHomeScreen extends ConsumerWidget {
           ),
         ),
         HomeTab(
+          icon: Icons.description_outlined,
+          selectedIcon: Icons.description,
+          label: l10n.documentsTitle,
+          screen: const DocumentsScreen(),
+        ),
+        HomeTab(
           icon: Icons.event_note_outlined,
           selectedIcon: Icons.event_note,
           label: l10n.requestsTitle,
@@ -58,7 +65,7 @@ class ParentHomeScreen extends ConsumerWidget {
         HomeTab(
           icon: Icons.notifications_outlined,
           selectedIcon: Icons.notifications,
-          label: l10n.inboxTitle,
+          label: l10n.tabInbox,
           screen: const InboxScreen(),
           badge: unread,
         ),

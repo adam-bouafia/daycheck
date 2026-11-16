@@ -238,5 +238,72 @@
         "type": "String"
       }
     }
+  },
+  "statusAbsent": "Absent",
+  "markAbsent": "Mark absent",
+  "markAbsentTitle": "Mark {name} absent today",
+  "absentReasonHint": "Reason, for example sick (optional)",
+  "absentInformsGuardians": "Every parent of this child gets a notification.",
+  "markedAbsentBy": "Marked absent by {name}",
+  "absentNotificationTitle": "{name} is absent today",
+  "checkedInNotificationTitle": "{name} has arrived",
+  "checkedOutNotificationTitle": "{name} has been picked up",
+  "expectedAt": "Expected at {time}, not checked in yet",
+  "attendancePopupsLabel": "Pop-ups for arrival, pick-up and absence",
+  "takePhoto": "Take photo",
+  "choosePhoto": "Choose photo",
+  "documentsTitle": "Documents",
+  "downloadPdf": "Download",
+  "savedToDevice": "Saved",
+  "pagesCount": "{count, plural, one{1 page} other{{count} pages}}",
+  "tabInbox": "Inbox",
+  "@markAbsentTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@markedAbsentBy": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@absentNotificationTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@checkedInNotificationTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@checkedOutNotificationTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@expectedAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "@pagesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

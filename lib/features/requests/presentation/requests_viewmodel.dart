@@ -1,4 +1,5 @@
 import 'package:daycheck/core/localization/app_locale.dart';
+import 'package:daycheck/features/inbox/data/inbox_item.dart';
 import 'package:daycheck/features/inbox/presentation/inbox_viewmodel.dart';
 import 'package:daycheck/features/requests/data/leave_request.dart';
 import 'package:daycheck/features/requests/data/request_repository.dart';
@@ -57,7 +58,12 @@ class RequestsViewModel extends Notifier<List<LeaveRequest>> {
         _nameOf(childId),
       ),
     };
-    await _notify(title, l10n.requestedBy(requestedBy), childId);
+    await _notify(
+      title,
+      l10n.requestedBy(requestedBy),
+      childId,
+      forStaff: true,
+    );
   }
 
   Future<void> approve(String requestId) =>
@@ -92,10 +98,17 @@ class RequestsViewModel extends Notifier<List<LeaveRequest>> {
       ref.read(settingsViewModelProvider).languageCode,
     );
     final title = titleFor(l10n, _nameOf(request.childId));
-    await _notify(title, '', request.childId);
+    await _notify(title, '', request.childId, forStaff: false);
   }
 
-  Future<void> _notify(String title, String body, String childId) async {
+  /// A new request is for staff to act on; a decision is news for the
+  /// family, made by staff, so it stays out of the staff list.
+  Future<void> _notify(
+    String title,
+    String body,
+    String childId, {
+    required bool forStaff,
+  }) async {
     if (ref.read(settingsViewModelProvider).requestPopups) {
       await ref
           .read(notificationServiceProvider)
@@ -103,7 +116,13 @@ class RequestsViewModel extends Notifier<List<LeaveRequest>> {
     }
     await ref
         .read(inboxViewModelProvider.notifier)
-        .add(title, body, childId: childId);
+        .add(
+          title,
+          body,
+          childId: childId,
+          forStaff: forStaff,
+          link: InboxLink.request,
+        );
   }
 }
 

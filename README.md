@@ -14,10 +14,19 @@ Test accounts: `sara` / `sara123` (staff) and `amina` / `amina123`
 ## What it does
 
 - **Roster**: every child with today's status (not arrived, present,
-  departed), derived from the log of check-in/check-out events, never
+  picked up, absent), derived from the log of check-in/check-out events, never
   stored separately.
 - **Check in / check out**: records who dropped the child off or picked
   them up, and when.
+- **Take photo**: staff open the camera straight from a child's screen;
+  the photo goes only to that child's own parents.
+- **Absent**: staff mark a child absent with a reason. Every guardian is
+  notified on arrival, pick-up and absence, so separated parents on two
+  accounts both know where their child is. Before the child arrives, the
+  parent screen says "Expected at 07:00, not checked in yet".
+- **Documents**: a newsletter, a weekly menu and a permission form
+  (mock PDFs) to open in the phone's viewer, download through the save
+  dialog, or share. PDFs in the feed get the same three buttons.
 - **Activity notes**: staff post what a child did, with an optional photo
   (the note is its caption) and an optional PDF (a form, a menu, a
   newsletter). Parents open the PDF in their own viewer or share it.
@@ -125,7 +134,7 @@ flutter run
 flutter test
 ```
 
-49 tests: login (wrong password, saved session), the status and schedule rules as pure logic, every ViewModel
+57 tests: login (wrong password, saved session), the status and schedule rules as pure logic, every ViewModel
 with fake repositories (check-in/out, notes with photos and PDFs,
 requests, inbox, settings), the pop-up switches, language fallback,
 widget tests that log in as staff and as a parent and drive each home, and rendering in Dutch,

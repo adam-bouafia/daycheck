@@ -1,3 +1,5 @@
+import 'package:daycheck/features/documents/data/daycare_document.dart';
+import 'package:daycheck/features/documents/presentation/documents_screen.dart';
 import 'package:daycheck/features/home/presentation/home_gate.dart';
 import 'package:daycheck/features/inbox/presentation/inbox_viewmodel.dart';
 import 'package:daycheck/features/requests/presentation/requests_viewmodel.dart';
@@ -16,6 +18,12 @@ import '../features/roster/support.dart';
 import '../features/session/fake_session_repository.dart';
 import '../features/settings/fake_settings_repository.dart';
 
+/// The real document list, without copying assets to disk.
+class FakeDocumentRepository extends DocumentRepository {
+  @override
+  Future<String> fileFor(DaycareDocument doc) async => '/tmp/${doc.fileName}';
+}
+
 /// The whole app from the login gate, with every repository faked.
 class TestApp {
   final roster = FakeRosterRepository();
@@ -31,6 +39,7 @@ class TestApp {
       requestRepositoryProvider.overrideWithValue(FakeRequestRepository()),
       settingsRepositoryProvider.overrideWithValue(FakeSettingsRepository()),
       sessionRepositoryProvider.overrideWithValue(session),
+      documentRepositoryProvider.overrideWithValue(FakeDocumentRepository()),
     ],
     child: MaterialApp(
       locale: locale,
@@ -45,5 +54,22 @@ class TestApp {
     await tester.enterText(find.byKey(const Key('password')), pass);
     await tester.tap(find.widgetWithText(FilledButton, 'Sign in'));
     await tester.pumpAndSettle();
+  }
+
+  Future<void> signOut(WidgetTester tester) async {
+    await tester.tap(find.byIcon(Icons.settings_outlined).hitTestable().first);
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+      find.text('Sign out'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.text('Sign out'));
+    await tester.pumpAndSettle();
+  }
+
+  Future<void> logOutIn(WidgetTester tester, String user) async {
+    await signOut(tester);
+    await logIn(tester, user, '${user}123');
   }
 }

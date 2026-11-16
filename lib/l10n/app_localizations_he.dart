@@ -345,4 +345,79 @@ class AppLocalizationsHe extends AppLocalizations {
   String signedInAs(String name) {
     return 'מחובר/ת בתור $name';
   }
+
+  @override
+  String get statusAbsent => 'נעדר';
+
+  @override
+  String get markAbsent => 'סימון היעדרות';
+
+  @override
+  String markAbsentTitle(String name) {
+    return 'סימון $name כנעדר היום';
+  }
+
+  @override
+  String get absentReasonHint => 'סיבה, למשל מחלה (לא חובה)';
+
+  @override
+  String get absentInformsGuardians => 'כל הורה של הילד יקבל התראה.';
+
+  @override
+  String markedAbsentBy(String name) {
+    return 'סומן כנעדר על ידי $name';
+  }
+
+  @override
+  String absentNotificationTitle(String name) {
+    return '$name נעדר היום';
+  }
+
+  @override
+  String checkedInNotificationTitle(String name) {
+    return '$name הגיע';
+  }
+
+  @override
+  String checkedOutNotificationTitle(String name) {
+    return '$name נאסף';
+  }
+
+  @override
+  String expectedAt(String time) {
+    return 'צפוי ב-$time, עדיין לא הגיע';
+  }
+
+  @override
+  String get attendancePopupsLabel => 'חלונות קופצים להגעה, איסוף והיעדרות';
+
+  @override
+  String get takePhoto => 'צילום תמונה';
+
+  @override
+  String get choosePhoto => 'בחירת תמונה';
+
+  @override
+  String get documentsTitle => 'מסמכים';
+
+  @override
+  String get downloadPdf => 'הורדה';
+
+  @override
+  String get savedToDevice => 'נשמר';
+
+  @override
+  String pagesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count עמודים',
+      two: 'שני עמודים',
+      one: 'עמוד אחד',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get tabInbox => 'התראות';
 }

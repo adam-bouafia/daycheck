@@ -24,13 +24,21 @@ class InboxViewModel extends Notifier<List<InboxItem>> {
     state = await _repo.loadItems();
   }
 
-  Future<void> add(String title, String body, {String? childId}) async {
+  Future<void> add(
+    String title,
+    String body, {
+    String? childId,
+    bool forStaff = true,
+    InboxLink link = InboxLink.none,
+  }) async {
     final item = InboxItem(
       id: DateTime.now().microsecondsSinceEpoch.toString(),
       title: title,
       body: body,
       at: DateTime.now(),
       childId: childId,
+      forStaff: forStaff,
+      link: link,
     );
     state = [item, ...state];
     await _repo.saveItems(state);

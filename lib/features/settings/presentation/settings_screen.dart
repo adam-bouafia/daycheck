@@ -98,6 +98,11 @@ class SettingsScreen extends ConsumerWidget {
                   title: Text(l10n.activityPopupsLabel),
                 ),
                 SwitchListTile(
+                  value: settings.attendancePopups,
+                  onChanged: vm.setAttendancePopups,
+                  title: Text(l10n.attendancePopupsLabel),
+                ),
+                SwitchListTile(
                   value: settings.requestPopups,
                   onChanged: vm.setRequestPopups,
                   title: Text(l10n.requestPopupsLabel),

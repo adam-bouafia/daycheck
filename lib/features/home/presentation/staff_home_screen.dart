@@ -1,4 +1,5 @@
 import 'package:daycheck/core/localization/app_locale.dart';
+import 'package:daycheck/features/documents/presentation/documents_screen.dart';
 import 'package:daycheck/features/home/presentation/home_scaffold.dart';
 import 'package:daycheck/features/inbox/presentation/inbox_screen.dart';
 import 'package:daycheck/features/inbox/presentation/inbox_viewmodel.dart';
@@ -44,9 +45,15 @@ class StaffHomeScreen extends ConsumerWidget {
           badge: pending,
         ),
         HomeTab(
+          icon: Icons.description_outlined,
+          selectedIcon: Icons.description,
+          label: l10n.documentsTitle,
+          screen: const DocumentsScreen(),
+        ),
+        HomeTab(
           icon: Icons.notifications_outlined,
           selectedIcon: Icons.notifications,
-          label: l10n.inboxTitle,
+          label: l10n.tabInbox,
           screen: const InboxScreen(),
           badge: unread.length,
         ),

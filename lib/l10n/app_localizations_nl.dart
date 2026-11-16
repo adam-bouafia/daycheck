@@ -343,4 +343,80 @@ class AppLocalizationsNl extends AppLocalizations {
   String signedInAs(String name) {
     return 'Ingelogd als $name';
   }
+
+  @override
+  String get statusAbsent => 'Afwezig';
+
+  @override
+  String get markAbsent => 'Afwezig melden';
+
+  @override
+  String markAbsentTitle(String name) {
+    return '$name vandaag afwezig melden';
+  }
+
+  @override
+  String get absentReasonHint => 'Reden, bijvoorbeeld ziek (optioneel)';
+
+  @override
+  String get absentInformsGuardians =>
+      'Elke ouder van dit kind krijgt een melding.';
+
+  @override
+  String markedAbsentBy(String name) {
+    return 'Afwezig gemeld door $name';
+  }
+
+  @override
+  String absentNotificationTitle(String name) {
+    return '$name is vandaag afwezig';
+  }
+
+  @override
+  String checkedInNotificationTitle(String name) {
+    return '$name is aangekomen';
+  }
+
+  @override
+  String checkedOutNotificationTitle(String name) {
+    return '$name is opgehaald';
+  }
+
+  @override
+  String expectedAt(String time) {
+    return 'Verwacht om $time, nog niet ingecheckt';
+  }
+
+  @override
+  String get attendancePopupsLabel =>
+      'Pop-ups voor aankomst, ophalen en afwezigheid';
+
+  @override
+  String get takePhoto => 'Foto maken';
+
+  @override
+  String get choosePhoto => 'Foto kiezen';
+
+  @override
+  String get documentsTitle => 'Documenten';
+
+  @override
+  String get downloadPdf => 'Downloaden';
+
+  @override
+  String get savedToDevice => 'Opgeslagen';
+
+  @override
+  String pagesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pagina\'s',
+      one: '1 pagina',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get tabInbox => 'Meldingen';
 }
