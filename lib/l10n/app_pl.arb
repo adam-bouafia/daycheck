@@ -111,5 +111,11 @@
   "downloadPdf": "Pobierz",
   "savedToDevice": "Zapisano",
   "pagesCount": "{count, plural, one{1 strona} few{{count} strony} many{{count} stron} other{{count} strony}}",
-  "tabInbox": "Alerty"
+  "tabInbox": "Alerty",
+  "undo": "Cofnij",
+  "correctionNotificationTitle": "Korekta: {name}",
+  "eventUndone": "Cofnięto: {what}",
+  "resetDemo": "Wyczyść dane demo",
+  "resetDemoHint": "Usuwa wszystkie przyjścia, notatki, wnioski i powiadomienia, aby zacząć czysty dzień. Dzieci i konta zostają.",
+  "resetDemoDone": "Dane demo wyczyszczone"
 }

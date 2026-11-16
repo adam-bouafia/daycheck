@@ -58,6 +58,12 @@ When a child does not come, staff tap **Mark absent** and can add a
 reason ("sick, fever"). The status becomes Absent until the child is
 checked in after all.
 
+Tapping the status chip on a child's screen ("Present", "Absent", ...)
+opens every change that makes sense from there: check in, check out,
+mark absent, or **Undo** the last one when it was a mistake. An undo
+notifies the family too, since they were told about the original.
+Staff can also **Reset demo data** in Settings to start a clean day.
+
 Every guardian of the child is notified on arrival, pick-up and absence,
 each on their own account. Separated parents both know whether their
 child is at the daycare, whoever dropped them off. Before arrival, the

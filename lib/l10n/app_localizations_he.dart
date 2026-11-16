@@ -420,4 +420,27 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get tabInbox => 'התראות';
+
+  @override
+  String get undo => 'ביטול פעולה';
+
+  @override
+  String correctionNotificationTitle(String name) {
+    return 'תיקון עבור $name';
+  }
+
+  @override
+  String eventUndone(String what) {
+    return 'בוטל: $what';
+  }
+
+  @override
+  String get resetDemo => 'איפוס נתוני הדגמה';
+
+  @override
+  String get resetDemoHint =>
+      'מוחק את כל רישומי ההגעה, ההערות, הבקשות וההתראות כדי להתחיל יום נקי. הילדים והחשבונות נשארים.';
+
+  @override
+  String get resetDemoDone => 'נתוני ההדגמה אופסו';
 }

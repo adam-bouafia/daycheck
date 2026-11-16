@@ -111,5 +111,11 @@
   "downloadPdf": "تنزيل",
   "savedToDevice": "تم الحفظ",
   "pagesCount": "{count, plural, zero{لا صفحات} one{صفحة واحدة} two{صفحتان} few{{count} صفحات} many{{count} صفحة} other{{count} صفحة}}",
-  "tabInbox": "الإشعارات"
+  "tabInbox": "الإشعارات",
+  "undo": "تراجع",
+  "correctionNotificationTitle": "تصحيح لـ {name}",
+  "eventUndone": "تم التراجع عن: {what}",
+  "resetDemo": "إعادة ضبط بيانات العرض",
+  "resetDemoHint": "يحذف كل تسجيلات الوصول والملاحظات والطلبات والإشعارات لبدء يوم جديد. يبقى الأطفال والحسابات.",
+  "resetDemoDone": "تمت إعادة ضبط بيانات العرض"
 }

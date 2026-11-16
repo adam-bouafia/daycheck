@@ -419,4 +419,27 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tabInbox => 'Inbox';
+
+  @override
+  String get undo => 'Undo';
+
+  @override
+  String correctionNotificationTitle(String name) {
+    return 'Correction for $name';
+  }
+
+  @override
+  String eventUndone(String what) {
+    return 'Taken back: $what';
+  }
+
+  @override
+  String get resetDemo => 'Reset demo data';
+
+  @override
+  String get resetDemoHint =>
+      'Removes every check-in, note, request and notification, so you can start a clean day. Children and accounts stay.';
+
+  @override
+  String get resetDemoDone => 'Demo data reset';
 }

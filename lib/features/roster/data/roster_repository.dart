@@ -91,6 +91,14 @@ class RosterRepository {
     );
   }
 
+  Future<void> saveEvents(List<DayEvent> events) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(
+      _eventsKey,
+      events.map((e) => jsonEncode(e.toJson())).toList(),
+    );
+  }
+
   Future<List<Schedule>> loadSchedules() async {
     final prefs = await SharedPreferences.getInstance();
     final raw = prefs.getStringList(_schedulesKey);

@@ -111,5 +111,11 @@
   "downloadPdf": "İndir",
   "savedToDevice": "Kaydedildi",
   "pagesCount": "{count, plural, one{1 sayfa} other{{count} sayfa}}",
-  "tabInbox": "Bildirim"
+  "tabInbox": "Bildirim",
+  "undo": "Geri al",
+  "correctionNotificationTitle": "{name} için düzeltme",
+  "eventUndone": "Geri alındı: {what}",
+  "resetDemo": "Demo verilerini sıfırla",
+  "resetDemoHint": "Temiz bir güne başlamak için tüm girişleri, notları, talepleri ve bildirimleri siler. Çocuklar ve hesaplar kalır.",
+  "resetDemoDone": "Demo verileri sıfırlandı"
 }

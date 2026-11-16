@@ -76,6 +76,12 @@ class RequestsViewModel extends Notifier<List<LeaveRequest>> {
         return l10n.requestCancelledNotificationTitle(name);
       });
 
+  /// Demo only.
+  Future<void> clearAll() async {
+    state = const [];
+    await _repo.saveRequests(state);
+  }
+
   String _nameOf(String childId) => ref
       .read(rosterViewModelProvider)
       .children

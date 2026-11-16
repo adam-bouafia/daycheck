@@ -111,5 +111,11 @@
   "downloadPdf": "Télécharger",
   "savedToDevice": "Enregistré",
   "pagesCount": "{count, plural, one{1 page} other{{count} pages}}",
-  "tabInbox": "Alertes"
+  "tabInbox": "Alertes",
+  "undo": "Annuler",
+  "correctionNotificationTitle": "Correction pour {name}",
+  "eventUndone": "Annulé : {what}",
+  "resetDemo": "Réinitialiser la démo",
+  "resetDemoHint": "Supprime les arrivées, notes, demandes et notifications pour repartir d'une journée vierge. Les enfants et les comptes restent.",
+  "resetDemoDone": "Démo réinitialisée"
 }

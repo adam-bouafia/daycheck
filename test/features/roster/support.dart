@@ -38,6 +38,9 @@ class FakeRosterRepository implements RosterRepository {
   Future<void> appendEvent(DayEvent event) async => events = [...events, event];
 
   @override
+  Future<void> saveEvents(List<DayEvent> value) async => events = value;
+
+  @override
   Future<String> addPhoto(String sourcePath) async {
     addedPhotos.add(sourcePath);
     return 'fake-photo.jpg';

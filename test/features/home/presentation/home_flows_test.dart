@@ -212,4 +212,66 @@ void main() {
       expect(find.byIcon(Icons.download_outlined), findsNWidgets(3));
     }
   });
+
+  testWidgets('tapping the status changes it, and undo takes it back', (
+    tester,
+  ) async {
+    await start(tester, 'sara');
+    await tester.tap(find.text('Mila de Vries'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Check in'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Check in').last);
+    await tester.pumpAndSettle();
+    expect(find.text('Present'), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('status-chip')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Mark absent').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Mark absent'));
+    await tester.pumpAndSettle();
+    expect(find.text('Absent'), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('status-chip')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Undo'));
+    await tester.pumpAndSettle();
+    expect(find.text('Present'), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('status-chip')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Undo'));
+    await tester.pumpAndSettle();
+    expect(find.text('Not arrived'), findsOneWidget);
+    expect(t.roster.events, isEmpty);
+  });
+
+  testWidgets('staff can reset the demo data from Settings', (tester) async {
+    t.roster.events = [
+      DayEvent(
+        childId: '1',
+        at: DateTime.now(),
+        kind: EventKind.checkIn,
+        by: 'Sanne de Vries',
+      ),
+    ];
+    await start(tester, 'sara');
+    // The summary label and Mila's tile.
+    expect(find.text('Present'), findsNWidgets(2));
+
+    await tester.tap(find.byIcon(Icons.settings_outlined).hitTestable().first);
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+      find.text('Reset demo data'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.text('Reset demo data'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Reset demo data'));
+    await tester.pumpAndSettle();
+
+    expect(t.roster.events, isEmpty);
+  });
 }

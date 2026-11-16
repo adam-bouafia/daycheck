@@ -52,6 +52,12 @@ class InboxViewModel extends Notifier<List<InboxItem>> {
     await _repo.saveItems(state);
   }
 
+  /// Demo only.
+  Future<void> clearAll() async {
+    state = const [];
+    await _repo.saveItems(state);
+  }
+
   Future<void> markAllRead() async {
     state = [for (final i in state) i.copyWith(read: true)];
     await _repo.saveItems(state);

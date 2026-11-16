@@ -783,6 +783,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Inbox'**
   String get tabInbox;
+
+  /// No description provided for @undo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get undo;
+
+  /// No description provided for @correctionNotificationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Correction for {name}'**
+  String correctionNotificationTitle(String name);
+
+  /// No description provided for @eventUndone.
+  ///
+  /// In en, this message translates to:
+  /// **'Taken back: {what}'**
+  String eventUndone(String what);
+
+  /// No description provided for @resetDemo.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset demo data'**
+  String get resetDemo;
+
+  /// No description provided for @resetDemoHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Removes every check-in, note, request and notification, so you can start a clean day. Children and accounts stay.'**
+  String get resetDemoHint;
+
+  /// No description provided for @resetDemoDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Demo data reset'**
+  String get resetDemoDone;
 }
 
 class _AppLocalizationsDelegate

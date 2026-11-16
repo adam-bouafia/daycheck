@@ -111,5 +111,11 @@
   "downloadPdf": "Herunterladen",
   "savedToDevice": "Gespeichert",
   "pagesCount": "{count, plural, one{1 Seite} other{{count} Seiten}}",
-  "tabInbox": "Hinweise"
+  "tabInbox": "Hinweise",
+  "undo": "Rückgängig",
+  "correctionNotificationTitle": "Korrektur für {name}",
+  "eventUndone": "Zurückgenommen: {what}",
+  "resetDemo": "Demodaten zurücksetzen",
+  "resetDemoHint": "Löscht alle Anmeldungen, Notizen, Anträge und Benachrichtigungen für einen sauberen Tag. Kinder und Konten bleiben.",
+  "resetDemoDone": "Demodaten zurückgesetzt"
 }

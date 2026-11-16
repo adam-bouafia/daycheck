@@ -420,4 +420,27 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tabInbox => 'Hinweise';
+
+  @override
+  String get undo => 'Rückgängig';
+
+  @override
+  String correctionNotificationTitle(String name) {
+    return 'Korrektur für $name';
+  }
+
+  @override
+  String eventUndone(String what) {
+    return 'Zurückgenommen: $what';
+  }
+
+  @override
+  String get resetDemo => 'Demodaten zurücksetzen';
+
+  @override
+  String get resetDemoHint =>
+      'Löscht alle Anmeldungen, Notizen, Anträge und Benachrichtigungen für einen sauberen Tag. Kinder und Konten bleiben.';
+
+  @override
+  String get resetDemoDone => 'Demodaten zurückgesetzt';
 }

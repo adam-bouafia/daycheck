@@ -111,5 +111,11 @@
   "downloadPdf": "Downloaden",
   "savedToDevice": "Opgeslagen",
   "pagesCount": "{count, plural, one{1 pagina} other{{count} pagina's}}",
-  "tabInbox": "Meldingen"
+  "tabInbox": "Meldingen",
+  "undo": "Ongedaan maken",
+  "correctionNotificationTitle": "Correctie voor {name}",
+  "eventUndone": "Teruggedraaid: {what}",
+  "resetDemo": "Demogegevens wissen",
+  "resetDemoHint": "Wist alle check-ins, notities, aanvragen en meldingen, zodat je met een schone dag begint. Kinderen en accounts blijven.",
+  "resetDemoDone": "Demogegevens gewist"
 }

@@ -419,4 +419,27 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get tabInbox => 'Bildirim';
+
+  @override
+  String get undo => 'Geri al';
+
+  @override
+  String correctionNotificationTitle(String name) {
+    return '$name için düzeltme';
+  }
+
+  @override
+  String eventUndone(String what) {
+    return 'Geri alındı: $what';
+  }
+
+  @override
+  String get resetDemo => 'Demo verilerini sıfırla';
+
+  @override
+  String get resetDemoHint =>
+      'Temiz bir güne başlamak için tüm girişleri, notları, talepleri ve bildirimleri siler. Çocuklar ve hesaplar kalır.';
+
+  @override
+  String get resetDemoDone => 'Demo verileri sıfırlandı';
 }

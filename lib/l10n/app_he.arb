@@ -111,5 +111,11 @@
   "downloadPdf": "הורדה",
   "savedToDevice": "נשמר",
   "pagesCount": "{count, plural, one{עמוד אחד} two{שני עמודים} other{{count} עמודים}}",
-  "tabInbox": "התראות"
+  "tabInbox": "התראות",
+  "undo": "ביטול פעולה",
+  "correctionNotificationTitle": "תיקון עבור {name}",
+  "eventUndone": "בוטל: {what}",
+  "resetDemo": "איפוס נתוני הדגמה",
+  "resetDemoHint": "מוחק את כל רישומי ההגעה, ההערות, הבקשות וההתראות כדי להתחיל יום נקי. הילדים והחשבונות נשארים.",
+  "resetDemoDone": "נתוני ההדגמה אופסו"
 }

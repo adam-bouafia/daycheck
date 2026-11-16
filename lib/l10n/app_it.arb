@@ -111,5 +111,11 @@
   "downloadPdf": "Scarica",
   "savedToDevice": "Salvato",
   "pagesCount": "{count, plural, one{1 pagina} other{{count} pagine}}",
-  "tabInbox": "Avvisi"
+  "tabInbox": "Avvisi",
+  "undo": "Annulla",
+  "correctionNotificationTitle": "Correzione per {name}",
+  "eventUndone": "Annullato: {what}",
+  "resetDemo": "Azzera dati demo",
+  "resetDemoHint": "Cancella entrate, note, richieste e notifiche per ripartire da una giornata pulita. Bambini e account restano.",
+  "resetDemoDone": "Dati demo azzerati"
 }

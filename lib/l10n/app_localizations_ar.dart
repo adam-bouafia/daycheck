@@ -428,4 +428,27 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tabInbox => 'الإشعارات';
+
+  @override
+  String get undo => 'تراجع';
+
+  @override
+  String correctionNotificationTitle(String name) {
+    return 'تصحيح لـ $name';
+  }
+
+  @override
+  String eventUndone(String what) {
+    return 'تم التراجع عن: $what';
+  }
+
+  @override
+  String get resetDemo => 'إعادة ضبط بيانات العرض';
+
+  @override
+  String get resetDemoHint =>
+      'يحذف كل تسجيلات الوصول والملاحظات والطلبات والإشعارات لبدء يوم جديد. يبقى الأطفال والحسابات.';
+
+  @override
+  String get resetDemoDone => 'تمت إعادة ضبط بيانات العرض';
 }

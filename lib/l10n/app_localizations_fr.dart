@@ -420,4 +420,27 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tabInbox => 'Alertes';
+
+  @override
+  String get undo => 'Annuler';
+
+  @override
+  String correctionNotificationTitle(String name) {
+    return 'Correction pour $name';
+  }
+
+  @override
+  String eventUndone(String what) {
+    return 'Annulé : $what';
+  }
+
+  @override
+  String get resetDemo => 'Réinitialiser la démo';
+
+  @override
+  String get resetDemoHint =>
+      'Supprime les arrivées, notes, demandes et notifications pour repartir d\'une journée vierge. Les enfants et les comptes restent.';
+
+  @override
+  String get resetDemoDone => 'Démo réinitialisée';
 }

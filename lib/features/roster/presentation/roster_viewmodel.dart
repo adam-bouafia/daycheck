@@ -144,6 +144,42 @@ class RosterViewModel extends Notifier<RosterState> {
     );
   }
 
+  /// Takes back today's most recent check-in, pick-up or absence, for a
+  /// tap on the wrong child or the wrong button. The family is told,
+  /// because they were told about the original.
+  Future<void> undoLastAttendance(String childId) async {
+    final last = state.attendanceOf(childId).firstOrNull;
+    if (last == null) return;
+    final events = [
+      for (final e in state.events)
+        if (!identical(e, last)) e,
+    ];
+    await _repo.saveEvents(events);
+    state = RosterState(
+      children: state.children,
+      events: events,
+      schedules: state.schedules,
+    );
+    final l10n = _l10n;
+    final what = switch (last.kind) {
+      EventKind.checkIn => l10n.checkedInBy(last.by),
+      EventKind.checkOut => l10n.checkedOutBy(last.by),
+      _ => l10n.markedAbsentBy(last.by),
+    };
+    await _notifyFamily(
+      childId,
+      l10n.correctionNotificationTitle(_nameOf(childId)),
+      l10n.eventUndone(what),
+      popup: _settings.attendancePopups,
+    );
+  }
+
+  /// Demo only: back to the seeded children with an empty day.
+  Future<void> resetDemoData() async {
+    await _repo.saveEvents(const []);
+    state = RosterState(children: state.children, schedules: state.schedules);
+  }
+
   AppSettings get _settings => ref.read(settingsViewModelProvider);
   AppLocalizations get _l10n => localizationsFor(_settings.languageCode);
   String _nameOf(String childId) =>

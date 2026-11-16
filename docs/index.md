@@ -27,7 +27,7 @@ nine languages, and on older phones.
 | Storage | Local first: `shared_preferences` plus the app's own folders for photos and PDFs |
 | Languages | Dutch, English, French, Polish, German, Turkish, Italian, Hebrew, Arabic |
 | Design | Glassmorphism on Catppuccin Latte (light) and Mocha (dark) |
-| Quality | 57 tests, `flutter analyze` clean, CI on GitHub Actions |
+| Quality | 59 tests, `flutter analyze` clean, CI on GitHub Actions |
 
 ## What is in this documentation
 

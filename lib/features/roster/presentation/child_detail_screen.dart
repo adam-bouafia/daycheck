@@ -1,6 +1,7 @@
 import 'package:daycheck/core/localization/app_locale.dart';
 import 'package:daycheck/core/widgets/glass.dart';
 import 'package:daycheck/features/roster/data/child.dart';
+import 'package:daycheck/features/roster/data/day_event.dart';
 import 'package:daycheck/features/roster/data/day_status.dart';
 import 'package:daycheck/features/roster/presentation/calendar_screen.dart';
 import 'package:daycheck/features/roster/presentation/photo_gallery_screen.dart';
@@ -19,6 +20,75 @@ class ChildDetailScreen extends ConsumerWidget {
   const ChildDetailScreen({super.key, required this.child});
 
   final Child child;
+
+  /// Tapping the status chip: every change that makes sense from here,
+  /// including taking back the last one when it was a mistake.
+  Future<void> _openStatusMenu(
+    BuildContext context,
+    WidgetRef ref,
+    DayStatus status,
+  ) async {
+    final l10n = context.l10n;
+    final last = ref.read(rosterViewModelProvider).attendanceOf(child.id);
+    final undoLabel = switch (last.firstOrNull) {
+      null => null,
+      final e => switch (e.kind) {
+        EventKind.checkIn => l10n.checkedInBy(e.by),
+        EventKind.checkOut => l10n.checkedOutBy(e.by),
+        _ => l10n.markedAbsentBy(e.by),
+      },
+    };
+    await showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      builder: (sheet) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (status != DayStatus.present)
+              ListTile(
+                leading: const Icon(Icons.login),
+                title: Text(l10n.checkIn),
+                onTap: () {
+                  Navigator.pop(sheet);
+                  openCheckSheet(context, child, status);
+                },
+              ),
+            if (status == DayStatus.present)
+              ListTile(
+                leading: const Icon(Icons.logout),
+                title: Text(l10n.checkOut),
+                onTap: () {
+                  Navigator.pop(sheet);
+                  openCheckSheet(context, child, status);
+                },
+              ),
+            if (status != DayStatus.absent)
+              ListTile(
+                leading: const Icon(Icons.event_busy_outlined),
+                title: Text(l10n.markAbsent),
+                onTap: () {
+                  Navigator.pop(sheet);
+                  openAbsentSheet(context, child);
+                },
+              ),
+            if (undoLabel != null)
+              ListTile(
+                leading: const Icon(Icons.undo),
+                title: Text(l10n.undo),
+                subtitle: Text(undoLabel),
+                onTap: () {
+                  Navigator.pop(sheet);
+                  ref
+                      .read(rosterViewModelProvider.notifier)
+                      .undoLastAttendance(child.id);
+                },
+              ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -78,7 +148,9 @@ class ChildDetailScreen extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Chip(
+                        ActionChip(
+                          key: const Key('status-chip'),
+                          avatar: Icon(Icons.edit, size: 16, color: color),
                           label: Text(label),
                           backgroundColor: color.withValues(alpha: 0.12),
                           labelStyle: TextStyle(
@@ -86,6 +158,8 @@ class ChildDetailScreen extends ConsumerWidget {
                             fontWeight: FontWeight.w600,
                           ),
                           side: BorderSide.none,
+                          onPressed: () =>
+                              _openStatusMenu(context, ref, status),
                         ),
                         const SizedBox(height: 4),
                         Text(

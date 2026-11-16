@@ -305,5 +305,25 @@
         "type": "int"
       }
     }
+  },
+  "undo": "Undo",
+  "correctionNotificationTitle": "Correction for {name}",
+  "eventUndone": "Taken back: {what}",
+  "resetDemo": "Reset demo data",
+  "resetDemoHint": "Removes every check-in, note, request and notification, so you can start a clean day. Children and accounts stay.",
+  "resetDemoDone": "Demo data reset",
+  "@correctionNotificationTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@eventUndone": {
+    "placeholders": {
+      "what": {
+        "type": "String"
+      }
+    }
   }
 }

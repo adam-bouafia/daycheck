@@ -426,4 +426,27 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get tabInbox => 'Alerty';
+
+  @override
+  String get undo => 'Cofnij';
+
+  @override
+  String correctionNotificationTitle(String name) {
+    return 'Korekta: $name';
+  }
+
+  @override
+  String eventUndone(String what) {
+    return 'Cofnięto: $what';
+  }
+
+  @override
+  String get resetDemo => 'Wyczyść dane demo';
+
+  @override
+  String get resetDemoHint =>
+      'Usuwa wszystkie przyjścia, notatki, wnioski i powiadomienia, aby zacząć czysty dzień. Dzieci i konta zostają.';
+
+  @override
+  String get resetDemoDone => 'Dane demo wyczyszczone';
 }

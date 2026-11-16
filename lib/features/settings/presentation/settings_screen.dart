@@ -3,11 +3,44 @@ import 'package:daycheck/core/widgets/glass.dart';
 import 'package:daycheck/features/session/presentation/session_viewmodel.dart';
 import 'package:daycheck/features/settings/data/app_settings.dart';
 import 'package:daycheck/features/settings/presentation/settings_viewmodel.dart';
+import 'package:daycheck/features/inbox/presentation/inbox_viewmodel.dart';
+import 'package:daycheck/features/requests/presentation/requests_viewmodel.dart';
+import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
+import 'package:daycheck/features/session/data/role.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
+
+  Future<void> _confirmReset(BuildContext context, WidgetRef ref) async {
+    final l10n = context.l10n;
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l10n.resetDemo),
+        content: Text(l10n.resetDemoHint),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(l10n.cancelRequest),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: Text(l10n.resetDemo),
+          ),
+        ],
+      ),
+    );
+    if (ok != true) return;
+    await ref.read(rosterViewModelProvider.notifier).resetDemoData();
+    await ref.read(requestsViewModelProvider.notifier).clearAll();
+    await ref.read(inboxViewModelProvider.notifier).clearAll();
+    if (context.mounted) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(l10n.resetDemoDone)));
+    }
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -122,6 +155,15 @@ class SettingsScreen extends ConsumerWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
+                if (ref.watch(sessionViewModelProvider).role == Role.staff)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: OutlinedButton.icon(
+                      icon: const Icon(Icons.restart_alt),
+                      label: Text(l10n.resetDemo),
+                      onPressed: () => _confirmReset(context, ref),
+                    ),
+                  ),
                 FilledButton.tonalIcon(
                   icon: const Icon(Icons.logout),
                   label: Text(l10n.signOutTooltip),

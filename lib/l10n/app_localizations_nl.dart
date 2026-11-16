@@ -419,4 +419,27 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tabInbox => 'Meldingen';
+
+  @override
+  String get undo => 'Ongedaan maken';
+
+  @override
+  String correctionNotificationTitle(String name) {
+    return 'Correctie voor $name';
+  }
+
+  @override
+  String eventUndone(String what) {
+    return 'Teruggedraaid: $what';
+  }
+
+  @override
+  String get resetDemo => 'Demogegevens wissen';
+
+  @override
+  String get resetDemoHint =>
+      'Wist alle check-ins, notities, aanvragen en meldingen, zodat je met een schone dag begint. Kinderen en accounts blijven.';
+
+  @override
+  String get resetDemoDone => 'Demogegevens gewist';
 }
