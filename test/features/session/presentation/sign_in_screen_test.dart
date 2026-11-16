@@ -1,3 +1,7 @@
+import 'package:daycheck/features/settings/presentation/settings_viewmodel.dart';
+
+import '../../settings/fake_settings_repository.dart';
+
 import 'package:daycheck/features/inbox/presentation/inbox_viewmodel.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
 import 'package:daycheck/features/session/presentation/sign_in_screen.dart';
@@ -18,6 +22,7 @@ void main() {
       rosterRepositoryProvider.overrideWithValue(repo),
       notificationServiceProvider.overrideWithValue(FakeNotificationService()),
       inboxRepositoryProvider.overrideWithValue(FakeInboxRepository()),
+      settingsRepositoryProvider.overrideWithValue(FakeSettingsRepository()),
     ],
     child: MaterialApp(
       locale: locale,
@@ -44,5 +49,18 @@ void main() {
     expect(find.text('Wie gebruikt DayCheck?'), findsOneWidget);
     expect(find.text('Medewerker'), findsOneWidget);
     expect(find.text('Ouder — kies je naam'), findsOneWidget);
+  });
+
+  testWidgets('Arabic and Hebrew lay the screen out right to left', (
+    tester,
+  ) async {
+    for (final code in ['ar', 'he']) {
+      await tester.pumpWidget(app(Locale(code)));
+      await tester.pumpAndSettle();
+
+      final context = tester.element(find.byType(ListView));
+      expect(Directionality.of(context), TextDirection.rtl, reason: code);
+    }
+    expect(find.text('מי משתמש ב-DayCheck?'), findsOneWidget);
   });
 }

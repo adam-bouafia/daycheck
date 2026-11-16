@@ -1,3 +1,7 @@
+import 'package:daycheck/features/settings/presentation/settings_viewmodel.dart';
+
+import '../../settings/fake_settings_repository.dart';
+
 import 'package:daycheck/features/inbox/presentation/inbox_viewmodel.dart';
 import 'package:daycheck/features/requests/data/leave_request.dart';
 import 'package:daycheck/features/requests/presentation/requests_viewmodel.dart';
@@ -28,6 +32,7 @@ void main() {
         requestRepositoryProvider.overrideWithValue(requests),
         notificationServiceProvider.overrideWithValue(notifications),
         inboxRepositoryProvider.overrideWithValue(inbox),
+        settingsRepositoryProvider.overrideWithValue(FakeSettingsRepository()),
       ],
     );
     addTearDown(container.dispose);

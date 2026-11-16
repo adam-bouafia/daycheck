@@ -1,3 +1,7 @@
+import 'package:daycheck/features/settings/presentation/settings_viewmodel.dart';
+
+import '../../settings/fake_settings_repository.dart';
+
 import 'package:daycheck/features/inbox/presentation/inbox_viewmodel.dart';
 import 'package:daycheck/features/roster/data/day_event.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
@@ -20,6 +24,7 @@ void main() {
       rosterRepositoryProvider.overrideWithValue(repo),
       notificationServiceProvider.overrideWithValue(notifications),
       inboxRepositoryProvider.overrideWithValue(FakeInboxRepository()),
+      settingsRepositoryProvider.overrideWithValue(FakeSettingsRepository()),
     ],
     child: MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,

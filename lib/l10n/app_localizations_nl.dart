@@ -283,4 +283,50 @@ class AppLocalizationsNl extends AppLocalizations {
   String requestCancelledNotificationTitle(String name) {
     return 'Aanvraag geannuleerd voor $name';
   }
+
+  @override
+  String get sharePhoto => 'Foto delen';
+
+  @override
+  String photoPosition(int index, int count) {
+    return '$index van $count';
+  }
+
+  @override
+  String get settingsTitle => 'Instellingen';
+
+  @override
+  String get languageLabel => 'Taal';
+
+  @override
+  String get languageSystem => 'Taal van het toestel';
+
+  @override
+  String get themeLabel => 'Weergave';
+
+  @override
+  String get themeSystem => 'Systeem';
+
+  @override
+  String get themeLight => 'Licht';
+
+  @override
+  String get themeDark => 'Donker';
+
+  @override
+  String get reduceEffectsLabel => 'Minder effecten';
+
+  @override
+  String get reduceEffectsHint =>
+      'Effen panelen in plaats van wazig glas. Soepeler op oudere telefoons.';
+
+  @override
+  String get activityPopupsLabel => 'Pop-ups voor nieuwe activiteit';
+
+  @override
+  String get requestPopupsLabel => 'Pop-ups voor aanvragen';
+
+  @override
+  String get popupsHint =>
+      'Alles komt nog steeds in de meldingenlijst in de app. Deze schakelaars bepalen alleen de pop-up op je telefoon.';
 }

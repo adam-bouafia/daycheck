@@ -5,8 +5,15 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
+import 'app_localizations_ar.dart';
+import 'app_localizations_de.dart';
 import 'app_localizations_en.dart';
+import 'app_localizations_fr.dart';
+import 'app_localizations_he.dart';
+import 'app_localizations_it.dart';
 import 'app_localizations_nl.dart';
+import 'app_localizations_pl.dart';
+import 'app_localizations_tr.dart';
 
 // ignore_for_file: type=lint
 
@@ -94,8 +101,15 @@ abstract class AppLocalizations {
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
+    Locale('ar'),
+    Locale('de'),
     Locale('en'),
+    Locale('fr'),
+    Locale('he'),
+    Locale('it'),
     Locale('nl'),
+    Locale('pl'),
+    Locale('tr'),
   ];
 
   /// No description provided for @signInPrompt.
@@ -553,6 +567,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Request cancelled for {name}'**
   String requestCancelledNotificationTitle(String name);
+
+  /// No description provided for @sharePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Share photo'**
+  String get sharePhoto;
+
+  /// No description provided for @photoPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'{index} of {count}'**
+  String photoPosition(int index, int count);
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTitle;
+
+  /// No description provided for @languageLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get languageLabel;
+
+  /// No description provided for @languageSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'Device language'**
+  String get languageSystem;
+
+  /// No description provided for @themeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get themeLabel;
+
+  /// No description provided for @themeSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get themeSystem;
+
+  /// No description provided for @themeLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get themeLight;
+
+  /// No description provided for @themeDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get themeDark;
+
+  /// No description provided for @reduceEffectsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Reduce effects'**
+  String get reduceEffectsLabel;
+
+  /// No description provided for @reduceEffectsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Solid panels instead of blurred glass. Smoother on older phones.'**
+  String get reduceEffectsHint;
+
+  /// No description provided for @activityPopupsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Pop-ups for new activity'**
+  String get activityPopupsLabel;
+
+  /// No description provided for @requestPopupsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Pop-ups for requests'**
+  String get requestPopupsLabel;
+
+  /// No description provided for @popupsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything still lands in the notification list in the app. These switches only control the pop-up on your phone.'**
+  String get popupsHint;
 }
 
 class _AppLocalizationsDelegate
@@ -565,8 +663,17 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['en', 'nl'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>[
+    'ar',
+    'de',
+    'en',
+    'fr',
+    'he',
+    'it',
+    'nl',
+    'pl',
+    'tr',
+  ].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -575,10 +682,24 @@ class _AppLocalizationsDelegate
 AppLocalizations lookupAppLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
+    case 'ar':
+      return AppLocalizationsAr();
+    case 'de':
+      return AppLocalizationsDe();
     case 'en':
       return AppLocalizationsEn();
+    case 'fr':
+      return AppLocalizationsFr();
+    case 'he':
+      return AppLocalizationsHe();
+    case 'it':
+      return AppLocalizationsIt();
     case 'nl':
       return AppLocalizationsNl();
+    case 'pl':
+      return AppLocalizationsPl();
+    case 'tr':
+      return AppLocalizationsTr();
   }
 
   throw FlutterError(

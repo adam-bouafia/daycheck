@@ -1,0 +1,334 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for Italian (`it`).
+class AppLocalizationsIt extends AppLocalizations {
+  AppLocalizationsIt([String locale = 'it']) : super(locale);
+
+  @override
+  String get signInPrompt => 'Chi usa DayCheck?';
+
+  @override
+  String get signInDemoNotice =>
+      'Solo un accesso dimostrativo, non un vero login.';
+
+  @override
+  String get roleStaff => 'Personale';
+
+  @override
+  String get roleStaffSubtitle =>
+      'Vedi ogni bambino, registra entrata e uscita, aggiungi attività';
+
+  @override
+  String get roleParentPrompt => 'Genitore — scegli il tuo nome';
+
+  @override
+  String get roleParentSubtitle => 'Vedi tuo figlio, sola lettura';
+
+  @override
+  String get appBarStaff => 'DayCheck · Personale';
+
+  @override
+  String appBarParent(String name) {
+    return 'DayCheck · $name';
+  }
+
+  @override
+  String get todaysLogTooltip => 'Registro di oggi';
+
+  @override
+  String get signOutTooltip => 'Esci';
+
+  @override
+  String get noChildForGuardian =>
+      'Nessun bambino trovato per questo genitore.';
+
+  @override
+  String get statusNotArrived => 'Non arrivato';
+
+  @override
+  String get statusPresent => 'Presente';
+
+  @override
+  String get statusDeparted => 'Uscito';
+
+  @override
+  String get notArrivedYet => 'Non ancora arrivato';
+
+  @override
+  String checkedInAtBy(String time, String name) {
+    return 'Entrata alle $time, accompagnato da $name';
+  }
+
+  @override
+  String checkedOutAtBy(String time, String name) {
+    return 'Uscita alle $time, ritirato da $name';
+  }
+
+  @override
+  String notesToday(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count note oggi',
+      one: '1 nota oggi',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String eventsToday(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count eventi oggi',
+      one: '1 evento oggi',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get checkIn => 'Entrata';
+
+  @override
+  String get checkOut => 'Uscita';
+
+  @override
+  String get addNote => 'Aggiungi nota';
+
+  @override
+  String get todaysActivity => 'Attività di oggi';
+
+  @override
+  String get nothingYetToday => 'Ancora niente oggi.';
+
+  @override
+  String checkedInBy(String name) {
+    return 'Accompagnato da $name';
+  }
+
+  @override
+  String checkedOutBy(String name) {
+    return 'Ritirato da $name';
+  }
+
+  @override
+  String noteBy(String name) {
+    return 'Nota di $name';
+  }
+
+  @override
+  String checkInChild(String name) {
+    return 'Entrata di $name';
+  }
+
+  @override
+  String checkOutChild(String name) {
+    return 'Uscita di $name';
+  }
+
+  @override
+  String get droppedOffBy => 'Accompagnato da';
+
+  @override
+  String get pickedUpBy => 'Ritirato da';
+
+  @override
+  String get addActivityNoteTitle => 'Aggiungi un\'attività';
+
+  @override
+  String get whatDidTheyDo => 'Che cosa ha fatto oggi?';
+
+  @override
+  String get addPhoto => 'Aggiungi una foto';
+
+  @override
+  String get photoAdded => 'Foto aggiunta';
+
+  @override
+  String get save => 'Salva';
+
+  @override
+  String get nothingCheckedToday => 'Nessuna entrata o uscita registrata oggi.';
+
+  @override
+  String get unknownChild => 'Bambino sconosciuto';
+
+  @override
+  String get activityNoteLabel => 'Nota attività';
+
+  @override
+  String newActivityNotificationTitle(String name) {
+    return 'Nuova attività per $name';
+  }
+
+  @override
+  String get requestsTooltip => 'Richieste';
+
+  @override
+  String get requestsTitle => 'Richieste';
+
+  @override
+  String get requestTypeLeave => 'Assenza';
+
+  @override
+  String get requestTypeExtraHours => 'Ore extra';
+
+  @override
+  String get requestStatusPending => 'In attesa';
+
+  @override
+  String get requestStatusApproved => 'Approvata';
+
+  @override
+  String get requestStatusCancelled => 'Annullata';
+
+  @override
+  String get newRequestTitle => 'Nuova richiesta';
+
+  @override
+  String get pickDate => 'Scegli una data';
+
+  @override
+  String get noteOptionalHint => 'Nota (facoltativa)';
+
+  @override
+  String get submitRequest => 'Invia';
+
+  @override
+  String get approve => 'Approva';
+
+  @override
+  String get cancelRequest => 'Annulla';
+
+  @override
+  String get noRequestsYet => 'Ancora nessuna richiesta.';
+
+  @override
+  String requestedBy(String name) {
+    return 'Richiesta da $name';
+  }
+
+  @override
+  String newLeaveRequestTitle(String name) {
+    return 'Richiesta di assenza per $name';
+  }
+
+  @override
+  String newExtraHoursRequestTitle(String name) {
+    return 'Richiesta di ore extra per $name';
+  }
+
+  @override
+  String get scheduleTooltip => 'Orario';
+
+  @override
+  String get scheduleTitle => 'Orario';
+
+  @override
+  String scheduledHours(String start, String end) {
+    return 'Previsto $start–$end';
+  }
+
+  @override
+  String get notScheduledToday => 'Non previsto in questo giorno';
+
+  @override
+  String get photosTooltip => 'Foto';
+
+  @override
+  String get photosTitle => 'Foto';
+
+  @override
+  String get noPhotosYet => 'Ancora nessuna foto.';
+
+  @override
+  String get addPdf => 'Aggiungi un PDF';
+
+  @override
+  String get pdfAdded => 'PDF aggiunto';
+
+  @override
+  String get attachmentLabel => 'Allegato';
+
+  @override
+  String get openAttachment => 'Apri';
+
+  @override
+  String get shareAttachment => 'Condividi';
+
+  @override
+  String get couldNotOpenAttachment => 'Impossibile aprire questo file.';
+
+  @override
+  String get inboxTitle => 'Notifiche';
+
+  @override
+  String get inboxTooltip => 'Notifiche';
+
+  @override
+  String get noNotificationsYet => 'Ancora nessuna notifica.';
+
+  @override
+  String get markAllRead => 'Segna tutto come letto';
+
+  @override
+  String requestApprovedNotificationTitle(String name) {
+    return 'Richiesta approvata per $name';
+  }
+
+  @override
+  String requestCancelledNotificationTitle(String name) {
+    return 'Richiesta annullata per $name';
+  }
+
+  @override
+  String get sharePhoto => 'Condividi foto';
+
+  @override
+  String photoPosition(int index, int count) {
+    return '$index di $count';
+  }
+
+  @override
+  String get settingsTitle => 'Impostazioni';
+
+  @override
+  String get languageLabel => 'Lingua';
+
+  @override
+  String get languageSystem => 'Lingua del dispositivo';
+
+  @override
+  String get themeLabel => 'Aspetto';
+
+  @override
+  String get themeSystem => 'Sistema';
+
+  @override
+  String get themeLight => 'Chiaro';
+
+  @override
+  String get themeDark => 'Scuro';
+
+  @override
+  String get reduceEffectsLabel => 'Riduci effetti';
+
+  @override
+  String get reduceEffectsHint =>
+      'Pannelli pieni invece del vetro sfocato. Più fluido sui telefoni meno recenti.';
+
+  @override
+  String get activityPopupsLabel => 'Pop-up per nuove attività';
+
+  @override
+  String get requestPopupsLabel => 'Pop-up per le richieste';
+
+  @override
+  String get popupsHint =>
+      'Tutto arriva comunque nell\'elenco delle notifiche nell\'app. Questi interruttori controllano solo il pop-up sul telefono.';
+}

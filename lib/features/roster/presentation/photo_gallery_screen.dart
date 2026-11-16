@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:daycheck/core/localization/app_locale.dart';
 import 'package:daycheck/core/widgets/glass.dart';
 import 'package:daycheck/features/roster/data/child.dart';
+import 'package:daycheck/features/roster/presentation/photo_viewer_screen.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -49,44 +50,56 @@ class PhotoGalleryScreen extends ConsumerWidget {
                     final date = MaterialLocalizations.of(context)
                         .formatMediumDate(event.at);
                     final caption = event.note;
-                    return GlassPanel(
-                      radius: 14,
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: ClipRRect(
-                              borderRadius: const BorderRadius.vertical(
-                                top: Radius.circular(14),
-                              ),
-                              child: Image.file(
-                                File('${folder.path}/${event.photoName}'),
-                                width: double.infinity,
-                                fit: BoxFit.cover,
+                    return GestureDetector(
+                      onTap: () => openPhotoViewer(context, events, index),
+                      child: GlassPanel(
+                        radius: 14,
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.vertical(
+                                  top: Radius.circular(14),
+                                ),
+                                child: Hero(
+                                  tag: photoHeroTag(event),
+                                  child: Image.file(
+                                    File('${folder.path}/${event.photoName}'),
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                    // Decode a thumbnail, not the full photo:
+                                    // a grid of full-size decodes is what
+                                    // runs an old phone out of memory.
+                                    cacheWidth: 480,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(8, 6, 8, 8),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  date,
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                                if (caption != null && caption.isNotEmpty)
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(8, 6, 8, 8),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
                                   Text(
-                                    caption,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
+                                    date,
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodySmall,
                                   ),
-                              ],
+                                  if (caption != null && caption.isNotEmpty)
+                                    Text(
+                                      caption,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall,
+                                    ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     );
                   },

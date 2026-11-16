@@ -7,14 +7,14 @@ extension AppLocaleX on BuildContext {
   AppLocalizations get l10n => AppLocalizations.of(this)!;
 }
 
-/// Localized strings picked by the device's own locale, for code with no
-/// `BuildContext` — a local notification shown from the ViewModel, for
-/// example. There's no in-app language switcher here (unlike MetJou),
-/// so the device's locale is the only signal available.
-AppLocalizations deviceLocalizations() {
-  final locale = ui.PlatformDispatcher.instance.locale;
+/// Localized strings for code with no `BuildContext` - a notification
+/// raised from a ViewModel, for example. [languageCode] is the in-app
+/// choice from Settings; null falls back to the device's language.
+AppLocalizations localizationsFor(String? languageCode) {
+  final code =
+      languageCode ?? ui.PlatformDispatcher.instance.locale.languageCode;
   final supported = AppLocalizations.supportedLocales.firstWhere(
-    (l) => l.languageCode == locale.languageCode,
+    (l) => l.languageCode == code,
     orElse: () => const Locale('en'),
   );
   return lookupAppLocalizations(supported);

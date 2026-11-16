@@ -283,4 +283,50 @@ class AppLocalizationsEn extends AppLocalizations {
   String requestCancelledNotificationTitle(String name) {
     return 'Request cancelled for $name';
   }
+
+  @override
+  String get sharePhoto => 'Share photo';
+
+  @override
+  String photoPosition(int index, int count) {
+    return '$index of $count';
+  }
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get languageLabel => 'Language';
+
+  @override
+  String get languageSystem => 'Device language';
+
+  @override
+  String get themeLabel => 'Appearance';
+
+  @override
+  String get themeSystem => 'System';
+
+  @override
+  String get themeLight => 'Light';
+
+  @override
+  String get themeDark => 'Dark';
+
+  @override
+  String get reduceEffectsLabel => 'Reduce effects';
+
+  @override
+  String get reduceEffectsHint =>
+      'Solid panels instead of blurred glass. Smoother on older phones.';
+
+  @override
+  String get activityPopupsLabel => 'Pop-ups for new activity';
+
+  @override
+  String get requestPopupsLabel => 'Pop-ups for requests';
+
+  @override
+  String get popupsHint =>
+      'Everything still lands in the notification list in the app. These switches only control the pop-up on your phone.';
 }

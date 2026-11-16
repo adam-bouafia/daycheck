@@ -8,6 +8,7 @@ import 'package:daycheck/features/roster/data/day_event.dart';
 import 'package:daycheck/features/roster/data/day_status.dart';
 import 'package:daycheck/features/roster/data/roster_repository.dart';
 import 'package:daycheck/features/roster/data/schedule.dart';
+import 'package:daycheck/features/settings/presentation/settings_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// DI seam: tests override this with a fake repository instead of the real
@@ -126,11 +127,15 @@ class RosterViewModel extends Notifier<RosterState> {
       ),
     );
     final childName = state.children.firstWhere((c) => c.id == childId).name;
-    final l10n = deviceLocalizations();
+    final l10n = localizationsFor(
+      ref.read(settingsViewModelProvider).languageCode,
+    );
     final title = l10n.newActivityNotificationTitle(childName);
-    await ref
-        .read(notificationServiceProvider)
-        .showActivityNotification(title, note);
+    if (ref.read(settingsViewModelProvider).activityPopups) {
+      await ref
+          .read(notificationServiceProvider)
+          .showActivityNotification(title, note);
+    }
     await ref
         .read(inboxViewModelProvider.notifier)
         .add(title, note, childId: childId);

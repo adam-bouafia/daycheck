@@ -3,6 +3,7 @@ import 'package:daycheck/core/widgets/glass.dart';
 import 'package:daycheck/features/roster/presentation/roster_screen.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
 import 'package:daycheck/features/session/presentation/session_viewmodel.dart';
+import 'package:daycheck/features/settings/presentation/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -23,7 +24,19 @@ class SignInScreen extends ConsumerWidget {
       ..sort();
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: AppBar(title: const Text('DayCheck')),
+      appBar: AppBar(
+        title: const Text('DayCheck'),
+        actions: [
+          IconButton(
+            tooltip: l10n.settingsTitle,
+            icon: const Icon(Icons.settings_outlined),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const SettingsScreen()),
+            ),
+          ),
+        ],
+      ),
       body: GlassBackground(
         child: SafeArea(
           top: false,

@@ -4,6 +4,7 @@ import 'package:daycheck/features/requests/data/leave_request.dart';
 import 'package:daycheck/features/requests/data/request_repository.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
 import 'package:daycheck/l10n/app_localizations.dart';
+import 'package:daycheck/features/settings/presentation/settings_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// DI seam: tests override this with a fake repository.
@@ -47,7 +48,9 @@ class RequestsViewModel extends Notifier<List<LeaveRequest>> {
     state = [...state, request];
     await _repo.saveRequests(state);
 
-    final l10n = deviceLocalizations();
+    final l10n = localizationsFor(
+      ref.read(settingsViewModelProvider).languageCode,
+    );
     final title = switch (type) {
       RequestType.leave => l10n.newLeaveRequestTitle(_nameOf(childId)),
       RequestType.extraHours => l10n.newExtraHoursRequestTitle(
@@ -85,15 +88,19 @@ class RequestsViewModel extends Notifier<List<LeaveRequest>> {
     ];
     await _repo.saveRequests(state);
 
-    final l10n = deviceLocalizations();
+    final l10n = localizationsFor(
+      ref.read(settingsViewModelProvider).languageCode,
+    );
     final title = titleFor(l10n, _nameOf(request.childId));
     await _notify(title, '', request.childId);
   }
 
   Future<void> _notify(String title, String body, String childId) async {
-    await ref
-        .read(notificationServiceProvider)
-        .showActivityNotification(title, body);
+    if (ref.read(settingsViewModelProvider).requestPopups) {
+      await ref
+          .read(notificationServiceProvider)
+          .showActivityNotification(title, body);
+    }
     await ref
         .read(inboxViewModelProvider.notifier)
         .add(title, body, childId: childId);

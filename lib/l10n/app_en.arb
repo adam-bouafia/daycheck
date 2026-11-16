@@ -1,22 +1,23 @@
 {
   "@@locale": "en",
-
   "signInPrompt": "Who's using DayCheck?",
   "signInDemoNotice": "Demo sign-in only, not a real login.",
   "roleStaff": "Staff",
   "roleStaffSubtitle": "See every child, check them in/out, add activity notes",
   "roleParentPrompt": "Parent — pick your name",
   "roleParentSubtitle": "See your child, read-only",
-
   "appBarStaff": "DayCheck · Staff",
   "appBarParent": "DayCheck · {name}",
   "@appBarParent": {
-    "placeholders": { "name": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "todaysLogTooltip": "Today's log",
   "signOutTooltip": "Sign out",
   "noChildForGuardian": "No child found for this guardian.",
-
   "statusNotArrived": "Not arrived",
   "statusPresent": "Present",
   "statusDeparted": "Departed",
@@ -24,26 +25,41 @@
   "checkedInAtBy": "Checked in at {time} by {name}",
   "@checkedInAtBy": {
     "placeholders": {
-      "time": { "type": "String" },
-      "name": { "type": "String" }
+      "time": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
     }
   },
   "checkedOutAtBy": "Checked out at {time} by {name}",
   "@checkedOutAtBy": {
     "placeholders": {
-      "time": { "type": "String" },
-      "name": { "type": "String" }
+      "time": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
     }
   },
   "notesToday": "{count, plural, one{1 note today} other{{count} notes today}}",
   "@notesToday": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "eventsToday": "{count, plural, one{1 event today} other{{count} events today}}",
   "@eventsToday": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
-
   "checkIn": "Check in",
   "checkOut": "Check out",
   "addNote": "Add note",
@@ -51,43 +67,62 @@
   "nothingYetToday": "Nothing yet today.",
   "checkedInBy": "Checked in by {name}",
   "@checkedInBy": {
-    "placeholders": { "name": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "checkedOutBy": "Checked out by {name}",
   "@checkedOutBy": {
-    "placeholders": { "name": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "noteBy": "Note by {name}",
   "@noteBy": {
-    "placeholders": { "name": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
-
   "checkInChild": "Check in {name}",
   "@checkInChild": {
-    "placeholders": { "name": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "checkOutChild": "Check out {name}",
   "@checkOutChild": {
-    "placeholders": { "name": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "droppedOffBy": "Dropped off by",
   "pickedUpBy": "Picked up by",
-
   "addActivityNoteTitle": "Add an activity note",
   "whatDidTheyDo": "What did they do today?",
   "addPhoto": "Add a photo",
   "photoAdded": "Photo added",
   "save": "Save",
-
   "nothingCheckedToday": "Nothing checked in or out yet today.",
   "unknownChild": "Unknown child",
   "activityNoteLabel": "Activity note",
-
   "newActivityNotificationTitle": "New activity for {name}",
   "@newActivityNotificationTitle": {
-    "placeholders": { "name": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
-
   "requestsTooltip": "Requests",
   "requestsTitle": "Requests",
   "requestTypeLeave": "Leave",
@@ -104,49 +139,93 @@
   "noRequestsYet": "No requests yet.",
   "requestedBy": "Requested by {name}",
   "@requestedBy": {
-    "placeholders": { "name": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "newLeaveRequestTitle": "Leave request for {name}",
   "@newLeaveRequestTitle": {
-    "placeholders": { "name": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "newExtraHoursRequestTitle": "Extra hours request for {name}",
   "@newExtraHoursRequestTitle": {
-    "placeholders": { "name": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
-
   "scheduleTooltip": "Schedule",
   "scheduleTitle": "Schedule",
   "scheduledHours": "Scheduled {start}–{end}",
   "@scheduledHours": {
     "placeholders": {
-      "start": { "type": "String" },
-      "end": { "type": "String" }
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
     }
   },
   "notScheduledToday": "Not scheduled this day",
-
   "photosTooltip": "Photos",
   "photosTitle": "Photos",
   "noPhotosYet": "No photos yet.",
-
   "addPdf": "Add a PDF",
   "pdfAdded": "PDF added",
   "attachmentLabel": "Attachment",
   "openAttachment": "Open",
   "shareAttachment": "Share",
   "couldNotOpenAttachment": "Couldn't open this file.",
-
   "inboxTitle": "Notifications",
   "inboxTooltip": "Notifications",
   "noNotificationsYet": "No notifications yet.",
   "markAllRead": "Mark all read",
   "requestApprovedNotificationTitle": "Request approved for {name}",
   "@requestApprovedNotificationTitle": {
-    "placeholders": { "name": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "requestCancelledNotificationTitle": "Request cancelled for {name}",
   "@requestCancelledNotificationTitle": {
-    "placeholders": { "name": { "type": "String" } }
-  }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "sharePhoto": "Share photo",
+  "photoPosition": "{index} of {count}",
+  "@photoPosition": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsTitle": "Settings",
+  "languageLabel": "Language",
+  "languageSystem": "Device language",
+  "themeLabel": "Appearance",
+  "themeSystem": "System",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "reduceEffectsLabel": "Reduce effects",
+  "reduceEffectsHint": "Solid panels instead of blurred glass. Smoother on older phones.",
+  "activityPopupsLabel": "Pop-ups for new activity",
+  "requestPopupsLabel": "Pop-ups for requests",
+  "popupsHint": "Everything still lands in the notification list in the app. These switches only control the pop-up on your phone."
 }

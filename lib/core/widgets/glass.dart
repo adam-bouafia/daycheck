@@ -3,6 +3,22 @@ import 'dart:ui';
 import 'package:daycheck/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
+/// Turns the blur off below it. Set from the "Reduce effects" setting:
+/// a backdrop blur is the most expensive thing this app draws, and on an
+/// old phone's GPU it is what makes scrolling stutter.
+class GlassEffects extends InheritedWidget {
+  const GlassEffects({super.key, required this.reduced, required super.child});
+
+  final bool reduced;
+
+  static bool reducedOf(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<GlassEffects>()?.reduced ??
+      false;
+
+  @override
+  bool updateShouldNotify(GlassEffects old) => reduced != old.reduced;
+}
+
 /// Frosted-glass panel: blurs what is behind it, with a translucent (or
 /// tinted) fill, a light sheen, a thin light border and a soft shadow.
 /// Joins the nearest [BackdropGroup], so many panels share one blur pass.
@@ -30,6 +46,7 @@ class GlassPanel extends StatelessWidget {
     final dark = scheme.brightness == Brightness.dark;
     final shape = BorderRadius.circular(radius);
     final tint = colors;
+    final reduced = GlassEffects.reducedOf(context);
 
     final Color shadow;
     final Decoration fill;
@@ -46,7 +63,9 @@ class GlassPanel extends StatelessWidget {
                 end: Alignment.bottomRight,
               ),
         color: tint == null
-            ? scheme.surfaceContainerLowest.withValues(alpha: 0.45)
+            ? scheme.surfaceContainerLowest.withValues(
+                alpha: reduced ? 0.92 : 0.45,
+              )
             : null,
       );
     } else {
@@ -58,8 +77,8 @@ class GlassPanel extends StatelessWidget {
         gradient: LinearGradient(
           colors: tint == null
               ? [
-                  Colors.white.withValues(alpha: 0.42),
-                  Colors.white.withValues(alpha: 0.18),
+                  Colors.white.withValues(alpha: reduced ? 0.9 : 0.42),
+                  Colors.white.withValues(alpha: reduced ? 0.8 : 0.18),
                 ]
               : [for (final c in tint) c.withValues(alpha: 0.58)],
           begin: Alignment.topLeft,
@@ -68,48 +87,56 @@ class GlassPanel extends StatelessWidget {
       );
     }
 
+    final surface = Material(
+      type: MaterialType.transparency,
+      child: InkWell(
+        onTap: onTap,
+        child: Ink(
+          decoration: fill,
+          child: DecoratedBox(
+            // Light sheen from the top-left, like light on glass.
+            decoration: BoxDecoration(
+              borderRadius: shape,
+              border: Border.all(color: border, width: dark ? 1 : 1.2),
+              gradient: dark
+                  ? null
+                  : LinearGradient(
+                      colors: [
+                        Colors.white.withValues(alpha: 0.35),
+                        Colors.white.withValues(alpha: 0),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.center,
+                    ),
+            ),
+            child: child,
+          ),
+        ),
+      ),
+    );
+
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: shape,
         boxShadow: [
-          BoxShadow(color: shadow, blurRadius: 24, offset: const Offset(0, 8)),
+          BoxShadow(
+            color: shadow,
+            blurRadius: reduced ? 8 : 24,
+            offset: Offset(0, reduced ? 3 : 8),
+          ),
         ],
       ),
       child: ClipRRect(
         borderRadius: shape,
-        child: BackdropFilter.grouped(
-          filter: ImageFilter.blur(
-            sigmaX: dark ? 14 : 18,
-            sigmaY: dark ? 14 : 18,
-          ),
-          child: Material(
-            type: MaterialType.transparency,
-            child: InkWell(
-              onTap: onTap,
-              child: Ink(
-                decoration: fill,
-                child: DecoratedBox(
-                  // Light sheen from the top-left, like light on glass.
-                  decoration: BoxDecoration(
-                    borderRadius: shape,
-                    border: Border.all(color: border, width: dark ? 1 : 1.2),
-                    gradient: dark
-                        ? null
-                        : LinearGradient(
-                            colors: [
-                              Colors.white.withValues(alpha: 0.35),
-                              Colors.white.withValues(alpha: 0),
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.center,
-                          ),
-                  ),
-                  child: child,
+        child: reduced
+            ? surface
+            : BackdropFilter.grouped(
+                filter: ImageFilter.blur(
+                  sigmaX: dark ? 14 : 18,
+                  sigmaY: dark ? 14 : 18,
                 ),
+                child: surface,
               ),
-            ),
-          ),
-        ),
       ),
     );
   }
@@ -127,12 +154,23 @@ class GlassBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = Theme.of(context).brightness == Brightness.dark;
+    final reduced = GlassEffects.reducedOf(context);
+    // Reduced: a radial gradient fades out the same way the blur does,
+    // without the full-screen blur pass.
     Widget blob(Color color, double size, double alpha) => Container(
       width: size,
       height: size,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: color.withValues(alpha: alpha),
+        color: reduced ? null : color.withValues(alpha: alpha),
+        gradient: reduced
+            ? RadialGradient(
+                colors: [
+                  color.withValues(alpha: alpha),
+                  color.withValues(alpha: 0),
+                ],
+              )
+            : null,
       ),
     );
     final shapes = dark
@@ -196,13 +234,15 @@ class GlassBackground extends StatelessWidget {
             ),
           Positioned.fill(
             child: IgnorePointer(
-              child: ImageFiltered(
-                imageFilter: ImageFilter.blur(
-                  sigmaX: dark ? 60 : 50,
-                  sigmaY: dark ? 60 : 50,
-                ),
-                child: Stack(children: shapes),
-              ),
+              child: reduced
+                  ? Stack(children: shapes)
+                  : ImageFiltered(
+                      imageFilter: ImageFilter.blur(
+                        sigmaX: dark ? 60 : 50,
+                        sigmaY: dark ? 60 : 50,
+                      ),
+                      child: Stack(children: shapes),
+                    ),
             ),
           ),
           child,

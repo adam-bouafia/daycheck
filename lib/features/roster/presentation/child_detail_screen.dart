@@ -7,6 +7,7 @@ import 'package:daycheck/features/roster/data/day_event.dart';
 import 'package:daycheck/features/roster/data/day_status.dart';
 import 'package:daycheck/features/roster/presentation/calendar_screen.dart';
 import 'package:daycheck/features/roster/presentation/photo_gallery_screen.dart';
+import 'package:daycheck/features/roster/presentation/photo_viewer_screen.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
 import 'package:daycheck/features/roster/presentation/widgets/add_note_sheet.dart';
 import 'package:daycheck/features/roster/presentation/widgets/check_sheet.dart';
@@ -201,7 +202,7 @@ class _EventTile extends StatelessWidget {
               ),
               if (photoName != null) ...[
                 const SizedBox(height: 8),
-                _EventPhoto(name: photoName),
+                _EventPhoto(event: event),
               ],
               if (attachmentName != null) ...[
                 const SizedBox(height: 8),
@@ -264,20 +265,35 @@ class _EventAttachment extends ConsumerWidget {
 }
 
 class _EventPhoto extends ConsumerWidget {
-  const _EventPhoto({required this.name});
+  const _EventPhoto({required this.event});
 
-  final String name;
+  final DayEvent event;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final folder = ref.watch(photosFolderProvider).value;
     if (folder == null) return const SizedBox.shrink();
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
-      child: Image.file(
-        File('${folder.path}/$name'),
-        height: 140,
-        fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: () {
+        final photos = ref
+            .read(rosterViewModelProvider)
+            .eventsOf(event.childId)
+            .where((e) => e.photoName != null)
+            .toList();
+        openPhotoViewer(context, photos, photos.indexOf(event));
+      },
+      child: Hero(
+        tag: photoHeroTag(event),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Image.file(
+            File('${folder.path}/${event.photoName}'),
+            height: 140,
+            width: double.infinity,
+            fit: BoxFit.cover,
+            cacheWidth: 900,
+          ),
+        ),
       ),
     );
   }

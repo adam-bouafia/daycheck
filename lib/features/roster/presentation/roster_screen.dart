@@ -10,7 +10,7 @@ import 'package:daycheck/features/roster/presentation/widgets/child_tile.dart';
 import 'package:daycheck/features/requests/presentation/requests_screen.dart';
 import 'package:daycheck/features/session/data/role.dart';
 import 'package:daycheck/features/session/presentation/session_viewmodel.dart';
-import 'package:daycheck/features/session/presentation/sign_in_screen.dart';
+import 'package:daycheck/features/settings/presentation/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -73,14 +73,12 @@ class RosterScreen extends ConsumerWidget {
             ),
           ),
           IconButton(
-            tooltip: l10n.signOutTooltip,
-            icon: const Icon(Icons.logout),
-            onPressed: () {
-              ref.read(sessionViewModelProvider.notifier).signOut();
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (_) => const SignInScreen()),
-              );
-            },
+            tooltip: l10n.settingsTitle,
+            icon: const Icon(Icons.settings_outlined),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const SettingsScreen()),
+            ),
           ),
         ],
       ),

@@ -1,19 +1,16 @@
 {
   "@@locale": "nl",
-
   "signInPrompt": "Wie gebruikt DayCheck?",
   "signInDemoNotice": "Alleen een demo-inlog, geen echte login.",
   "roleStaff": "Medewerker",
   "roleStaffSubtitle": "Zie ieder kind, check in/uit, voeg activiteiten toe",
   "roleParentPrompt": "Ouder — kies je naam",
   "roleParentSubtitle": "Zie je kind, alleen lezen",
-
   "appBarStaff": "DayCheck · Medewerker",
   "appBarParent": "DayCheck · {name}",
   "todaysLogTooltip": "Logboek van vandaag",
   "signOutTooltip": "Uitloggen",
   "noChildForGuardian": "Geen kind gevonden voor deze ouder.",
-
   "statusNotArrived": "Niet aangekomen",
   "statusPresent": "Aanwezig",
   "statusDeparted": "Vertrokken",
@@ -22,7 +19,6 @@
   "checkedOutAtBy": "Uitgecheckt om {time} door {name}",
   "notesToday": "{count, plural, one{1 notitie vandaag} other{{count} notities vandaag}}",
   "eventsToday": "{count, plural, one{1 gebeurtenis vandaag} other{{count} gebeurtenissen vandaag}}",
-
   "checkIn": "Inchecken",
   "checkOut": "Uitchecken",
   "addNote": "Notitie toevoegen",
@@ -31,24 +27,19 @@
   "checkedInBy": "Ingecheckt door {name}",
   "checkedOutBy": "Uitgecheckt door {name}",
   "noteBy": "Notitie door {name}",
-
   "checkInChild": "{name} inchecken",
   "checkOutChild": "{name} uitchecken",
   "droppedOffBy": "Afgezet door",
   "pickedUpBy": "Opgehaald door",
-
   "addActivityNoteTitle": "Activiteit toevoegen",
   "whatDidTheyDo": "Wat hebben ze vandaag gedaan?",
   "addPhoto": "Foto toevoegen",
   "photoAdded": "Foto toegevoegd",
   "save": "Opslaan",
-
   "nothingCheckedToday": "Nog niemand in- of uitgecheckt vandaag.",
   "unknownChild": "Onbekend kind",
   "activityNoteLabel": "Activiteitnotitie",
-
   "newActivityNotificationTitle": "Nieuwe activiteit voor {name}",
-
   "requestsTooltip": "Aanvragen",
   "requestsTitle": "Aanvragen",
   "requestTypeLeave": "Verlof",
@@ -66,27 +57,37 @@
   "requestedBy": "Aangevraagd door {name}",
   "newLeaveRequestTitle": "Verlofaanvraag voor {name}",
   "newExtraHoursRequestTitle": "Aanvraag extra uren voor {name}",
-
   "scheduleTooltip": "Planning",
   "scheduleTitle": "Planning",
   "scheduledHours": "Gepland {start}–{end}",
   "notScheduledToday": "Niet gepland op deze dag",
-
   "photosTooltip": "Foto's",
   "photosTitle": "Foto's",
   "noPhotosYet": "Nog geen foto's.",
-
   "addPdf": "PDF toevoegen",
   "pdfAdded": "PDF toegevoegd",
   "attachmentLabel": "Bijlage",
   "openAttachment": "Openen",
   "shareAttachment": "Delen",
   "couldNotOpenAttachment": "Dit bestand kon niet worden geopend.",
-
   "inboxTitle": "Meldingen",
   "inboxTooltip": "Meldingen",
   "noNotificationsYet": "Nog geen meldingen.",
   "markAllRead": "Alles als gelezen markeren",
   "requestApprovedNotificationTitle": "Aanvraag goedgekeurd voor {name}",
-  "requestCancelledNotificationTitle": "Aanvraag geannuleerd voor {name}"
+  "requestCancelledNotificationTitle": "Aanvraag geannuleerd voor {name}",
+  "sharePhoto": "Foto delen",
+  "photoPosition": "{index} van {count}",
+  "settingsTitle": "Instellingen",
+  "languageLabel": "Taal",
+  "languageSystem": "Taal van het toestel",
+  "themeLabel": "Weergave",
+  "themeSystem": "Systeem",
+  "themeLight": "Licht",
+  "themeDark": "Donker",
+  "reduceEffectsLabel": "Minder effecten",
+  "reduceEffectsHint": "Effen panelen in plaats van wazig glas. Soepeler op oudere telefoons.",
+  "activityPopupsLabel": "Pop-ups voor nieuwe activiteit",
+  "requestPopupsLabel": "Pop-ups voor aanvragen",
+  "popupsHint": "Alles komt nog steeds in de meldingenlijst in de app. Deze schakelaars bepalen alleen de pop-up op je telefoon."
 }

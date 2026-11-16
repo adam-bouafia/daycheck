@@ -1,3 +1,7 @@
+import 'package:daycheck/features/settings/presentation/settings_viewmodel.dart';
+
+import '../../settings/fake_settings_repository.dart';
+
 import 'package:daycheck/features/inbox/presentation/inbox_viewmodel.dart';
 import 'package:daycheck/features/roster/data/day_status.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
@@ -23,6 +27,7 @@ void main() {
         rosterRepositoryProvider.overrideWithValue(repo),
         notificationServiceProvider.overrideWithValue(notifications),
         inboxRepositoryProvider.overrideWithValue(inbox),
+        settingsRepositoryProvider.overrideWithValue(FakeSettingsRepository()),
       ],
     );
     addTearDown(container.dispose);
@@ -78,6 +83,33 @@ void main() {
     expect(notifications.sent.single.$2, 'Played outside');
     expect(inbox.items, hasLength(1));
     expect(inbox.items.single.childId, '1');
+  });
+
+  test('with activity pop-ups off, the note still reaches the inbox', () async {
+    final settings = container.read(settingsViewModelProvider.notifier);
+    container.read(rosterViewModelProvider);
+    await Future<void>.delayed(Duration.zero);
+    await settings.setActivityPopups(false);
+
+    await container
+        .read(rosterViewModelProvider.notifier)
+        .addActivityNote('1', 'Nap');
+
+    expect(notifications.sent, isEmpty);
+    expect(inbox.items, hasLength(1));
+  });
+
+  test('the notification uses the language picked in Settings', () async {
+    container.read(settingsViewModelProvider);
+    container.read(rosterViewModelProvider);
+    await Future<void>.delayed(Duration.zero);
+    await container.read(settingsViewModelProvider.notifier).setLanguage('de');
+
+    await container
+        .read(rosterViewModelProvider.notifier)
+        .addActivityNote('1', 'Malen');
+
+    expect(notifications.sent.single.$1, 'Neue Aktivität für Mila de Vries');
   });
 
   test(
