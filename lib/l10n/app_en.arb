@@ -86,5 +86,47 @@
   "newActivityNotificationTitle": "New activity for {name}",
   "@newActivityNotificationTitle": {
     "placeholders": { "name": { "type": "String" } }
-  }
+  },
+
+  "requestsTooltip": "Requests",
+  "requestsTitle": "Requests",
+  "requestTypeLeave": "Leave",
+  "requestTypeExtraHours": "Extra hours",
+  "requestStatusPending": "Pending",
+  "requestStatusApproved": "Approved",
+  "requestStatusCancelled": "Cancelled",
+  "newRequestTitle": "New request",
+  "pickDate": "Pick a date",
+  "noteOptionalHint": "Note (optional)",
+  "submitRequest": "Submit",
+  "approve": "Approve",
+  "cancelRequest": "Cancel",
+  "noRequestsYet": "No requests yet.",
+  "requestedBy": "Requested by {name}",
+  "@requestedBy": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "newLeaveRequestTitle": "Leave request for {name}",
+  "@newLeaveRequestTitle": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "newExtraHoursRequestTitle": "Extra hours request for {name}",
+  "@newExtraHoursRequestTitle": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+
+  "scheduleTooltip": "Schedule",
+  "scheduleTitle": "Schedule",
+  "scheduledHours": "Scheduled {start}–{end}",
+  "@scheduledHours": {
+    "placeholders": {
+      "start": { "type": "String" },
+      "end": { "type": "String" }
+    }
+  },
+  "notScheduledToday": "Not scheduled this day",
+
+  "photosTooltip": "Photos",
+  "photosTitle": "Photos",
+  "noPhotosYet": "No photos yet."
 }

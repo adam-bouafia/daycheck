@@ -337,6 +337,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'New activity for {name}'**
   String newActivityNotificationTitle(String name);
+
+  /// No description provided for @requestsTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Requests'**
+  String get requestsTooltip;
+
+  /// No description provided for @requestsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Requests'**
+  String get requestsTitle;
+
+  /// No description provided for @requestTypeLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave'**
+  String get requestTypeLeave;
+
+  /// No description provided for @requestTypeExtraHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Extra hours'**
+  String get requestTypeExtraHours;
+
+  /// No description provided for @requestStatusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get requestStatusPending;
+
+  /// No description provided for @requestStatusApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get requestStatusApproved;
+
+  /// No description provided for @requestStatusCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get requestStatusCancelled;
+
+  /// No description provided for @newRequestTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New request'**
+  String get newRequestTitle;
+
+  /// No description provided for @pickDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a date'**
+  String get pickDate;
+
+  /// No description provided for @noteOptionalHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
+  String get noteOptionalHint;
+
+  /// No description provided for @submitRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit'**
+  String get submitRequest;
+
+  /// No description provided for @approve.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get approve;
+
+  /// No description provided for @cancelRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancelRequest;
+
+  /// No description provided for @noRequestsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No requests yet.'**
+  String get noRequestsYet;
+
+  /// No description provided for @requestedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested by {name}'**
+  String requestedBy(String name);
+
+  /// No description provided for @newLeaveRequestTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave request for {name}'**
+  String newLeaveRequestTitle(String name);
+
+  /// No description provided for @newExtraHoursRequestTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Extra hours request for {name}'**
+  String newExtraHoursRequestTitle(String name);
+
+  /// No description provided for @scheduleTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule'**
+  String get scheduleTooltip;
+
+  /// No description provided for @scheduleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule'**
+  String get scheduleTitle;
+
+  /// No description provided for @scheduledHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled {start}–{end}'**
+  String scheduledHours(String start, String end);
+
+  /// No description provided for @notScheduledToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Not scheduled this day'**
+  String get notScheduledToday;
+
+  /// No description provided for @photosTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Photos'**
+  String get photosTooltip;
+
+  /// No description provided for @photosTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Photos'**
+  String get photosTitle;
+
+  /// No description provided for @noPhotosYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No photos yet.'**
+  String get noPhotosYet;
 }
 
 class _AppLocalizationsDelegate

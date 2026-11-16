@@ -47,5 +47,32 @@
   "unknownChild": "Onbekend kind",
   "activityNoteLabel": "Activiteitnotitie",
 
-  "newActivityNotificationTitle": "Nieuwe activiteit voor {name}"
+  "newActivityNotificationTitle": "Nieuwe activiteit voor {name}",
+
+  "requestsTooltip": "Aanvragen",
+  "requestsTitle": "Aanvragen",
+  "requestTypeLeave": "Verlof",
+  "requestTypeExtraHours": "Extra uren",
+  "requestStatusPending": "In behandeling",
+  "requestStatusApproved": "Goedgekeurd",
+  "requestStatusCancelled": "Geannuleerd",
+  "newRequestTitle": "Nieuwe aanvraag",
+  "pickDate": "Kies een datum",
+  "noteOptionalHint": "Notitie (optioneel)",
+  "submitRequest": "Indienen",
+  "approve": "Goedkeuren",
+  "cancelRequest": "Annuleren",
+  "noRequestsYet": "Nog geen aanvragen.",
+  "requestedBy": "Aangevraagd door {name}",
+  "newLeaveRequestTitle": "Verlofaanvraag voor {name}",
+  "newExtraHoursRequestTitle": "Aanvraag extra uren voor {name}",
+
+  "scheduleTooltip": "Planning",
+  "scheduleTitle": "Planning",
+  "scheduledHours": "Gepland {start}–{end}",
+  "notScheduledToday": "Niet gepland op deze dag",
+
+  "photosTooltip": "Foto's",
+  "photosTitle": "Foto's",
+  "noPhotosYet": "Nog geen foto's."
 }

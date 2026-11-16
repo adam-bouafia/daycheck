@@ -5,6 +5,7 @@ import 'package:daycheck/features/roster/presentation/child_detail_screen.dart';
 import 'package:daycheck/features/roster/presentation/daily_log_screen.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
 import 'package:daycheck/features/roster/presentation/widgets/child_tile.dart';
+import 'package:daycheck/features/requests/presentation/requests_screen.dart';
 import 'package:daycheck/features/session/data/role.dart';
 import 'package:daycheck/features/session/presentation/session_viewmodel.dart';
 import 'package:daycheck/features/session/presentation/sign_in_screen.dart';
@@ -43,6 +44,14 @@ class RosterScreen extends ConsumerWidget {
                 MaterialPageRoute(builder: (_) => const DailyLogScreen()),
               ),
             ),
+          IconButton(
+            tooltip: l10n.requestsTooltip,
+            icon: const Icon(Icons.event_note_outlined),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const RequestsScreen()),
+            ),
+          ),
           IconButton(
             tooltip: l10n.signOutTooltip,
             icon: const Icon(Icons.logout),

@@ -163,4 +163,84 @@ class AppLocalizationsEn extends AppLocalizations {
   String newActivityNotificationTitle(String name) {
     return 'New activity for $name';
   }
+
+  @override
+  String get requestsTooltip => 'Requests';
+
+  @override
+  String get requestsTitle => 'Requests';
+
+  @override
+  String get requestTypeLeave => 'Leave';
+
+  @override
+  String get requestTypeExtraHours => 'Extra hours';
+
+  @override
+  String get requestStatusPending => 'Pending';
+
+  @override
+  String get requestStatusApproved => 'Approved';
+
+  @override
+  String get requestStatusCancelled => 'Cancelled';
+
+  @override
+  String get newRequestTitle => 'New request';
+
+  @override
+  String get pickDate => 'Pick a date';
+
+  @override
+  String get noteOptionalHint => 'Note (optional)';
+
+  @override
+  String get submitRequest => 'Submit';
+
+  @override
+  String get approve => 'Approve';
+
+  @override
+  String get cancelRequest => 'Cancel';
+
+  @override
+  String get noRequestsYet => 'No requests yet.';
+
+  @override
+  String requestedBy(String name) {
+    return 'Requested by $name';
+  }
+
+  @override
+  String newLeaveRequestTitle(String name) {
+    return 'Leave request for $name';
+  }
+
+  @override
+  String newExtraHoursRequestTitle(String name) {
+    return 'Extra hours request for $name';
+  }
+
+  @override
+  String get scheduleTooltip => 'Schedule';
+
+  @override
+  String get scheduleTitle => 'Schedule';
+
+  @override
+  String scheduledHours(String start, String end) {
+    return 'Scheduled $start–$end';
+  }
+
+  @override
+  String get notScheduledToday => 'Not scheduled this day';
+
+  @override
+  String get photosTooltip => 'Photos';
+
+  @override
+  String get photosTitle => 'Photos';
+
+  @override
+  String get noPhotosYet => 'No photos yet.';
 }

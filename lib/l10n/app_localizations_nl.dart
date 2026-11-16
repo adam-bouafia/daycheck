@@ -163,4 +163,84 @@ class AppLocalizationsNl extends AppLocalizations {
   String newActivityNotificationTitle(String name) {
     return 'Nieuwe activiteit voor $name';
   }
+
+  @override
+  String get requestsTooltip => 'Aanvragen';
+
+  @override
+  String get requestsTitle => 'Aanvragen';
+
+  @override
+  String get requestTypeLeave => 'Verlof';
+
+  @override
+  String get requestTypeExtraHours => 'Extra uren';
+
+  @override
+  String get requestStatusPending => 'In behandeling';
+
+  @override
+  String get requestStatusApproved => 'Goedgekeurd';
+
+  @override
+  String get requestStatusCancelled => 'Geannuleerd';
+
+  @override
+  String get newRequestTitle => 'Nieuwe aanvraag';
+
+  @override
+  String get pickDate => 'Kies een datum';
+
+  @override
+  String get noteOptionalHint => 'Notitie (optioneel)';
+
+  @override
+  String get submitRequest => 'Indienen';
+
+  @override
+  String get approve => 'Goedkeuren';
+
+  @override
+  String get cancelRequest => 'Annuleren';
+
+  @override
+  String get noRequestsYet => 'Nog geen aanvragen.';
+
+  @override
+  String requestedBy(String name) {
+    return 'Aangevraagd door $name';
+  }
+
+  @override
+  String newLeaveRequestTitle(String name) {
+    return 'Verlofaanvraag voor $name';
+  }
+
+  @override
+  String newExtraHoursRequestTitle(String name) {
+    return 'Aanvraag extra uren voor $name';
+  }
+
+  @override
+  String get scheduleTooltip => 'Planning';
+
+  @override
+  String get scheduleTitle => 'Planning';
+
+  @override
+  String scheduledHours(String start, String end) {
+    return 'Gepland $start–$end';
+  }
+
+  @override
+  String get notScheduledToday => 'Niet gepland op deze dag';
+
+  @override
+  String get photosTooltip => 'Foto\'s';
+
+  @override
+  String get photosTitle => 'Foto\'s';
+
+  @override
+  String get noPhotosYet => 'Nog geen foto\'s.';
 }
