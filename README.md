@@ -53,6 +53,10 @@ Feature-first, layered inside each feature:
 ```
 lib/
   core/theme/            shared theme
+  core/localization/     context.l10n extension, device-locale lookup for
+                          code with no BuildContext (e.g. a notification)
+  core/notifications/    local notification when staff post an activity
+  l10n/                  app_en.arb, app_nl.arb and the generated code
   features/roster/
     data/                  Model: Child, DayEvent (check-in/out or an
                             activity note), the status rule, the
@@ -93,8 +97,8 @@ DayCheck's design avoids that exact class of problem by construction:
 | "Stuck on last week," app needs a manual refresh or clearing local data to show new activity | The View doesn't automatically react to new data; something stale is cached and nothing tells the UI to re-read it | Every View uses `ref.watch` on the ViewModel's state. There's no refresh button anywhere, because there's nothing to refresh — the state changes, the View rebuilds, same frame |
 | "I see in the log that a photo was added, but it doesn't show under Media" | Two separate stores (an activity log and a media index) that are supposed to agree, and don't | There's only one store: a photo is a field on the same `DayEvent` that's already in the log. If the event exists, the photo is right there with it — not a second thing that can drift out of sync |
 | Same icon for chat and messages; no way to tell when a gallery photo was taken without opening the timeline | Content is split across separate surfaces (a chat screen, a media gallery, a timeline) that don't share context | One per-child feed: status, check-ins, check-outs and notes-with-photos are all the same list, same timestamps, nothing split out |
-| Language locked to the phone's locale, missing translations, broken templated strings ("changed a one # diaper") | String interpolation done by hand instead of through a real localization system | Not yet relevant to DayCheck (English only so far), but this is exactly the discipline already in my other Flutter project — [MetJou](https://github.com/adam-bouafia/metjou) ships 5 languages through Flutter's `gen-l10n`, with typed arguments, not string concatenation |
-| No push notifications, reported for years | Out of scope for a local-only demo | Would carry over the same approach MetJou already uses (`flutter_local_notifications`) if this grew a background component |
+| Language locked to the phone's locale, missing translations, broken templated strings ("changed a one # diaper") | String interpolation done by hand instead of through a real localization system | Fixed: DayCheck ships English and Dutch through Flutter's `gen-l10n`, with typed, pluralised arguments (`{count, plural, ...}`), not string concatenation — the same discipline already in [MetJou](https://github.com/adam-bouafia/metjou) (5 languages) |
+| No push notifications, reported for years | — | Partially answered, honestly: a local notification fires when staff post an activity note (`flutter_local_notifications`, same as MetJou). This demonstrates the mechanism, not a real fix — a real fix needs a *second device* (the parent's own phone) and a server to push to it, which a single-device local-only demo doesn't have |
 
 What this table does *not* claim: that DayCheck is a finished product, or
 that these are the only reasons a real app has reliability problems
@@ -132,9 +136,12 @@ flutter test
 ```
 
 Covers the status rule as pure logic (including that activity notes don't
-affect attendance), the ViewModel's behaviour with a fake repository
-(check-in, check-out, activity notes with and without a photo), and widget
-tests that drive the full check-in/check-out and add-note flows end to end.
+affect attendance), the ViewModel's behaviour with a fake repository and a
+fake notification service (check-in, check-out, activity notes with and
+without a photo, the notification sent), widget tests that drive the full
+check-in/check-out and add-note flows end to end for both roles, and a
+locale test that renders the sign-in screen in Dutch and checks the real
+translated text, not just that it compiles.
 
 ## CI
 

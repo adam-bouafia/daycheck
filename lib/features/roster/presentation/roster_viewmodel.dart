@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:daycheck/core/localization/app_locale.dart';
+import 'package:daycheck/core/notifications/notification_service.dart';
 import 'package:daycheck/features/roster/data/child.dart';
 import 'package:daycheck/features/roster/data/day_event.dart';
 import 'package:daycheck/features/roster/data/day_status.dart';
@@ -10,6 +12,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// one that reads and writes `SharedPreferences` and the photos folder.
 final rosterRepositoryProvider = Provider<RosterRepository>(
   (ref) => RosterRepository(),
+);
+
+/// DI seam: tests override this with a fake that records calls instead of
+/// touching the real notifications plugin.
+final notificationServiceProvider = Provider<NotificationService>(
+  (ref) => NotificationService(),
 );
 
 /// Resolved once and cached, instead of on every rebuild of a photo tile.
@@ -89,6 +97,14 @@ class RosterViewModel extends Notifier<RosterState> {
         photoName: photoName,
       ),
     );
+    final childName = state.children.firstWhere((c) => c.id == childId).name;
+    final l10n = deviceLocalizations();
+    await ref
+        .read(notificationServiceProvider)
+        .showActivityNotification(
+          l10n.newActivityNotificationTitle(childName),
+          note,
+        );
   }
 
   Future<void> _record(DayEvent event) async {

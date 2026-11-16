@@ -3,16 +3,22 @@ import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../fake_notification_service.dart';
 import '../support.dart';
 
 void main() {
   late FakeRosterRepository repo;
+  late FakeNotificationService notifications;
   late ProviderContainer container;
 
   setUp(() {
     repo = FakeRosterRepository();
+    notifications = FakeNotificationService();
     container = ProviderContainer(
-      overrides: [rosterRepositoryProvider.overrideWithValue(repo)],
+      overrides: [
+        rosterRepositoryProvider.overrideWithValue(repo),
+        notificationServiceProvider.overrideWithValue(notifications),
+      ],
     );
     addTearDown(container.dispose);
   });
@@ -62,6 +68,9 @@ void main() {
     expect(state.statusOf('1'), DayStatus.notArrived);
     expect(state.eventsOf('1').single.note, 'Played outside');
     expect(repo.addedPhotos, isEmpty);
+    expect(notifications.sent, hasLength(1));
+    expect(notifications.sent.single.$1, contains('Mila de Vries'));
+    expect(notifications.sent.single.$2, 'Played outside');
   });
 
   test(

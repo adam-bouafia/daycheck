@@ -1,0 +1,51 @@
+{
+  "@@locale": "nl",
+
+  "signInPrompt": "Wie gebruikt DayCheck?",
+  "signInDemoNotice": "Alleen een demo-inlog, geen echte login.",
+  "roleStaff": "Medewerker",
+  "roleStaffSubtitle": "Zie ieder kind, check in/uit, voeg activiteiten toe",
+  "roleParentPrompt": "Ouder — kies je naam",
+  "roleParentSubtitle": "Zie je kind, alleen lezen",
+
+  "appBarStaff": "DayCheck · Medewerker",
+  "appBarParent": "DayCheck · {name}",
+  "todaysLogTooltip": "Logboek van vandaag",
+  "signOutTooltip": "Uitloggen",
+  "noChildForGuardian": "Geen kind gevonden voor deze ouder.",
+
+  "statusNotArrived": "Niet aangekomen",
+  "statusPresent": "Aanwezig",
+  "statusDeparted": "Vertrokken",
+  "notArrivedYet": "Nog niet aangekomen",
+  "checkedInAtBy": "Ingecheckt om {time} door {name}",
+  "checkedOutAtBy": "Uitgecheckt om {time} door {name}",
+  "notesToday": "{count, plural, one{1 notitie vandaag} other{{count} notities vandaag}}",
+  "eventsToday": "{count, plural, one{1 gebeurtenis vandaag} other{{count} gebeurtenissen vandaag}}",
+
+  "checkIn": "Inchecken",
+  "checkOut": "Uitchecken",
+  "addNote": "Notitie toevoegen",
+  "todaysActivity": "Activiteiten van vandaag",
+  "nothingYetToday": "Nog niets vandaag.",
+  "checkedInBy": "Ingecheckt door {name}",
+  "checkedOutBy": "Uitgecheckt door {name}",
+  "noteBy": "Notitie door {name}",
+
+  "checkInChild": "{name} inchecken",
+  "checkOutChild": "{name} uitchecken",
+  "droppedOffBy": "Afgezet door",
+  "pickedUpBy": "Opgehaald door",
+
+  "addActivityNoteTitle": "Activiteit toevoegen",
+  "whatDidTheyDo": "Wat hebben ze vandaag gedaan?",
+  "addPhoto": "Foto toevoegen",
+  "photoAdded": "Foto toegevoegd",
+  "save": "Opslaan",
+
+  "nothingCheckedToday": "Nog niemand in- of uitgecheckt vandaag.",
+  "unknownChild": "Onbekend kind",
+  "activityNoteLabel": "Activiteitnotitie",
+
+  "newActivityNotificationTitle": "Nieuwe activiteit voor {name}"
+}

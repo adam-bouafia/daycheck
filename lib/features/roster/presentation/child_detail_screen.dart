@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:daycheck/core/localization/app_locale.dart';
 import 'package:daycheck/features/roster/data/child.dart';
 import 'package:daycheck/features/roster/data/day_event.dart';
 import 'package:daycheck/features/roster/data/day_status.dart';
@@ -21,15 +22,16 @@ class ChildDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
     final state = ref.watch(rosterViewModelProvider);
     final isStaff = ref.watch(sessionViewModelProvider).role == Role.staff;
     final status = state.statusOf(child.id);
     final events = state.eventsOf(child.id);
     final scheme = Theme.of(context).colorScheme;
     final (label, color) = switch (status) {
-      DayStatus.notArrived => ('Not arrived', scheme.onSurfaceVariant),
-      DayStatus.present => ('Present', scheme.primary),
-      DayStatus.departed => ('Departed', scheme.tertiary),
+      DayStatus.notArrived => (l10n.statusNotArrived, scheme.onSurfaceVariant),
+      DayStatus.present => (l10n.statusPresent, scheme.primary),
+      DayStatus.departed => (l10n.statusDeparted, scheme.tertiary),
     };
     return Scaffold(
       appBar: AppBar(title: Text(child.name)),
@@ -61,7 +63,7 @@ class ChildDetailScreen extends ConsumerWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '${events.length} ${events.length == 1 ? 'event' : 'events'} today',
+                      l10n.eventsToday(events.length),
                       style: TextStyle(color: scheme.onSurfaceVariant),
                     ),
                   ],
@@ -80,7 +82,9 @@ class ChildDetailScreen extends ConsumerWidget {
                       status == DayStatus.present ? Icons.logout : Icons.login,
                     ),
                     label: Text(
-                      status == DayStatus.present ? 'Check out' : 'Check in',
+                      status == DayStatus.present
+                          ? l10n.checkOut
+                          : l10n.checkIn,
                     ),
                   ),
                 ),
@@ -89,7 +93,7 @@ class ChildDetailScreen extends ConsumerWidget {
                   child: FilledButton.tonalIcon(
                     onPressed: () => openAddNoteSheet(context, child.id),
                     icon: const Icon(Icons.edit_note),
-                    label: const Text('Add note'),
+                    label: Text(l10n.addNote),
                   ),
                 ),
               ],
@@ -97,7 +101,7 @@ class ChildDetailScreen extends ConsumerWidget {
           ],
           const SizedBox(height: 20),
           Text(
-            "Today's activity",
+            l10n.todaysActivity,
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 8),
@@ -105,7 +109,7 @@ class ChildDetailScreen extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 24),
               child: Text(
-                'Nothing yet today.',
+                l10n.nothingYetToday,
                 style: TextStyle(color: scheme.onSurfaceVariant),
               ),
             )
@@ -124,13 +128,14 @@ class _EventTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final time = TimeOfDay.fromDateTime(event.at);
     final clock =
         '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
     final (icon, title) = switch (event.kind) {
-      EventKind.checkIn => (Icons.login, 'Checked in by ${event.by}'),
-      EventKind.checkOut => (Icons.logout, 'Checked out by ${event.by}'),
-      EventKind.activityNote => (Icons.edit_note, 'Note by ${event.by}'),
+      EventKind.checkIn => (Icons.login, l10n.checkedInBy(event.by)),
+      EventKind.checkOut => (Icons.logout, l10n.checkedOutBy(event.by)),
+      EventKind.activityNote => (Icons.edit_note, l10n.noteBy(event.by)),
     };
     final photoName = event.photoName;
     return Card(

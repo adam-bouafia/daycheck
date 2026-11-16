@@ -1,21 +1,34 @@
 import 'package:daycheck/features/roster/data/day_event.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
 import 'package:daycheck/features/session/presentation/sign_in_screen.dart';
+import 'package:daycheck/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../fake_notification_service.dart';
 import '../support.dart';
 
 void main() {
   late FakeRosterRepository repo;
+  late FakeNotificationService notifications;
 
   Widget app() => ProviderScope(
-    overrides: [rosterRepositoryProvider.overrideWithValue(repo)],
-    child: const MaterialApp(home: SignInScreen()),
+    overrides: [
+      rosterRepositoryProvider.overrideWithValue(repo),
+      notificationServiceProvider.overrideWithValue(notifications),
+    ],
+    child: MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: const SignInScreen(),
+    ),
   );
 
-  setUp(() => repo = FakeRosterRepository());
+  setUp(() {
+    repo = FakeRosterRepository();
+    notifications = FakeNotificationService();
+  });
 
   group('staff', () {
     Future<void> signIn(WidgetTester tester) async {
@@ -103,6 +116,7 @@ void main() {
       expect(find.text('Played outside all morning'), findsOneWidget);
       expect(find.text('Not arrived'), findsOneWidget);
       expect(repo.events, hasLength(1));
+      expect(notifications.sent, hasLength(1));
     });
   });
 

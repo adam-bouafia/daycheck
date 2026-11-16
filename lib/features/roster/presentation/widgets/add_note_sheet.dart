@@ -1,3 +1,4 @@
+import 'package:daycheck/core/localization/app_locale.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -51,6 +52,7 @@ class _AddNoteSheetState extends ConsumerState<_AddNoteSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.fromLTRB(
@@ -64,7 +66,7 @@ class _AddNoteSheetState extends ConsumerState<_AddNoteSheet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Add an activity note',
+              l10n.addActivityNoteTitle,
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 12),
@@ -73,21 +75,21 @@ class _AddNoteSheetState extends ConsumerState<_AddNoteSheet> {
               minLines: 2,
               maxLines: 4,
               textCapitalization: TextCapitalization.sentences,
-              decoration: const InputDecoration(
-                hintText: 'What did they do today?',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                hintText: l10n.whatDidTheyDo,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 12),
             OutlinedButton.icon(
               onPressed: _pickPhoto,
               icon: const Icon(Icons.add_a_photo_outlined),
-              label: Text(_photoPath == null ? 'Add a photo' : 'Photo added'),
+              label: Text(_photoPath == null ? l10n.addPhoto : l10n.photoAdded),
             ),
             const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
-              child: FilledButton(onPressed: _save, child: const Text('Save')),
+              child: FilledButton(onPressed: _save, child: Text(l10n.save)),
             ),
           ],
         ),

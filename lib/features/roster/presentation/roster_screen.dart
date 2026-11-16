@@ -1,3 +1,4 @@
+import 'package:daycheck/core/localization/app_locale.dart';
 import 'package:daycheck/features/roster/data/day_event.dart';
 import 'package:daycheck/features/roster/presentation/child_detail_screen.dart';
 import 'package:daycheck/features/roster/presentation/daily_log_screen.dart';
@@ -14,6 +15,7 @@ class RosterScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
     final state = ref.watch(rosterViewModelProvider);
     final session = ref.watch(sessionViewModelProvider);
     final isStaff = session.role == Role.staff;
@@ -25,12 +27,14 @@ class RosterScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          isStaff ? 'DayCheck · Staff' : 'DayCheck · ${session.guardianName}',
+          isStaff
+              ? l10n.appBarStaff
+              : l10n.appBarParent(session.guardianName ?? ''),
         ),
         actions: [
           if (isStaff)
             IconButton(
-              tooltip: "Today's log",
+              tooltip: l10n.todaysLogTooltip,
               icon: const Icon(Icons.history),
               onPressed: () => Navigator.push(
                 context,
@@ -38,7 +42,7 @@ class RosterScreen extends ConsumerWidget {
               ),
             ),
           IconButton(
-            tooltip: 'Sign out',
+            tooltip: l10n.signOutTooltip,
             icon: const Icon(Icons.logout),
             onPressed: () {
               ref.read(sessionViewModelProvider.notifier).signOut();
@@ -52,7 +56,7 @@ class RosterScreen extends ConsumerWidget {
       body: state.children.isEmpty
           ? const Center(child: CircularProgressIndicator())
           : visibleChildren.isEmpty
-          ? const Center(child: Text('No child found for this guardian.'))
+          ? Center(child: Text(l10n.noChildForGuardian))
           : ListView(
               padding: const EdgeInsets.all(12),
               children: [

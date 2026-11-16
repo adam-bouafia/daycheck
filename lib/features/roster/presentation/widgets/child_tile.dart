@@ -1,6 +1,8 @@
+import 'package:daycheck/core/localization/app_locale.dart';
 import 'package:daycheck/features/roster/data/child.dart';
 import 'package:daycheck/features/roster/data/day_event.dart';
 import 'package:daycheck/features/roster/data/day_status.dart';
+import 'package:daycheck/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class ChildTile extends StatelessWidget {
@@ -21,25 +23,27 @@ class ChildTile extends StatelessWidget {
   final int noteCount;
   final VoidCallback onTap;
 
-  String get _subtitle {
+  String _attendanceLine(AppLocalizations l10n) {
     final event = lastAttendance;
-    if (event == null) return 'Not arrived yet';
+    if (event == null) return l10n.notArrivedYet;
     final time = TimeOfDay.fromDateTime(event.at).format24();
     return switch (status) {
-      DayStatus.present => 'Checked in at $time by ${event.by}',
-      DayStatus.departed => 'Checked out at $time by ${event.by}',
-      DayStatus.notArrived => 'Not arrived yet',
+      DayStatus.present => l10n.checkedInAtBy(time, event.by),
+      DayStatus.departed => l10n.checkedOutAtBy(time, event.by),
+      DayStatus.notArrived => l10n.notArrivedYet,
     };
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     final (label, color) = switch (status) {
-      DayStatus.notArrived => ('Not arrived', scheme.onSurfaceVariant),
-      DayStatus.present => ('Present', scheme.primary),
-      DayStatus.departed => ('Departed', scheme.tertiary),
+      DayStatus.notArrived => (l10n.statusNotArrived, scheme.onSurfaceVariant),
+      DayStatus.present => (l10n.statusPresent, scheme.primary),
+      DayStatus.departed => (l10n.statusDeparted, scheme.tertiary),
     };
+    final attendanceLine = _attendanceLine(l10n);
     return Card(
       child: ListTile(
         onTap: onTap,
@@ -47,8 +51,8 @@ class ChildTile extends StatelessWidget {
         title: Text(child.name),
         subtitle: Text(
           noteCount == 0
-              ? _subtitle
-              : '$_subtitle · $noteCount ${noteCount == 1 ? 'note' : 'notes'} today',
+              ? attendanceLine
+              : '$attendanceLine · ${l10n.notesToday(noteCount)}',
         ),
         trailing: Chip(
           label: Text(label),

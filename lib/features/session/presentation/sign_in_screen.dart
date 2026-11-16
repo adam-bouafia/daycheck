@@ -1,3 +1,4 @@
+import 'package:daycheck/core/localization/app_locale.dart';
 import 'package:daycheck/features/roster/presentation/roster_screen.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
 import 'package:daycheck/features/session/presentation/session_viewmodel.dart';
@@ -14,6 +15,7 @@ class SignInScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
     final children = ref.watch(rosterViewModelProvider).children;
     final guardians = {for (final c in children) ...c.guardians}.toList()
       ..sort();
@@ -23,12 +25,12 @@ class SignInScreen extends ConsumerWidget {
         padding: const EdgeInsets.all(20),
         children: [
           Text(
-            "Who's using DayCheck?",
+            l10n.signInPrompt,
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 4),
           Text(
-            'Demo sign-in only, not a real login.',
+            l10n.signInDemoNotice,
             style: TextStyle(
               color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
@@ -37,10 +39,8 @@ class SignInScreen extends ConsumerWidget {
           Card(
             child: ListTile(
               leading: const Icon(Icons.badge_outlined),
-              title: const Text('Staff'),
-              subtitle: const Text(
-                'See every child, check them in/out, add activity notes',
-              ),
+              title: Text(l10n.roleStaff),
+              subtitle: Text(l10n.roleStaffSubtitle),
               onTap: () {
                 ref.read(sessionViewModelProvider.notifier).signInAsStaff();
                 _enterRoster(context);
@@ -49,7 +49,7 @@ class SignInScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'Parent — pick your name',
+            l10n.roleParentPrompt,
             style: Theme.of(context).textTheme.titleSmall,
           ),
           const SizedBox(height: 8),
@@ -58,7 +58,7 @@ class SignInScreen extends ConsumerWidget {
               child: ListTile(
                 leading: const Icon(Icons.family_restroom_outlined),
                 title: Text(guardian),
-                subtitle: const Text('See your child, read-only'),
+                subtitle: Text(l10n.roleParentSubtitle),
                 onTap: () {
                   ref
                       .read(sessionViewModelProvider.notifier)

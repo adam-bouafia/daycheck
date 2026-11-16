@@ -1,3 +1,4 @@
+import 'package:daycheck/core/localization/app_locale.dart';
 import 'package:daycheck/features/roster/data/child.dart';
 import 'package:daycheck/features/roster/data/day_status.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
@@ -51,6 +52,7 @@ class _CheckSheetState extends ConsumerState<_CheckSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
@@ -60,13 +62,13 @@ class _CheckSheetState extends ConsumerState<_CheckSheet> {
           children: [
             Text(
               widget.checkingIn
-                  ? 'Check in ${widget.child.name}'
-                  : 'Check out ${widget.child.name}',
+                  ? l10n.checkInChild(widget.child.name)
+                  : l10n.checkOutChild(widget.child.name),
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 8),
             Text(
-              widget.checkingIn ? 'Dropped off by' : 'Picked up by',
+              widget.checkingIn ? l10n.droppedOffBy : l10n.pickedUpBy,
               style: Theme.of(context).textTheme.titleSmall,
             ),
             RadioGroup<String>(
@@ -88,7 +90,7 @@ class _CheckSheetState extends ConsumerState<_CheckSheet> {
               width: double.infinity,
               child: FilledButton(
                 onPressed: _confirm,
-                child: Text(widget.checkingIn ? 'Check in' : 'Check out'),
+                child: Text(widget.checkingIn ? l10n.checkIn : l10n.checkOut),
               ),
             ),
           ],

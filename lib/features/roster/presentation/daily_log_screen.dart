@@ -1,3 +1,4 @@
+import 'package:daycheck/core/localization/app_locale.dart';
 import 'package:daycheck/features/roster/data/day_event.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -8,27 +9,37 @@ class DailyLogScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
     final state = ref.watch(rosterViewModelProvider);
     final events = [...state.events]..sort((a, b) => b.at.compareTo(a.at));
     final names = {for (final c in state.children) c.id: c.name};
     return Scaffold(
-      appBar: AppBar(title: const Text("Today's log")),
+      appBar: AppBar(title: Text(l10n.todaysLogTooltip)),
       body: events.isEmpty
-          ? const Center(child: Text('Nothing checked in or out yet today.'))
+          ? Center(child: Text(l10n.nothingCheckedToday))
           : ListView.builder(
               itemCount: events.length,
               itemBuilder: (context, index) {
                 final event = events[index];
                 final time = TimeOfDay.fromDateTime(event.at);
-                final (icon, label) = switch (event.kind) {
-                  EventKind.checkIn => (Icons.login, 'Checked in'),
-                  EventKind.checkOut => (Icons.logout, 'Checked out'),
-                  EventKind.activityNote => (Icons.edit_note, 'Activity note'),
+                final (icon, subtitle) = switch (event.kind) {
+                  EventKind.checkIn => (
+                    Icons.login,
+                    l10n.checkedInBy(event.by),
+                  ),
+                  EventKind.checkOut => (
+                    Icons.logout,
+                    l10n.checkedOutBy(event.by),
+                  ),
+                  EventKind.activityNote => (
+                    Icons.edit_note,
+                    l10n.noteBy(event.by),
+                  ),
                 };
                 return ListTile(
                   leading: Icon(icon),
-                  title: Text(names[event.childId] ?? 'Unknown child'),
-                  subtitle: Text('$label by ${event.by}'),
+                  title: Text(names[event.childId] ?? l10n.unknownChild),
+                  subtitle: Text(subtitle),
                   trailing: Text(
                     '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}',
                   ),
