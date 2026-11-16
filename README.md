@@ -134,7 +134,7 @@ flutter run
 flutter test
 ```
 
-59 tests: login (wrong password, saved session), the status and schedule rules as pure logic, every ViewModel
+60 tests: login (wrong password, saved session), the status and schedule rules as pure logic, every ViewModel
 with fake repositories (check-in/out, notes with photos and PDFs,
 requests, inbox, settings), the pop-up switches, language fallback,
 widget tests that log in as staff and as a parent and drive each home, and rendering in Dutch,

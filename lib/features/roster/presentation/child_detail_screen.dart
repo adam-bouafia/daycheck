@@ -72,6 +72,18 @@ class ChildDetailScreen extends ConsumerWidget {
                   openAbsentSheet(context, child);
                 },
               ),
+            if (status != DayStatus.notArrived)
+              ListTile(
+                leading: const Icon(Icons.home_outlined),
+                title: Text(l10n.statusNotArrived),
+                subtitle: Text(l10n.notArrivedHint),
+                onTap: () {
+                  Navigator.pop(sheet);
+                  ref
+                      .read(rosterViewModelProvider.notifier)
+                      .setNotArrived(child.id);
+                },
+              ),
             if (undoLabel != null)
               ListTile(
                 leading: const Icon(Icons.undo),

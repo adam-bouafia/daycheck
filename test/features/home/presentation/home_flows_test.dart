@@ -247,6 +247,35 @@ void main() {
     expect(t.roster.events, isEmpty);
   });
 
+  testWidgets('Not arrived in the status menu clears the day in one step', (
+    tester,
+  ) async {
+    final now = DateTime.now();
+    t.roster.events = [
+      DayEvent(childId: '1', at: now, kind: EventKind.checkIn, by: 'Tom'),
+      DayEvent(childId: '1', at: now, kind: EventKind.checkOut, by: 'Tom'),
+      DayEvent(
+        childId: '1',
+        at: now,
+        kind: EventKind.activityNote,
+        by: 'Sara Bakker',
+        note: 'Painted a tree',
+      ),
+    ];
+    await start(tester, 'sara');
+    await tester.tap(find.text('Mila de Vries'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const Key('status-chip')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Not arrived'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Not arrived'), findsOneWidget);
+    expect(find.text('Painted a tree'), findsOneWidget);
+    expect(t.roster.events.single.kind, EventKind.activityNote);
+  });
+
   testWidgets('staff can reset the demo data from Settings', (tester) async {
     t.roster.events = [
       DayEvent(

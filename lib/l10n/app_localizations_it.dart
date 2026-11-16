@@ -442,4 +442,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get resetDemoDone => 'Dati demo azzerati';
+
+  @override
+  String get notArrivedHint => 'Cancella entrata, uscita e assenza di oggi';
 }

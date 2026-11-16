@@ -443,4 +443,8 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get resetDemoDone => 'Démo réinitialisée';
+
+  @override
+  String get notArrivedHint =>
+      'Effacer l\'arrivée, le départ et l\'absence d\'aujourd\'hui';
 }

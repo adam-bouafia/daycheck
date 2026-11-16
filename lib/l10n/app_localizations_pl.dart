@@ -449,4 +449,8 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get resetDemoDone => 'Dane demo wyczyszczone';
+
+  @override
+  String get notArrivedHint =>
+      'Wyczyść dzisiejsze przyjście, odbiór i nieobecność';
 }

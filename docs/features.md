@@ -60,7 +60,8 @@ checked in after all.
 
 Tapping the status chip on a child's screen ("Present", "Absent", ...)
 opens every change that makes sense from there: check in, check out,
-mark absent, or **Undo** the last one when it was a mistake. An undo
+mark absent, back to **Not arrived** (clears today's attendance, keeps
+notes and photos), or **Undo** the last one when it was a mistake. An undo
 notifies the family too, since they were told about the original.
 Staff can also **Reset demo data** in Settings to start a clean day.
 

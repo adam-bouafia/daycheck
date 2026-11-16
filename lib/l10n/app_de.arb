@@ -117,5 +117,6 @@
   "eventUndone": "Zurückgenommen: {what}",
   "resetDemo": "Demodaten zurücksetzen",
   "resetDemoHint": "Löscht alle Anmeldungen, Notizen, Anträge und Benachrichtigungen für einen sauberen Tag. Kinder und Konten bleiben.",
-  "resetDemoDone": "Demodaten zurückgesetzt"
+  "resetDemoDone": "Demodaten zurückgesetzt",
+  "notArrivedHint": "Heutige Ankunft, Abholung und Abwesenheit löschen"
 }

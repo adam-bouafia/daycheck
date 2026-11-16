@@ -451,4 +451,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get resetDemoDone => 'تمت إعادة ضبط بيانات العرض';
+
+  @override
+  String get notArrivedHint => 'مسح وصول اليوم واستلامه وغيابه';
 }

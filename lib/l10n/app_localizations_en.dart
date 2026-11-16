@@ -442,4 +442,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get resetDemoDone => 'Demo data reset';
+
+  @override
+  String get notArrivedHint => 'Clear today\'s check-in, pick-up and absence';
 }

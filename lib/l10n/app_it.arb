@@ -117,5 +117,6 @@
   "eventUndone": "Annullato: {what}",
   "resetDemo": "Azzera dati demo",
   "resetDemoHint": "Cancella entrate, note, richieste e notifiche per ripartire da una giornata pulita. Bambini e account restano.",
-  "resetDemoDone": "Dati demo azzerati"
+  "resetDemoDone": "Dati demo azzerati",
+  "notArrivedHint": "Cancella entrata, uscita e assenza di oggi"
 }

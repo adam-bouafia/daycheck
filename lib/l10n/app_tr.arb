@@ -117,5 +117,6 @@
   "eventUndone": "Geri alındı: {what}",
   "resetDemo": "Demo verilerini sıfırla",
   "resetDemoHint": "Temiz bir güne başlamak için tüm girişleri, notları, talepleri ve bildirimleri siler. Çocuklar ve hesaplar kalır.",
-  "resetDemoDone": "Demo verileri sıfırlandı"
+  "resetDemoDone": "Demo verileri sıfırlandı",
+  "notArrivedHint": "Bugünkü giriş, alınma ve devamsızlığı temizle"
 }

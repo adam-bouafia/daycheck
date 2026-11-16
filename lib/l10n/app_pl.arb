@@ -117,5 +117,6 @@
   "eventUndone": "Cofnięto: {what}",
   "resetDemo": "Wyczyść dane demo",
   "resetDemoHint": "Usuwa wszystkie przyjścia, notatki, wnioski i powiadomienia, aby zacząć czysty dzień. Dzieci i konta zostają.",
-  "resetDemoDone": "Dane demo wyczyszczone"
+  "resetDemoDone": "Dane demo wyczyszczone",
+  "notArrivedHint": "Wyczyść dzisiejsze przyjście, odbiór i nieobecność"
 }

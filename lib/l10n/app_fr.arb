@@ -117,5 +117,6 @@
   "eventUndone": "Annulé : {what}",
   "resetDemo": "Réinitialiser la démo",
   "resetDemoHint": "Supprime les arrivées, notes, demandes et notifications pour repartir d'une journée vierge. Les enfants et les comptes restent.",
-  "resetDemoDone": "Démo réinitialisée"
+  "resetDemoDone": "Démo réinitialisée",
+  "notArrivedHint": "Effacer l'arrivée, le départ et l'absence d'aujourd'hui"
 }

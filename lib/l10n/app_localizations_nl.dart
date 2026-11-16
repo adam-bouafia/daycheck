@@ -442,4 +442,8 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get resetDemoDone => 'Demogegevens gewist';
+
+  @override
+  String get notArrivedHint =>
+      'Inchecken, ophalen en afwezigheid van vandaag wissen';
 }

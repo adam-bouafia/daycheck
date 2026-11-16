@@ -442,4 +442,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get resetDemoDone => 'Demo verileri sıfırlandı';
+
+  @override
+  String get notArrivedHint => 'Bugünkü giriş, alınma ve devamsızlığı temizle';
 }

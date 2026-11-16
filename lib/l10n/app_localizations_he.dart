@@ -443,4 +443,7 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get resetDemoDone => 'נתוני ההדגמה אופסו';
+
+  @override
+  String get notArrivedHint => 'מחיקת ההגעה, האיסוף וההיעדרות של היום';
 }

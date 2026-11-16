@@ -117,5 +117,6 @@
   "eventUndone": "Teruggedraaid: {what}",
   "resetDemo": "Demogegevens wissen",
   "resetDemoHint": "Wist alle check-ins, notities, aanvragen en meldingen, zodat je met een schone dag begint. Kinderen en accounts blijven.",
-  "resetDemoDone": "Demogegevens gewist"
+  "resetDemoDone": "Demogegevens gewist",
+  "notArrivedHint": "Inchecken, ophalen en afwezigheid van vandaag wissen"
 }

@@ -443,4 +443,8 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get resetDemoDone => 'Demodaten zurückgesetzt';
+
+  @override
+  String get notArrivedHint =>
+      'Heutige Ankunft, Abholung und Abwesenheit löschen';
 }

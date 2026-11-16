@@ -174,6 +174,30 @@ class RosterViewModel extends Notifier<RosterState> {
     );
   }
 
+  /// Puts a child back to "not arrived": removes today's check-ins,
+  /// pick-ups and absences for them. Notes and photos stay.
+  Future<void> setNotArrived(String childId) async {
+    final today = state.attendanceOf(childId).toSet();
+    if (today.isEmpty) return;
+    final events = [
+      for (final e in state.events)
+        if (!today.contains(e)) e,
+    ];
+    await _repo.saveEvents(events);
+    state = RosterState(
+      children: state.children,
+      events: events,
+      schedules: state.schedules,
+    );
+    final l10n = _l10n;
+    await _notifyFamily(
+      childId,
+      l10n.correctionNotificationTitle(_nameOf(childId)),
+      l10n.eventUndone(l10n.statusNotArrived),
+      popup: _settings.attendancePopups,
+    );
+  }
+
   /// Demo only: back to the seeded children with an empty day.
   Future<void> resetDemoData() async {
     await _repo.saveEvents(const []);

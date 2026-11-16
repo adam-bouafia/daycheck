@@ -819,6 +819,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Demo data reset'**
   String get resetDemoDone;
+
+  /// No description provided for @notArrivedHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear today\'s check-in, pick-up and absence'**
+  String get notArrivedHint;
 }
 
 class _AppLocalizationsDelegate
