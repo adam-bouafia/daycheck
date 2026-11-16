@@ -1,4 +1,5 @@
 site_name: DayCheck
+site_url: https://adam-bouafia.github.io/daycheck/
 site_description: Daycare app in Flutter with Riverpod and MVVM
 repo_url: https://github.com/adam-bouafia/daycheck
 repo_name: adam-bouafia/daycheck

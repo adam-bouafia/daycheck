@@ -5,8 +5,11 @@ architecture from the start. Staff check children in and out and share
 the day with parents; parents follow along, get notified, and send leave
 or extra-hours requests.
 
-Full documentation (architecture, features, design, stack):
-`docs/`, built with MkDocs. Preview it with `docs/serve.sh`.
+Documentation (architecture, features, design, stack):
+https://adam-bouafia.github.io/daycheck/
+
+Test accounts: `sara` / `sara123` (staff) and `amina` / `amina123`
+(parent); all of them are listed on the login screen.
 
 ## What it does
 
