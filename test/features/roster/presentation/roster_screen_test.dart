@@ -1,5 +1,6 @@
-import 'package:daycheck/features/roster/presentation/roster_screen.dart';
+import 'package:daycheck/features/roster/data/day_event.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
+import 'package:daycheck/features/session/presentation/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -11,39 +12,54 @@ void main() {
 
   Widget app() => ProviderScope(
     overrides: [rosterRepositoryProvider.overrideWithValue(repo)],
-    child: const MaterialApp(home: RosterScreen()),
+    child: const MaterialApp(home: SignInScreen()),
   );
 
   setUp(() => repo = FakeRosterRepository());
 
-  testWidgets('a child starts not arrived, then present after checking in', (
-    tester,
-  ) async {
-    await tester.pumpWidget(app());
-    await tester.pumpAndSettle();
-
-    expect(find.text('Not arrived'), findsOneWidget);
-
-    await tester.tap(find.text('Mila de Vries'));
-    await tester.pumpAndSettle();
-    expect(find.text('Check in'), findsOneWidget);
-
-    await tester.tap(find.text('Check in'));
-    await tester.pumpAndSettle();
-    expect(find.text('Dropped off by'), findsOneWidget);
-
-    await tester.tap(find.text('Check in').last);
-    await tester.pumpAndSettle();
-
-    expect(find.text('Present'), findsOneWidget);
-    expect(find.text('1 event today'), findsOneWidget);
-  });
-
-  testWidgets(
-    'a checked-in child can be checked out, and it appears in the log',
-    (tester) async {
+  group('staff', () {
+    Future<void> signIn(WidgetTester tester) async {
       await tester.pumpWidget(app());
       await tester.pumpAndSettle();
+      await tester.tap(find.text('Staff'));
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('sees every child, each starting not arrived', (tester) async {
+      await signIn(tester);
+
+      expect(find.text('Mila de Vries'), findsOneWidget);
+      expect(find.text('Noah Jansen'), findsOneWidget);
+      expect(find.text('Not arrived'), findsNWidgets(2));
+    });
+
+    testWidgets(
+      'checking a child in makes them present, leaves the other alone',
+      (tester) async {
+        await signIn(tester);
+
+        await tester.tap(find.text('Mila de Vries'));
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('Check in'));
+        await tester.pumpAndSettle();
+        expect(find.text('Dropped off by'), findsOneWidget);
+        await tester.tap(find.text('Check in').last);
+        await tester.pumpAndSettle();
+
+        expect(find.text('Present'), findsOneWidget);
+        expect(find.text('1 event today'), findsOneWidget);
+
+        await tester.pageBack();
+        await tester.pumpAndSettle();
+        expect(find.text('Present'), findsOneWidget);
+        expect(find.text('Not arrived'), findsOneWidget);
+      },
+    );
+
+    testWidgets('checking out and the daily log across children', (
+      tester,
+    ) async {
+      await signIn(tester);
 
       await tester.tap(find.text('Mila de Vries'));
       await tester.pumpAndSettle();
@@ -68,20 +84,15 @@ void main() {
       expect(find.text("Today's log"), findsOneWidget);
       expect(find.text('Checked out by Tom de Vries'), findsOneWidget);
       expect(find.text('Checked in by Sanne de Vries'), findsOneWidget);
-    },
-  );
+    });
 
-  testWidgets(
-    'adding an activity note shows it on the detail screen but does not check the child in',
-    (tester) async {
-      await tester.pumpWidget(app());
-      await tester.pumpAndSettle();
+    testWidgets('an activity note does not check the child in', (tester) async {
+      await signIn(tester);
 
       await tester.tap(find.text('Mila de Vries'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Add note'));
       await tester.pumpAndSettle();
-
       await tester.enterText(
         find.byType(TextField),
         'Played outside all morning',
@@ -92,6 +103,51 @@ void main() {
       expect(find.text('Played outside all morning'), findsOneWidget);
       expect(find.text('Not arrived'), findsOneWidget);
       expect(repo.events, hasLength(1));
-    },
-  );
+    });
+  });
+
+  group('parent', () {
+    testWidgets('only sees their own child, and cannot check in or out', (
+      tester,
+    ) async {
+      await tester.pumpWidget(app());
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Lotte Jansen'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Noah Jansen'), findsOneWidget);
+      expect(find.text('Mila de Vries'), findsNothing);
+      // Staff-only actions don't show in the app bar for a parent.
+      expect(find.byIcon(Icons.history), findsNothing);
+
+      await tester.tap(find.text('Noah Jansen'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Check in'), findsNothing);
+      expect(find.text('Add note'), findsNothing);
+    });
+
+    testWidgets('sees an activity note staff added, read-only', (tester) async {
+      repo.events = [
+        DayEvent(
+          childId: '2',
+          at: DateTime.now(),
+          kind: EventKind.activityNote,
+          by: 'Staff',
+          note: 'Had a great nap',
+        ),
+      ];
+      await tester.pumpWidget(app());
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Lotte Jansen'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Noah Jansen'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Had a great nap'), findsOneWidget);
+      expect(find.text('Check in'), findsNothing);
+    });
+  });
 }

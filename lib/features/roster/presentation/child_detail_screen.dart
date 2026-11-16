@@ -6,11 +6,14 @@ import 'package:daycheck/features/roster/data/day_status.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
 import 'package:daycheck/features/roster/presentation/widgets/add_note_sheet.dart';
 import 'package:daycheck/features/roster/presentation/widgets/check_sheet.dart';
+import 'package:daycheck/features/session/data/role.dart';
+import 'package:daycheck/features/session/presentation/session_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// One child's full day: status, check-in/out, and the activity feed
-/// (notes and photos) shared by staff.
+/// (notes and photos) shared by staff. Staff can check in/out and add
+/// notes; a parent gets the same feed read-only.
 class ChildDetailScreen extends ConsumerWidget {
   const ChildDetailScreen({super.key, required this.child});
 
@@ -19,6 +22,7 @@ class ChildDetailScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(rosterViewModelProvider);
+    final isStaff = ref.watch(sessionViewModelProvider).role == Role.staff;
     final status = state.statusOf(child.id);
     final events = state.eventsOf(child.id);
     final scheme = Theme.of(context).colorScheme;
@@ -65,30 +69,32 @@ class ChildDetailScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              Expanded(
-                child: OutlinedButton.icon(
-                  onPressed: () => openCheckSheet(context, child, status),
-                  icon: Icon(
-                    status == DayStatus.present ? Icons.logout : Icons.login,
-                  ),
-                  label: Text(
-                    status == DayStatus.present ? 'Check out' : 'Check in',
+          if (isStaff) ...[
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: () => openCheckSheet(context, child, status),
+                    icon: Icon(
+                      status == DayStatus.present ? Icons.logout : Icons.login,
+                    ),
+                    label: Text(
+                      status == DayStatus.present ? 'Check out' : 'Check in',
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: FilledButton.tonalIcon(
-                  onPressed: () => openAddNoteSheet(context, child.id),
-                  icon: const Icon(Icons.edit_note),
-                  label: const Text('Add note'),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: FilledButton.tonalIcon(
+                    onPressed: () => openAddNoteSheet(context, child.id),
+                    icon: const Icon(Icons.edit_note),
+                    label: const Text('Add note'),
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
+          ],
           const SizedBox(height: 20),
           Text(
             "Today's activity",

@@ -22,7 +22,7 @@ void main() {
     await Future<void>.delayed(Duration.zero);
 
     final state = container.read(rosterViewModelProvider);
-    expect(state.children, hasLength(1));
+    expect(state.children, hasLength(2));
     expect(state.children.first.name, 'Mila de Vries');
   });
 

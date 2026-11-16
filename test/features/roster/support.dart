@@ -13,6 +13,7 @@ class FakeRosterRepository implements RosterRepository {
       name: 'Mila de Vries',
       guardians: ['Sanne de Vries', 'Tom de Vries'],
     ),
+    Child(id: '2', name: 'Noah Jansen', guardians: ['Lotte Jansen']),
   ];
   List<DayEvent> events = [];
 

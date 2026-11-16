@@ -22,11 +22,29 @@ a generic daycare administration problem, built from scratch.
   Activity notes are also events, but a different kind, and are excluded
   when deriving attendance.
 - A log screen lists every check-in, check-out and activity note for today,
-  across all children.
+  across all children (staff only — see below).
 - Everything is stored on the device (`shared_preferences` for the log,
   the app's own documents folder for photos). There is no backend and no
   account, the same local-first choice as my other Flutter project,
   [MetJou](https://github.com/adam-bouafia/metjou).
+
+## Two roles, not one
+
+Real daycare apps in this domain (this one included, as a reference point)
+ship as two separate apps: one for staff, one for parents. DayCheck models
+that distinction with a lightweight sign-in instead of building two apps:
+
+- **Staff** see every child, can check any child in or out (recording who
+  dropped off or picked up), and can add activity notes with photos.
+- **Parent** picks their own name and sees only their own child or
+  children, read-only: no check-in/out, no add-note, no cross-family
+  daily log.
+
+The sign-in (`features/session/`) is a deliberate demo stand-in for real
+authentication — no password, nothing persisted, just enough to gate what
+the roster and child detail screen show and allow, the way a real login
+would. "Admin" (billing, staff scheduling, org settings) is a different
+concern again and isn't modelled here.
 
 ## Architecture
 
@@ -42,7 +60,7 @@ lib/
     presentation/
       roster_viewmodel.dart     ViewModel: a Riverpod Notifier holding the
                                   roster and today's events
-      roster_screen.dart        View: the roster list
+      roster_screen.dart        View: the roster list, filtered by role
       child_detail_screen.dart  View: one child's status, actions and feed
       daily_log_screen.dart     View: every event today, across children
       widgets/
@@ -50,6 +68,11 @@ lib/
                                   state - who is picked, not shared elsewhere)
         add_note_sheet.dart     View: the activity-note form (text + photo)
         child_tile.dart         View: one row in the roster
+  features/session/
+    data/role.dart             Model: Role (staff or parent)
+    presentation/
+      session_viewmodel.dart   ViewModel: who is signed in, and as whom
+      sign_in_screen.dart      View: pick a role (demo stand-in for login)
 ```
 
 The repository is injected through a Riverpod provider
