@@ -7,6 +7,7 @@ import 'package:daycheck/features/roster/data/child.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
 import 'package:daycheck/features/session/data/role.dart';
 import 'package:daycheck/features/session/presentation/session_viewmodel.dart';
+import 'package:daycheck/core/widgets/settings_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -59,8 +60,12 @@ class RequestsScreen extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: AppBar(title: Text(l10n.requestsTitle)),
-      floatingActionButton: myChildren.isEmpty
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        title: Text(l10n.requestsTitle),
+        actions: const [SettingsButton()],
+      ),
+      floatingActionButton: isStaff || myChildren.isEmpty
           ? null
           : FloatingActionButton(
               onPressed: () => _newRequest(
@@ -73,7 +78,6 @@ class RequestsScreen extends ConsumerWidget {
             ),
       body: GlassBackground(
         child: SafeArea(
-          top: false,
           child: visible.isEmpty
               ? Center(child: Text(l10n.noRequestsYet))
               : ListView.builder(

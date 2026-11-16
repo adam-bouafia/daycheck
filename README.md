@@ -33,8 +33,14 @@ Full documentation (architecture, features, design, stack):
   approve or cancel. Every decision lands in the parent's notifications.
 - **Schedule calendar** per child: a month view with the days they attend
   and the hours for the selected day.
-- **Two roles**: staff see every child and can act; parents see only
-  their own children, read-only.
+- **Login with test accounts** (2 staff, 5 parents; listed on the login
+  screen). The session survives an app restart; only the username is
+  stored.
+- **Two separate apps in one**: staff get the daycare home (attendance
+  count, every child, check in/out, post notes, photos and PDFs, the day's
+  log, approve requests). Parents get the family home (where their child
+  is right now, today's feed, photos, their requests). Not one screen
+  with parts hidden.
 - **Nine languages**: Dutch, English, French, Polish, German, Turkish,
   Italian, Hebrew and Arabic, switchable in the app. Hebrew and Arabic
   lay the whole app out right to left.
@@ -69,7 +75,9 @@ lib/
     requests/            leave and extra-hours requests
     inbox/               the in-app notification list
     settings/            language, theme, pop-ups, reduce effects
-    session/             demo sign-in as staff or a parent
+    session/             test accounts, login, the saved session
+    home/                staff home and parent home (bottom tabs), the
+                         gate that picks one after login
 ```
 
 Every repository is injected through a Riverpod provider, so tests swap
@@ -114,10 +122,10 @@ flutter run
 flutter test
 ```
 
-46 tests: the status and schedule rules as pure logic, every ViewModel
+49 tests: login (wrong password, saved session), the status and schedule rules as pure logic, every ViewModel
 with fake repositories (check-in/out, notes with photos and PDFs,
 requests, inbox, settings), the pop-up switches, language fallback,
-widget tests for the full staff and parent flows, and rendering in Dutch,
+widget tests that log in as staff and as a parent and drive each home, and rendering in Dutch,
 Arabic and Hebrew (including right-to-left layout).
 
 ## CI

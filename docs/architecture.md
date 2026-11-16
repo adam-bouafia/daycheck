@@ -55,7 +55,8 @@ lib/
     notifications/          NotificationService (local pop-ups)
   l10n/                     app_<lang>.arb (nine languages) and the generated classes
   features/
-    session/                Role, SessionViewModel, sign-in screen
+    session/                Account, test accounts, SessionRepository, SessionViewModel, login
+    home/                   HomeGate, staff home, parent home, parent Today screen
     roster/
       data/                 Child, DayEvent, Schedule, status rule, RosterRepository
       presentation/         RosterViewModel; roster, child detail, daily log,
@@ -114,6 +115,23 @@ sequenceDiagram
 
 The in-app list always gets the entry. The pop-up is optional and
 controlled per kind in Settings.
+
+## One app, two homes
+
+`HomeGate` is the app's first screen. It watches the session and shows
+the login screen, the staff home or the parent home. Logging in or out
+only changes the session; no screen navigates to another role's home, so
+there is no way to end up on the wrong one.
+
+```mermaid
+flowchart LR
+  G{HomeGate} -->|no session| L[Login]
+  G -->|staff| S[Staff home<br/>Children, Log, Requests, Notifications]
+  G -->|parent| P[Parent home<br/>Today, Photos, Requests, Notifications]
+  L -->|signIn| G
+  S -->|signOut| G
+  P -->|signOut| G
+```
 
 ## Dependency injection
 

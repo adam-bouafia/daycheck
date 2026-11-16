@@ -1,7 +1,6 @@
 import 'package:daycheck/core/localization/app_locale.dart';
 import 'package:daycheck/core/widgets/glass.dart';
 import 'package:daycheck/features/session/presentation/session_viewmodel.dart';
-import 'package:daycheck/features/session/presentation/sign_in_screen.dart';
 import 'package:daycheck/features/settings/data/app_settings.dart';
 import 'package:daycheck/features/settings/presentation/settings_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +14,7 @@ class SettingsScreen extends ConsumerWidget {
     final l10n = context.l10n;
     final settings = ref.watch(settingsViewModelProvider);
     final vm = ref.read(settingsViewModelProvider.notifier);
-    final signedIn = ref.watch(sessionViewModelProvider).role != null;
+    final signedIn = ref.watch(sessionViewModelProvider).signedIn;
     final text = Theme.of(context).textTheme;
 
     Widget section(String title, List<Widget> children) => Padding(
@@ -37,10 +36,10 @@ class SettingsScreen extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: Colors.transparent,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(title: Text(l10n.settingsTitle)),
       body: GlassBackground(
         child: SafeArea(
-          top: false,
           child: ListView(
             padding: const EdgeInsets.all(12),
             children: [
@@ -108,18 +107,25 @@ class SettingsScreen extends ConsumerWidget {
                   child: Text(l10n.popupsHint, style: text.bodySmall),
                 ),
               ]),
-              if (signedIn)
+              if (signedIn) ...[
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Text(
+                    l10n.signedInAs(
+                      ref.watch(sessionViewModelProvider).displayName,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
                 FilledButton.tonalIcon(
                   icon: const Icon(Icons.logout),
                   label: Text(l10n.signOutTooltip),
                   onPressed: () {
                     ref.read(sessionViewModelProvider.notifier).signOut();
-                    Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (_) => const SignInScreen()),
-                      (_) => false,
-                    );
+                    Navigator.of(context).popUntil((r) => r.isFirst);
                   },
                 ),
+              ],
             ],
           ),
         ),

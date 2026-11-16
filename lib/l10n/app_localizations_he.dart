@@ -10,31 +10,7 @@ class AppLocalizationsHe extends AppLocalizations {
   AppLocalizationsHe([String locale = 'he']) : super(locale);
 
   @override
-  String get signInPrompt => 'מי משתמש ב-DayCheck?';
-
-  @override
-  String get signInDemoNotice => 'כניסת הדגמה בלבד, לא התחברות אמיתית.';
-
-  @override
   String get roleStaff => 'צוות';
-
-  @override
-  String get roleStaffSubtitle =>
-      'רואים כל ילד, רושמים הגעה ויציאה, מוסיפים פעילויות';
-
-  @override
-  String get roleParentPrompt => 'הורה — בחרו את שמכם';
-
-  @override
-  String get roleParentSubtitle => 'רואים את הילד שלכם, קריאה בלבד';
-
-  @override
-  String get appBarStaff => 'DayCheck · צוות';
-
-  @override
-  String appBarParent(String name) {
-    return 'DayCheck · $name';
-  }
 
   @override
   String get todaysLogTooltip => 'יומן היום';
@@ -167,9 +143,6 @@ class AppLocalizationsHe extends AppLocalizations {
   }
 
   @override
-  String get requestsTooltip => 'בקשות';
-
-  @override
   String get requestsTitle => 'בקשות';
 
   @override
@@ -268,9 +241,6 @@ class AppLocalizationsHe extends AppLocalizations {
   String get inboxTitle => 'התראות';
 
   @override
-  String get inboxTooltip => 'התראות';
-
-  @override
   String get noNotificationsYet => 'עדיין אין התראות.';
 
   @override
@@ -331,4 +301,48 @@ class AppLocalizationsHe extends AppLocalizations {
   @override
   String get popupsHint =>
       'הכול עדיין מגיע לרשימת ההתראות באפליקציה. המתגים האלה קובעים רק את החלון הקופץ בטלפון.';
+
+  @override
+  String get loginSubtitle => 'התחברו עם החשבון של המעון.';
+
+  @override
+  String get usernameLabel => 'שם משתמש';
+
+  @override
+  String get passwordLabel => 'סיסמה';
+
+  @override
+  String get signInButton => 'התחברות';
+
+  @override
+  String get loginFailed => 'שם המשתמש או הסיסמה שגויים.';
+
+  @override
+  String get demoAccountsTitle => 'חשבונות בדיקה';
+
+  @override
+  String get demoAccountsHint =>
+      'הקישו על חשבון כדי למלא את פרטיו. לבדיקה בלבד.';
+
+  @override
+  String get roleParent => 'הורה';
+
+  @override
+  String get tabChildren => 'ילדים';
+
+  @override
+  String get tabLog => 'יומן';
+
+  @override
+  String get tabToday => 'היום';
+
+  @override
+  String helloName(String name) {
+    return 'שלום, $name';
+  }
+
+  @override
+  String signedInAs(String name) {
+    return 'מחובר/ת בתור $name';
+  }
 }

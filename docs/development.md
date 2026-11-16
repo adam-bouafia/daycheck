@@ -7,8 +7,10 @@ flutter pub get
 flutter run
 ```
 
-The demo starts with three children and their schedules. Sign in as
-staff to act, or as a parent to see one family's view.
+The demo starts with three children and their schedules. Log in as
+`sara` / `sara123` for the daycare side, or as a parent such as
+`amina` / `amina123` for the family side. All test accounts are listed
+on the login screen and in [Features](features.md#login).
 
 ## Test
 
@@ -16,7 +18,7 @@ staff to act, or as a parent to see one family's view.
 flutter test
 ```
 
-46 tests:
+49 tests:
 
 - the status rule and the schedule rule as pure functions;
 - every ViewModel with in-memory fakes: check-in and check-out, notes
@@ -24,8 +26,9 @@ flutter test
 - the pop-up switches (pop-up off, inbox entry still created) and the
   notification language following Settings;
 - language fallback to English for unsupported device languages;
-- widget tests for the full staff and parent flows, the calendar and the
-  gallery;
+- login: wrong password, test-account fill-in, saved session, sign out;
+- widget tests that log in as staff and as a parent and drive each home,
+  plus the calendar and the gallery;
 - rendering in Dutch, Arabic and Hebrew, including right-to-left layout.
 
 ## Continuous integration

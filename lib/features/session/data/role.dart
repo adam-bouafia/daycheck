@@ -1,4 +1,3 @@
-/// Who is using the app right now. Mirrors a real distinction in this
-/// domain (Bitcare ships this as two separate apps, one per role) rather
-/// than one app where anyone can do anything.
+/// Who is using the app. Staff and parents get separate home screens,
+/// not one screen with parts hidden.
 enum Role { staff, parent }

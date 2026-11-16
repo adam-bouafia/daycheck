@@ -1,10 +1,38 @@
 # Features
 
-## Two roles
+## Login
 
-The sign-in screen asks who is using the app. It is a demo stand-in for a
-real login: no password, but it gates what every screen shows and allows,
-the same way a real session would.
+The app opens on a login screen. These test accounts are built in and
+listed on the login screen, where a tap fills them in:
+
+| Username | Password | Who | Child |
+| --- | --- | --- | --- |
+| sara | sara123 | Sara Bakker, staff | all |
+| tim | tim123 | Tim Visser, staff | all |
+| sanne | sanne123 | Sanne de Vries, parent | Mila |
+| tom | tom123 | Tom de Vries, parent | Mila |
+| lotte | lotte123 | Lotte Jansen, parent | Noah |
+| amina | amina123 | Amina El Amrani, parent | Yusuf |
+| karim | karim123 | Karim El Amrani, parent | Yusuf |
+
+The session survives an app restart (only the username is stored).
+Settings shows who is signed in and has Sign out. A real app would check
+the password on a server and never ship it in the app.
+
+## Two homes
+
+Staff and parents do not share one screen with parts hidden. After login
+each gets their own home with its own tabs:
+
+| Staff (daycare) | Parent (family) |
+| --- | --- |
+| **Children**: attendance count (present, not arrived, picked up) and every child; tap to check in or out and post notes, photos and PDFs | **Today**: where their child is right now (dropped off at 08:12 by ...), today's hours, and everything staff shared today |
+| **Log**: every check-in, check-out and note today | **Photos**: all photos of their children |
+| **Requests**: approve or cancel, with a badge for pending ones | **Requests**: ask for leave or extra hours |
+| **Notifications** | **Notifications**, only about their own children |
+
+Notes are signed with the staff member who posted them, so parents see
+"Note by Sara Bakker".
 
 | | Staff | Parent |
 | --- | --- | --- |
@@ -14,6 +42,7 @@ the same way a real session would.
 | Daily log across all children | Yes | No |
 | Requests | Approve or cancel | Submit for their child |
 | Notifications | All | Only about their own children |
+
 
 ## Roster and status
 

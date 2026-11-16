@@ -1,20 +1,6 @@
 {
   "@@locale": "en",
-  "signInPrompt": "Who's using DayCheck?",
-  "signInDemoNotice": "Demo sign-in only, not a real login.",
   "roleStaff": "Staff",
-  "roleStaffSubtitle": "See every child, check them in/out, add activity notes",
-  "roleParentPrompt": "Parent — pick your name",
-  "roleParentSubtitle": "See your child, read-only",
-  "appBarStaff": "DayCheck · Staff",
-  "appBarParent": "DayCheck · {name}",
-  "@appBarParent": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
   "todaysLogTooltip": "Today's log",
   "signOutTooltip": "Sign out",
   "noChildForGuardian": "No child found for this guardian.",
@@ -123,7 +109,6 @@
       }
     }
   },
-  "requestsTooltip": "Requests",
   "requestsTitle": "Requests",
   "requestTypeLeave": "Leave",
   "requestTypeExtraHours": "Extra hours",
@@ -185,7 +170,6 @@
   "shareAttachment": "Share",
   "couldNotOpenAttachment": "Couldn't open this file.",
   "inboxTitle": "Notifications",
-  "inboxTooltip": "Notifications",
   "noNotificationsYet": "No notifications yet.",
   "markAllRead": "Mark all read",
   "requestApprovedNotificationTitle": "Request approved for {name}",
@@ -227,5 +211,32 @@
   "reduceEffectsHint": "Solid panels instead of blurred glass. Smoother on older phones.",
   "activityPopupsLabel": "Pop-ups for new activity",
   "requestPopupsLabel": "Pop-ups for requests",
-  "popupsHint": "Everything still lands in the notification list in the app. These switches only control the pop-up on your phone."
+  "popupsHint": "Everything still lands in the notification list in the app. These switches only control the pop-up on your phone.",
+  "loginSubtitle": "Sign in with your daycare account.",
+  "usernameLabel": "Username",
+  "passwordLabel": "Password",
+  "signInButton": "Sign in",
+  "loginFailed": "Wrong username or password.",
+  "demoAccountsTitle": "Test accounts",
+  "demoAccountsHint": "Tap an account to fill in its details. For testing only.",
+  "roleParent": "Parent",
+  "tabChildren": "Children",
+  "tabLog": "Log",
+  "tabToday": "Today",
+  "helloName": "Hello, {name}",
+  "signedInAs": "Signed in as {name}",
+  "@helloName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@signedInAs": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }

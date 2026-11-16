@@ -10,32 +10,7 @@ class AppLocalizationsIt extends AppLocalizations {
   AppLocalizationsIt([String locale = 'it']) : super(locale);
 
   @override
-  String get signInPrompt => 'Chi usa DayCheck?';
-
-  @override
-  String get signInDemoNotice =>
-      'Solo un accesso dimostrativo, non un vero login.';
-
-  @override
   String get roleStaff => 'Personale';
-
-  @override
-  String get roleStaffSubtitle =>
-      'Vedi ogni bambino, registra entrata e uscita, aggiungi attività';
-
-  @override
-  String get roleParentPrompt => 'Genitore — scegli il tuo nome';
-
-  @override
-  String get roleParentSubtitle => 'Vedi tuo figlio, sola lettura';
-
-  @override
-  String get appBarStaff => 'DayCheck · Personale';
-
-  @override
-  String appBarParent(String name) {
-    return 'DayCheck · $name';
-  }
 
   @override
   String get todaysLogTooltip => 'Registro di oggi';
@@ -167,9 +142,6 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get requestsTooltip => 'Richieste';
-
-  @override
   String get requestsTitle => 'Richieste';
 
   @override
@@ -268,9 +240,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get inboxTitle => 'Notifiche';
 
   @override
-  String get inboxTooltip => 'Notifiche';
-
-  @override
   String get noNotificationsYet => 'Ancora nessuna notifica.';
 
   @override
@@ -331,4 +300,48 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get popupsHint =>
       'Tutto arriva comunque nell\'elenco delle notifiche nell\'app. Questi interruttori controllano solo il pop-up sul telefono.';
+
+  @override
+  String get loginSubtitle => 'Accedi con il tuo account dell\'asilo.';
+
+  @override
+  String get usernameLabel => 'Nome utente';
+
+  @override
+  String get passwordLabel => 'Password';
+
+  @override
+  String get signInButton => 'Accedi';
+
+  @override
+  String get loginFailed => 'Nome utente o password errati.';
+
+  @override
+  String get demoAccountsTitle => 'Account di prova';
+
+  @override
+  String get demoAccountsHint =>
+      'Tocca un account per compilare i suoi dati. Solo per i test.';
+
+  @override
+  String get roleParent => 'Genitore';
+
+  @override
+  String get tabChildren => 'Bambini';
+
+  @override
+  String get tabLog => 'Registro';
+
+  @override
+  String get tabToday => 'Oggi';
+
+  @override
+  String helloName(String name) {
+    return 'Ciao, $name';
+  }
+
+  @override
+  String signedInAs(String name) {
+    return 'Accesso come $name';
+  }
 }

@@ -14,26 +14,36 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// "I see a photo in the log but it doesn't show under Media" complaint
 /// this is a direct answer to (see the README).
 class PhotoGalleryScreen extends ConsumerWidget {
-  const PhotoGalleryScreen({super.key, required this.child});
+  const PhotoGalleryScreen({
+    super.key,
+    required this.children,
+    this.actions = const [],
+  });
 
-  final Child child;
+  /// One child from the staff detail screen; all of a parent's children
+  /// on the parent's Photos tab.
+  final List<Child> children;
+  final List<Widget> actions;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final folder = ref.watch(photosFolderProvider).value;
-    final events = ref
-        .watch(rosterViewModelProvider)
-        .eventsOf(child.id)
-        .where((e) => e.photoName != null)
-        .toList();
+    final roster = ref.watch(rosterViewModelProvider);
+    final events = [
+      for (final c in children)
+        ...roster.eventsOf(c.id).where((e) => e.photoName != null),
+    ]..sort((a, b) => b.at.compareTo(a.at));
+    final title = children.length == 1
+        ? '${l10n.photosTitle} · ${children.single.name}'
+        : l10n.photosTitle;
 
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: AppBar(title: Text('${l10n.photosTitle} · ${child.name}')),
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(title: Text(title), actions: actions),
       body: GlassBackground(
         child: SafeArea(
-          top: false,
           child: events.isEmpty || folder == null
               ? Center(child: Text(l10n.noPhotosYet))
               : GridView.builder(

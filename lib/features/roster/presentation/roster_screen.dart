@@ -1,19 +1,18 @@
 import 'package:daycheck/core/localization/app_locale.dart';
 import 'package:daycheck/core/widgets/glass.dart';
-import 'package:daycheck/features/inbox/presentation/inbox_screen.dart';
-import 'package:daycheck/features/inbox/presentation/inbox_viewmodel.dart';
+import 'package:daycheck/core/widgets/settings_button.dart';
 import 'package:daycheck/features/roster/data/day_event.dart';
+import 'package:daycheck/features/roster/data/day_status.dart';
 import 'package:daycheck/features/roster/presentation/child_detail_screen.dart';
-import 'package:daycheck/features/roster/presentation/daily_log_screen.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
 import 'package:daycheck/features/roster/presentation/widgets/child_tile.dart';
-import 'package:daycheck/features/requests/presentation/requests_screen.dart';
-import 'package:daycheck/features/session/data/role.dart';
 import 'package:daycheck/features/session/presentation/session_viewmodel.dart';
-import 'package:daycheck/features/settings/presentation/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// The staff home tab: today's attendance at a glance, then every child.
+/// Tapping a child opens the screen to check them in or out and post
+/// notes, photos and PDFs.
 class RosterScreen extends ConsumerWidget {
   const RosterScreen({super.key});
 
@@ -21,78 +20,28 @@ class RosterScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final state = ref.watch(rosterViewModelProvider);
-    final session = ref.watch(sessionViewModelProvider);
-    final isStaff = session.role == Role.staff;
-    final visibleChildren = isStaff
-        ? state.children
-        : state.children
-              .where((c) => c.guardians.contains(session.guardianName))
-              .toList();
-    final myChildIds = visibleChildren.map((c) => c.id).toSet();
-    final unreadCount = visibleInboxItems(
-      ref.watch(inboxViewModelProvider),
-      isStaff,
-      myChildIds,
-    ).where((i) => !i.read).length;
+    final name = ref.watch(sessionViewModelProvider).displayName;
+    final counts = {
+      for (final s in DayStatus.values)
+        s: state.children.where((c) => state.statusOf(c.id) == s).length,
+    };
     return Scaffold(
       backgroundColor: Colors.transparent,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(
-          isStaff
-              ? l10n.appBarStaff
-              : l10n.appBarParent(session.guardianName ?? ''),
-        ),
-        actions: [
-          IconButton(
-            tooltip: l10n.inboxTooltip,
-            icon: Badge(
-              label: Text('$unreadCount'),
-              isLabelVisible: unreadCount > 0,
-              child: const Icon(Icons.notifications_outlined),
-            ),
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const InboxScreen()),
-            ),
-          ),
-          if (isStaff)
-            IconButton(
-              tooltip: l10n.todaysLogTooltip,
-              icon: const Icon(Icons.history),
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const DailyLogScreen()),
-              ),
-            ),
-          IconButton(
-            tooltip: l10n.requestsTooltip,
-            icon: const Icon(Icons.event_note_outlined),
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const RequestsScreen()),
-            ),
-          ),
-          IconButton(
-            tooltip: l10n.settingsTitle,
-            icon: const Icon(Icons.settings_outlined),
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const SettingsScreen()),
-            ),
-          ),
-        ],
+        title: Text(l10n.helloName(name.split(' ').first)),
+        actions: const [SettingsButton()],
       ),
       body: GlassBackground(
         child: SafeArea(
-          top: false,
           child: state.children.isEmpty
               ? const Center(child: CircularProgressIndicator())
-              : visibleChildren.isEmpty
-              ? Center(child: Text(l10n.noChildForGuardian))
               : ListView(
                   padding: const EdgeInsets.all(12),
                   children: [
-                    for (final child in visibleChildren)
+                    _Summary(counts: counts),
+                    const SizedBox(height: 14),
+                    for (final child in state.children)
                       Padding(
                         padding: const EdgeInsets.only(bottom: 10),
                         child: ChildTile(
@@ -115,6 +64,50 @@ class RosterScreen extends ConsumerWidget {
                       ),
                   ],
                 ),
+        ),
+      ),
+    );
+  }
+}
+
+class _Summary extends StatelessWidget {
+  const _Summary({required this.counts});
+
+  final Map<DayStatus, int> counts;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final scheme = Theme.of(context).colorScheme;
+    final text = Theme.of(context).textTheme;
+    Widget cell(DayStatus status, String label, Color color) => Expanded(
+      child: Column(
+        children: [
+          Text(
+            '${counts[status]}',
+            style: text.headlineMedium?.copyWith(
+              color: color,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(label, textAlign: TextAlign.center, style: text.bodySmall),
+        ],
+      ),
+    );
+    return GlassPanel(
+      radius: 18,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 8),
+        child: Row(
+          children: [
+            cell(DayStatus.present, l10n.statusPresent, scheme.primary),
+            cell(
+              DayStatus.notArrived,
+              l10n.statusNotArrived,
+              scheme.onSurfaceVariant,
+            ),
+            cell(DayStatus.departed, l10n.statusDeparted, scheme.tertiary),
+          ],
         ),
       ),
     );

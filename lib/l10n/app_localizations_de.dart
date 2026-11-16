@@ -10,31 +10,7 @@ class AppLocalizationsDe extends AppLocalizations {
   AppLocalizationsDe([String locale = 'de']) : super(locale);
 
   @override
-  String get signInPrompt => 'Wer nutzt DayCheck?';
-
-  @override
-  String get signInDemoNotice => 'Nur eine Demo-Anmeldung, kein echter Login.';
-
-  @override
   String get roleStaff => 'Personal';
-
-  @override
-  String get roleStaffSubtitle =>
-      'Jedes Kind sehen, an- und abmelden, Aktivitäten hinzufügen';
-
-  @override
-  String get roleParentPrompt => 'Elternteil — wähle deinen Namen';
-
-  @override
-  String get roleParentSubtitle => 'Dein Kind sehen, nur lesen';
-
-  @override
-  String get appBarStaff => 'DayCheck · Personal';
-
-  @override
-  String appBarParent(String name) {
-    return 'DayCheck · $name';
-  }
 
   @override
   String get todaysLogTooltip => 'Heutiges Protokoll';
@@ -165,9 +141,6 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get requestsTooltip => 'Anträge';
-
-  @override
   String get requestsTitle => 'Anträge';
 
   @override
@@ -267,9 +240,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get inboxTitle => 'Benachrichtigungen';
 
   @override
-  String get inboxTooltip => 'Benachrichtigungen';
-
-  @override
   String get noNotificationsYet => 'Noch keine Benachrichtigungen.';
 
   @override
@@ -330,4 +300,48 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get popupsHint =>
       'Alles landet trotzdem in der Benachrichtigungsliste der App. Diese Schalter steuern nur das Pop-up auf deinem Handy.';
+
+  @override
+  String get loginSubtitle => 'Melde dich mit deinem Kita-Konto an.';
+
+  @override
+  String get usernameLabel => 'Benutzername';
+
+  @override
+  String get passwordLabel => 'Passwort';
+
+  @override
+  String get signInButton => 'Anmelden';
+
+  @override
+  String get loginFailed => 'Falscher Benutzername oder falsches Passwort.';
+
+  @override
+  String get demoAccountsTitle => 'Testkonten';
+
+  @override
+  String get demoAccountsHint =>
+      'Tippe auf ein Konto, um seine Daten einzutragen. Nur zum Testen.';
+
+  @override
+  String get roleParent => 'Elternteil';
+
+  @override
+  String get tabChildren => 'Kinder';
+
+  @override
+  String get tabLog => 'Protokoll';
+
+  @override
+  String get tabToday => 'Heute';
+
+  @override
+  String helloName(String name) {
+    return 'Hallo, $name';
+  }
+
+  @override
+  String signedInAs(String name) {
+    return 'Angemeldet als $name';
+  }
 }

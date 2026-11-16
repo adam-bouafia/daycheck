@@ -1,7 +1,7 @@
 import 'package:daycheck/core/notifications/notification_service.dart';
 import 'package:daycheck/core/theme/app_theme.dart';
 import 'package:daycheck/core/widgets/glass.dart';
-import 'package:daycheck/features/session/presentation/sign_in_screen.dart';
+import 'package:daycheck/features/home/presentation/home_gate.dart';
 import 'package:daycheck/features/settings/presentation/settings_viewmodel.dart';
 import 'package:daycheck/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +46,7 @@ class MyApp extends ConsumerWidget {
         reduced: settings.reduceEffects || MediaQuery.highContrastOf(context),
         child: child!,
       ),
-      home: const SignInScreen(),
+      home: const HomeGate(),
     );
   }
 }

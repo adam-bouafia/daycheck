@@ -2,6 +2,7 @@ import 'package:daycheck/core/localization/app_locale.dart';
 import 'package:daycheck/core/widgets/glass.dart';
 import 'package:daycheck/features/roster/data/day_event.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
+import 'package:daycheck/core/widgets/settings_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,10 +17,13 @@ class DailyLogScreen extends ConsumerWidget {
     final names = {for (final c in state.children) c.id: c.name};
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: AppBar(title: Text(l10n.todaysLogTooltip)),
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        title: Text(l10n.todaysLogTooltip),
+        actions: const [SettingsButton()],
+      ),
       body: GlassBackground(
         child: SafeArea(
-          top: false,
           child: events.isEmpty
               ? Center(child: Text(l10n.nothingCheckedToday))
               : ListView.builder(

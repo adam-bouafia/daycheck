@@ -10,32 +10,7 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
-  String get signInPrompt => 'من يستخدم DayCheck؟';
-
-  @override
-  String get signInDemoNotice =>
-      'تسجيل دخول تجريبي فقط، وليس تسجيل دخول حقيقيًا.';
-
-  @override
   String get roleStaff => 'الموظفون';
-
-  @override
-  String get roleStaffSubtitle =>
-      'عرض كل طفل، تسجيل الوصول والمغادرة، إضافة الأنشطة';
-
-  @override
-  String get roleParentPrompt => 'ولي الأمر — اختر اسمك';
-
-  @override
-  String get roleParentSubtitle => 'عرض طفلك، للقراءة فقط';
-
-  @override
-  String get appBarStaff => 'DayCheck · الموظفون';
-
-  @override
-  String appBarParent(String name) {
-    return 'DayCheck · $name';
-  }
 
   @override
   String get todaysLogTooltip => 'سجل اليوم';
@@ -174,9 +149,6 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get requestsTooltip => 'الطلبات';
-
-  @override
   String get requestsTitle => 'الطلبات';
 
   @override
@@ -275,9 +247,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get inboxTitle => 'الإشعارات';
 
   @override
-  String get inboxTooltip => 'الإشعارات';
-
-  @override
   String get noNotificationsYet => 'لا توجد إشعارات بعد.';
 
   @override
@@ -338,4 +307,47 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get popupsHint =>
       'يصل كل شيء إلى قائمة الإشعارات داخل التطبيق في كل الأحوال. هذه المفاتيح تتحكم فقط في النافذة المنبثقة على هاتفك.';
+
+  @override
+  String get loginSubtitle => 'سجّل الدخول بحساب الحضانة.';
+
+  @override
+  String get usernameLabel => 'اسم المستخدم';
+
+  @override
+  String get passwordLabel => 'كلمة المرور';
+
+  @override
+  String get signInButton => 'تسجيل الدخول';
+
+  @override
+  String get loginFailed => 'اسم المستخدم أو كلمة المرور غير صحيحة.';
+
+  @override
+  String get demoAccountsTitle => 'حسابات تجريبية';
+
+  @override
+  String get demoAccountsHint => 'اضغط على حساب لملء بياناته. للتجربة فقط.';
+
+  @override
+  String get roleParent => 'ولي الأمر';
+
+  @override
+  String get tabChildren => 'الأطفال';
+
+  @override
+  String get tabLog => 'السجل';
+
+  @override
+  String get tabToday => 'اليوم';
+
+  @override
+  String helloName(String name) {
+    return 'مرحبًا، $name';
+  }
+
+  @override
+  String signedInAs(String name) {
+    return 'تم تسجيل الدخول باسم $name';
+  }
 }

@@ -10,32 +10,7 @@ class AppLocalizationsTr extends AppLocalizations {
   AppLocalizationsTr([String locale = 'tr']) : super(locale);
 
   @override
-  String get signInPrompt => 'DayCheck\'i kim kullanıyor?';
-
-  @override
-  String get signInDemoNotice =>
-      'Yalnızca demo girişi, gerçek bir oturum açma değil.';
-
-  @override
   String get roleStaff => 'Personel';
-
-  @override
-  String get roleStaffSubtitle =>
-      'Tüm çocukları gör, giriş ve çıkış yap, etkinlik ekle';
-
-  @override
-  String get roleParentPrompt => 'Veli — adını seç';
-
-  @override
-  String get roleParentSubtitle => 'Çocuğunu gör, yalnızca okuma';
-
-  @override
-  String get appBarStaff => 'DayCheck · Personel';
-
-  @override
-  String appBarParent(String name) {
-    return 'DayCheck · $name';
-  }
 
   @override
   String get todaysLogTooltip => 'Bugünün kaydı';
@@ -166,9 +141,6 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get requestsTooltip => 'Talepler';
-
-  @override
   String get requestsTitle => 'Talepler';
 
   @override
@@ -267,9 +239,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get inboxTitle => 'Bildirimler';
 
   @override
-  String get inboxTooltip => 'Bildirimler';
-
-  @override
   String get noNotificationsYet => 'Henüz bildirim yok.';
 
   @override
@@ -330,4 +299,48 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get popupsHint =>
       'Her şey yine uygulamadaki bildirim listesine düşer. Bu anahtarlar yalnızca telefondaki açılır bildirimi kontrol eder.';
+
+  @override
+  String get loginSubtitle => 'Kreş hesabınla giriş yap.';
+
+  @override
+  String get usernameLabel => 'Kullanıcı adı';
+
+  @override
+  String get passwordLabel => 'Şifre';
+
+  @override
+  String get signInButton => 'Giriş yap';
+
+  @override
+  String get loginFailed => 'Kullanıcı adı veya şifre yanlış.';
+
+  @override
+  String get demoAccountsTitle => 'Test hesapları';
+
+  @override
+  String get demoAccountsHint =>
+      'Bilgilerini doldurmak için bir hesaba dokun. Yalnızca test için.';
+
+  @override
+  String get roleParent => 'Veli';
+
+  @override
+  String get tabChildren => 'Çocuklar';
+
+  @override
+  String get tabLog => 'Kayıt';
+
+  @override
+  String get tabToday => 'Bugün';
+
+  @override
+  String helloName(String name) {
+    return 'Merhaba, $name';
+  }
+
+  @override
+  String signedInAs(String name) {
+    return '$name olarak giriş yapıldı';
+  }
 }

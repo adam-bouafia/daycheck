@@ -10,32 +10,7 @@ class AppLocalizationsPl extends AppLocalizations {
   AppLocalizationsPl([String locale = 'pl']) : super(locale);
 
   @override
-  String get signInPrompt => 'Kto korzysta z DayCheck?';
-
-  @override
-  String get signInDemoNotice =>
-      'To tylko logowanie demonstracyjne, nie prawdziwe.';
-
-  @override
   String get roleStaff => 'Personel';
-
-  @override
-  String get roleStaffSubtitle =>
-      'Widzisz każde dziecko, rejestrujesz przyjście i wyjście, dodajesz aktywności';
-
-  @override
-  String get roleParentPrompt => 'Rodzic — wybierz swoje imię';
-
-  @override
-  String get roleParentSubtitle => 'Widzisz swoje dziecko, tylko do odczytu';
-
-  @override
-  String get appBarStaff => 'DayCheck · Personel';
-
-  @override
-  String appBarParent(String name) {
-    return 'DayCheck · $name';
-  }
 
   @override
   String get todaysLogTooltip => 'Dzisiejszy dziennik';
@@ -171,9 +146,6 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
-  String get requestsTooltip => 'Wnioski';
-
-  @override
   String get requestsTitle => 'Wnioski';
 
   @override
@@ -272,9 +244,6 @@ class AppLocalizationsPl extends AppLocalizations {
   String get inboxTitle => 'Powiadomienia';
 
   @override
-  String get inboxTooltip => 'Powiadomienia';
-
-  @override
   String get noNotificationsYet => 'Brak powiadomień.';
 
   @override
@@ -335,4 +304,48 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get popupsHint =>
       'Wszystko i tak trafia na listę powiadomień w aplikacji. Te przełączniki dotyczą tylko wyskakującego powiadomienia w telefonie.';
+
+  @override
+  String get loginSubtitle => 'Zaloguj się kontem żłobka.';
+
+  @override
+  String get usernameLabel => 'Nazwa użytkownika';
+
+  @override
+  String get passwordLabel => 'Hasło';
+
+  @override
+  String get signInButton => 'Zaloguj';
+
+  @override
+  String get loginFailed => 'Błędna nazwa użytkownika lub hasło.';
+
+  @override
+  String get demoAccountsTitle => 'Konta testowe';
+
+  @override
+  String get demoAccountsHint =>
+      'Dotknij konta, aby wpisać jego dane. Tylko do testów.';
+
+  @override
+  String get roleParent => 'Rodzic';
+
+  @override
+  String get tabChildren => 'Dzieci';
+
+  @override
+  String get tabLog => 'Dziennik';
+
+  @override
+  String get tabToday => 'Dzisiaj';
+
+  @override
+  String helloName(String name) {
+    return 'Cześć, $name';
+  }
+
+  @override
+  String signedInAs(String name) {
+    return 'Zalogowano jako $name';
+  }
 }

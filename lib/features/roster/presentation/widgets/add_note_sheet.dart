@@ -1,6 +1,7 @@
 import 'package:daycheck/core/localization/app_locale.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:daycheck/features/session/presentation/session_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -60,6 +61,7 @@ class _AddNoteSheetState extends ConsumerState<_AddNoteSheet> {
         .addActivityNote(
           widget.childId,
           text,
+          by: ref.read(sessionViewModelProvider).displayName,
           photoSourcePath: _photoPath,
           attachmentSourcePath: _attachmentPath,
         );

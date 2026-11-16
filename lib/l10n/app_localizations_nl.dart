@@ -10,31 +10,7 @@ class AppLocalizationsNl extends AppLocalizations {
   AppLocalizationsNl([String locale = 'nl']) : super(locale);
 
   @override
-  String get signInPrompt => 'Wie gebruikt DayCheck?';
-
-  @override
-  String get signInDemoNotice => 'Alleen een demo-inlog, geen echte login.';
-
-  @override
   String get roleStaff => 'Medewerker';
-
-  @override
-  String get roleStaffSubtitle =>
-      'Zie ieder kind, check in/uit, voeg activiteiten toe';
-
-  @override
-  String get roleParentPrompt => 'Ouder — kies je naam';
-
-  @override
-  String get roleParentSubtitle => 'Zie je kind, alleen lezen';
-
-  @override
-  String get appBarStaff => 'DayCheck · Medewerker';
-
-  @override
-  String appBarParent(String name) {
-    return 'DayCheck · $name';
-  }
 
   @override
   String get todaysLogTooltip => 'Logboek van vandaag';
@@ -165,9 +141,6 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get requestsTooltip => 'Aanvragen';
-
-  @override
   String get requestsTitle => 'Aanvragen';
 
   @override
@@ -266,9 +239,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get inboxTitle => 'Meldingen';
 
   @override
-  String get inboxTooltip => 'Meldingen';
-
-  @override
   String get noNotificationsYet => 'Nog geen meldingen.';
 
   @override
@@ -329,4 +299,48 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get popupsHint =>
       'Alles komt nog steeds in de meldingenlijst in de app. Deze schakelaars bepalen alleen de pop-up op je telefoon.';
+
+  @override
+  String get loginSubtitle => 'Log in met je account van de opvang.';
+
+  @override
+  String get usernameLabel => 'Gebruikersnaam';
+
+  @override
+  String get passwordLabel => 'Wachtwoord';
+
+  @override
+  String get signInButton => 'Inloggen';
+
+  @override
+  String get loginFailed => 'Onjuiste gebruikersnaam of wachtwoord.';
+
+  @override
+  String get demoAccountsTitle => 'Testaccounts';
+
+  @override
+  String get demoAccountsHint =>
+      'Tik op een account om de gegevens in te vullen. Alleen om te testen.';
+
+  @override
+  String get roleParent => 'Ouder';
+
+  @override
+  String get tabChildren => 'Kinderen';
+
+  @override
+  String get tabLog => 'Logboek';
+
+  @override
+  String get tabToday => 'Vandaag';
+
+  @override
+  String helloName(String name) {
+    return 'Hallo, $name';
+  }
+
+  @override
+  String signedInAs(String name) {
+    return 'Ingelogd als $name';
+  }
 }

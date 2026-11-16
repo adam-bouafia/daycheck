@@ -1,33 +1,68 @@
+import 'package:daycheck/features/session/data/account.dart';
 import 'package:daycheck/features/session/data/role.dart';
+import 'package:daycheck/features/session/data/session_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Who is signed in. This is a demo stand-in for real authentication: no
-/// password, no server, nothing persisted across app restarts. It exists
-/// to gate what the roster and child detail screens show and allow, the
-/// same way a real app would gate it after a real login.
+/// DI seam: tests override this with a fake repository.
+final sessionRepositoryProvider = Provider<SessionRepository>(
+  (ref) => SessionRepository(),
+);
+
 class SessionState {
-  const SessionState({this.role, this.guardianName});
+  const SessionState({this.account, this.restoring = false});
 
-  /// Null until someone has signed in.
-  final Role? role;
+  /// Null when nobody is signed in.
+  final Account? account;
 
-  /// Set only when [role] is [Role.parent]: which guardian is signed in,
-  /// so the roster can be filtered to their child or children.
-  final String? guardianName;
+  /// True while the saved session is read at startup, so the app shows a
+  /// spinner instead of flashing the login screen.
+  final bool restoring;
 
-  bool get signedIn => role != null;
+  Role? get role => account?.role;
+  bool get signedIn => account != null;
+  String get displayName => account?.displayName ?? '';
+
+  /// The name on a parent's children; null for staff.
+  String? get guardianName =>
+      account?.role == Role.parent ? account!.displayName : null;
 }
 
 class SessionViewModel extends Notifier<SessionState> {
+  SessionRepository get _repo => ref.read(sessionRepositoryProvider);
+
   @override
-  SessionState build() => const SessionState();
+  SessionState build() {
+    _restore();
+    return const SessionState(restoring: true);
+  }
 
-  void signInAsStaff() => state = const SessionState(role: Role.staff);
+  Future<void> _restore() async {
+    final username = await _repo.loadUsername();
+    if (!state.restoring) return;
+    state = SessionState(account: _find(username));
+  }
 
-  void signInAsParent(String guardianName) =>
-      state = SessionState(role: Role.parent, guardianName: guardianName);
+  Account? _find(String? username) {
+    for (final a in _repo.accounts) {
+      if (a.username == username) return a;
+    }
+    return null;
+  }
 
-  void signOut() => state = const SessionState();
+  /// Returns false, and changes nothing, when the username or password is
+  /// wrong. The username is case-insensitive; the password is not.
+  Future<bool> signIn(String username, String password) async {
+    final account = _find(username.trim().toLowerCase());
+    if (account == null || account.password != password) return false;
+    state = SessionState(account: account);
+    await _repo.saveUsername(account.username);
+    return true;
+  }
+
+  Future<void> signOut() async {
+    state = const SessionState();
+    await _repo.saveUsername(null);
+  }
 }
 
 final sessionViewModelProvider =

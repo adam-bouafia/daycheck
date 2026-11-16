@@ -57,12 +57,12 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
 
     return Scaffold(
       backgroundColor: Colors.transparent,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Text('${l10n.scheduleTitle} · ${widget.child.name}'),
       ),
       body: GlassBackground(
         child: SafeArea(
-          top: false,
           child: ListView(
             padding: const EdgeInsets.all(16),
             children: [

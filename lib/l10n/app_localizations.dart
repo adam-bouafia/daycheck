@@ -112,53 +112,11 @@ abstract class AppLocalizations {
     Locale('tr'),
   ];
 
-  /// No description provided for @signInPrompt.
-  ///
-  /// In en, this message translates to:
-  /// **'Who\'s using DayCheck?'**
-  String get signInPrompt;
-
-  /// No description provided for @signInDemoNotice.
-  ///
-  /// In en, this message translates to:
-  /// **'Demo sign-in only, not a real login.'**
-  String get signInDemoNotice;
-
   /// No description provided for @roleStaff.
   ///
   /// In en, this message translates to:
   /// **'Staff'**
   String get roleStaff;
-
-  /// No description provided for @roleStaffSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'See every child, check them in/out, add activity notes'**
-  String get roleStaffSubtitle;
-
-  /// No description provided for @roleParentPrompt.
-  ///
-  /// In en, this message translates to:
-  /// **'Parent — pick your name'**
-  String get roleParentPrompt;
-
-  /// No description provided for @roleParentSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'See your child, read-only'**
-  String get roleParentSubtitle;
-
-  /// No description provided for @appBarStaff.
-  ///
-  /// In en, this message translates to:
-  /// **'DayCheck · Staff'**
-  String get appBarStaff;
-
-  /// No description provided for @appBarParent.
-  ///
-  /// In en, this message translates to:
-  /// **'DayCheck · {name}'**
-  String appBarParent(String name);
 
   /// No description provided for @todaysLogTooltip.
   ///
@@ -352,12 +310,6 @@ abstract class AppLocalizations {
   /// **'New activity for {name}'**
   String newActivityNotificationTitle(String name);
 
-  /// No description provided for @requestsTooltip.
-  ///
-  /// In en, this message translates to:
-  /// **'Requests'**
-  String get requestsTooltip;
-
   /// No description provided for @requestsTitle.
   ///
   /// In en, this message translates to:
@@ -538,12 +490,6 @@ abstract class AppLocalizations {
   /// **'Notifications'**
   String get inboxTitle;
 
-  /// No description provided for @inboxTooltip.
-  ///
-  /// In en, this message translates to:
-  /// **'Notifications'**
-  String get inboxTooltip;
-
   /// No description provided for @noNotificationsYet.
   ///
   /// In en, this message translates to:
@@ -651,6 +597,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Everything still lands in the notification list in the app. These switches only control the pop-up on your phone.'**
   String get popupsHint;
+
+  /// No description provided for @loginSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with your daycare account.'**
+  String get loginSubtitle;
+
+  /// No description provided for @usernameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get usernameLabel;
+
+  /// No description provided for @passwordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get passwordLabel;
+
+  /// No description provided for @signInButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get signInButton;
+
+  /// No description provided for @loginFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong username or password.'**
+  String get loginFailed;
+
+  /// No description provided for @demoAccountsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Test accounts'**
+  String get demoAccountsTitle;
+
+  /// No description provided for @demoAccountsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap an account to fill in its details. For testing only.'**
+  String get demoAccountsHint;
+
+  /// No description provided for @roleParent.
+  ///
+  /// In en, this message translates to:
+  /// **'Parent'**
+  String get roleParent;
+
+  /// No description provided for @tabChildren.
+  ///
+  /// In en, this message translates to:
+  /// **'Children'**
+  String get tabChildren;
+
+  /// No description provided for @tabLog.
+  ///
+  /// In en, this message translates to:
+  /// **'Log'**
+  String get tabLog;
+
+  /// No description provided for @tabToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get tabToday;
+
+  /// No description provided for @helloName.
+  ///
+  /// In en, this message translates to:
+  /// **'Hello, {name}'**
+  String helloName(String name);
+
+  /// No description provided for @signedInAs.
+  ///
+  /// In en, this message translates to:
+  /// **'Signed in as {name}'**
+  String signedInAs(String name);
 }
 
 class _AppLocalizationsDelegate

@@ -10,31 +10,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get signInPrompt => 'Who\'s using DayCheck?';
-
-  @override
-  String get signInDemoNotice => 'Demo sign-in only, not a real login.';
-
-  @override
   String get roleStaff => 'Staff';
-
-  @override
-  String get roleStaffSubtitle =>
-      'See every child, check them in/out, add activity notes';
-
-  @override
-  String get roleParentPrompt => 'Parent — pick your name';
-
-  @override
-  String get roleParentSubtitle => 'See your child, read-only';
-
-  @override
-  String get appBarStaff => 'DayCheck · Staff';
-
-  @override
-  String appBarParent(String name) {
-    return 'DayCheck · $name';
-  }
 
   @override
   String get todaysLogTooltip => 'Today\'s log';
@@ -165,9 +141,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get requestsTooltip => 'Requests';
-
-  @override
   String get requestsTitle => 'Requests';
 
   @override
@@ -266,9 +239,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inboxTitle => 'Notifications';
 
   @override
-  String get inboxTooltip => 'Notifications';
-
-  @override
   String get noNotificationsYet => 'No notifications yet.';
 
   @override
@@ -329,4 +299,48 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get popupsHint =>
       'Everything still lands in the notification list in the app. These switches only control the pop-up on your phone.';
+
+  @override
+  String get loginSubtitle => 'Sign in with your daycare account.';
+
+  @override
+  String get usernameLabel => 'Username';
+
+  @override
+  String get passwordLabel => 'Password';
+
+  @override
+  String get signInButton => 'Sign in';
+
+  @override
+  String get loginFailed => 'Wrong username or password.';
+
+  @override
+  String get demoAccountsTitle => 'Test accounts';
+
+  @override
+  String get demoAccountsHint =>
+      'Tap an account to fill in its details. For testing only.';
+
+  @override
+  String get roleParent => 'Parent';
+
+  @override
+  String get tabChildren => 'Children';
+
+  @override
+  String get tabLog => 'Log';
+
+  @override
+  String get tabToday => 'Today';
+
+  @override
+  String helloName(String name) {
+    return 'Hello, $name';
+  }
+
+  @override
+  String signedInAs(String name) {
+    return 'Signed in as $name';
+  }
 }

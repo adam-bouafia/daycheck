@@ -5,6 +5,7 @@ import 'package:daycheck/features/inbox/presentation/inbox_viewmodel.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
 import 'package:daycheck/features/session/data/role.dart';
 import 'package:daycheck/features/session/presentation/session_viewmodel.dart';
+import 'package:daycheck/core/widgets/settings_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -44,6 +45,7 @@ class InboxScreen extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: Colors.transparent,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Text(l10n.inboxTitle),
         actions: [
@@ -51,16 +53,13 @@ class InboxScreen extends ConsumerWidget {
             TextButton(
               onPressed: () =>
                   ref.read(inboxViewModelProvider.notifier).markAllRead(),
-              child: Text(
-                l10n.markAllRead,
-                style: const TextStyle(color: Colors.white),
-              ),
+              child: Text(l10n.markAllRead),
             ),
+          const SettingsButton(),
         ],
       ),
       body: GlassBackground(
         child: SafeArea(
-          top: false,
           child: items.isEmpty
               ? Center(child: Text(l10n.noNotificationsYet))
               : ListView.builder(
