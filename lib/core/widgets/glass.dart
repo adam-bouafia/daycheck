@@ -216,6 +216,9 @@ class GlassBackground extends StatelessWidget {
     return BackdropGroup(
       child: Stack(
         children: [
+          // Its own base in dark mode too, instead of whatever is behind
+          // the route (black on a phone, but not guaranteed).
+          if (dark) const Positioned.fill(child: ColoredBox(color: Mocha.base)),
           if (!dark)
             const Positioned.fill(
               child: DecoratedBox(

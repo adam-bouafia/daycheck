@@ -36,7 +36,12 @@ class _HomeScaffoldState extends State<HomeScaffold> {
     return Scaffold(
       body: IndexedStack(
         index: _index,
-        children: [for (final t in widget.tabs) t.screen],
+        // Hidden tabs stay mounted; without HeroMode the same photo in two
+        // tabs (Today and Photos) would be two heroes with one tag.
+        children: [
+          for (final (i, t) in widget.tabs.indexed)
+            HeroMode(enabled: i == _index, child: t.screen),
+        ],
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index,

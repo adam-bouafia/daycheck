@@ -96,20 +96,18 @@ class SettingsScreen extends ConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(16, 4, 16, 14),
                   child: SegmentedButton<ThemeMode>(
+                    showSelectedIcon: false,
                     segments: [
                       ButtonSegment(
                         value: ThemeMode.system,
-                        icon: const Icon(Icons.brightness_auto),
                         label: Text(l10n.themeSystem),
                       ),
                       ButtonSegment(
                         value: ThemeMode.light,
-                        icon: const Icon(Icons.light_mode),
                         label: Text(l10n.themeLight),
                       ),
                       ButtonSegment(
                         value: ThemeMode.dark,
-                        icon: const Icon(Icons.dark_mode),
                         label: Text(l10n.themeDark),
                       ),
                     ],

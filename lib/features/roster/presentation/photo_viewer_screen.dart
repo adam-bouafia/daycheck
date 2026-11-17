@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:daycheck/core/localization/app_locale.dart';
+import 'package:daycheck/core/theme/app_theme.dart';
 import 'package:daycheck/core/widgets/glass.dart';
 import 'package:daycheck/features/roster/data/day_event.dart';
 import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
@@ -67,79 +68,85 @@ class _PhotoViewerScreenState extends ConsumerState<PhotoViewerScreen> {
     final locale = Localizations.localeOf(context).toString();
     final when = DateFormat.yMMMMEEEEd(locale).add_Hm().format(event.at);
 
-    return Scaffold(
-      backgroundColor: Colors.black,
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.black.withValues(alpha: 0.35),
-        foregroundColor: Colors.white,
-        title: Text(
-          l10n.photoPosition(_index + 1, widget.photos.length),
-          style: const TextStyle(color: Colors.white),
-        ),
-        actions: [
-          if (folder != null)
-            IconButton(
-              tooltip: l10n.sharePhoto,
-              icon: const Icon(Icons.ios_share),
-              onPressed: () => SharePlus.instance.share(
-                ShareParams(
-                  files: [XFile('${folder.path}/${event.photoName}')],
-                  text: event.note,
+    // Always dark, like most photo viewers: a light glass panel over a
+    // black backdrop is hard to read.
+    return Theme(
+      data: appDarkTheme,
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.black.withValues(alpha: 0.35),
+          foregroundColor: Colors.white,
+          title: Text(
+            l10n.photoPosition(_index + 1, widget.photos.length),
+            style: const TextStyle(color: Colors.white),
+          ),
+          actions: [
+            if (folder != null)
+              IconButton(
+                tooltip: l10n.sharePhoto,
+                icon: const Icon(Icons.ios_share),
+                onPressed: () => SharePlus.instance.share(
+                  ShareParams(
+                    files: [XFile('${folder.path}/${event.photoName}')],
+                    text: event.note,
+                  ),
                 ),
               ),
-            ),
-        ],
-      ),
-      body: folder == null
-          ? const SizedBox.shrink()
-          : Stack(
-              children: [
-                PageView.builder(
-                  controller: _pages,
-                  itemCount: widget.photos.length,
-                  onPageChanged: (i) => setState(() => _index = i),
-                  itemBuilder: (context, i) {
-                    final photo = widget.photos[i];
-                    return GestureDetector(
-                      onTap: () => setState(() => _showDetails = !_showDetails),
-                      child: InteractiveViewer(
-                        minScale: 1,
-                        maxScale: 4,
-                        child: Center(
-                          child: Hero(
-                            tag: photoHeroTag(photo),
-                            child: Image.file(
-                              File('${folder.path}/${photo.photoName}'),
-                              fit: BoxFit.contain,
+          ],
+        ),
+        body: folder == null
+            ? const SizedBox.shrink()
+            : Stack(
+                children: [
+                  PageView.builder(
+                    controller: _pages,
+                    itemCount: widget.photos.length,
+                    onPageChanged: (i) => setState(() => _index = i),
+                    itemBuilder: (context, i) {
+                      final photo = widget.photos[i];
+                      return GestureDetector(
+                        onTap: () =>
+                            setState(() => _showDetails = !_showDetails),
+                        child: InteractiveViewer(
+                          minScale: 1,
+                          maxScale: 4,
+                          child: Center(
+                            child: Hero(
+                              tag: photoHeroTag(photo),
+                              child: Image.file(
+                                File('${folder.path}/${photo.photoName}'),
+                                fit: BoxFit.contain,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                ),
-                Positioned(
-                  left: 12,
-                  right: 12,
-                  bottom: 12,
-                  child: SafeArea(
-                    child: AnimatedOpacity(
-                      opacity: _showDetails ? 1 : 0,
-                      duration: const Duration(milliseconds: 200),
-                      child: IgnorePointer(
-                        ignoring: !_showDetails,
-                        child: _Details(
-                          when: when,
-                          by: l10n.noteBy(event.by),
-                          caption: event.note,
+                      );
+                    },
+                  ),
+                  Positioned(
+                    left: 12,
+                    right: 12,
+                    bottom: 12,
+                    child: SafeArea(
+                      child: AnimatedOpacity(
+                        opacity: _showDetails ? 1 : 0,
+                        duration: const Duration(milliseconds: 200),
+                        child: IgnorePointer(
+                          ignoring: !_showDetails,
+                          child: _Details(
+                            when: when,
+                            by: l10n.noteBy(event.by),
+                            caption: event.note,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+      ),
     );
   }
 }
