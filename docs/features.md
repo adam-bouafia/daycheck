@@ -136,8 +136,11 @@ in-app notification list:
   loses nothing;
 - tap an entry to open what it is about: a request opens the request
   list, a child update opens that child;
-- mark one or all as read;
-- parents only see entries about their own children.
+- mark one or all as read; read state is per account, so one parent
+  reading an item leaves it unread for the other;
+- each account has its own list and unread count: staff see what is
+  meant for staff (new requests), parents only see entries about their
+  own children.
 
 The same event can also show a pop-up on the phone. Settings has separate
 switches for activity pop-ups and request pop-ups. Turning a pop-up off

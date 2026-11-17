@@ -27,12 +27,7 @@ class ParentHomeScreen extends ConsumerWidget {
         .children
         .where((c) => c.guardians.contains(guardian))
         .toList();
-    final ids = children.map((c) => c.id).toSet();
-    final unread = visibleInboxItems(
-      ref.watch(inboxViewModelProvider),
-      false,
-      ids,
-    ).where((i) => !i.read).length;
+    final unread = ref.watch(myUnreadCountProvider);
     return HomeScaffold(
       tabs: [
         HomeTab(

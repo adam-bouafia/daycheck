@@ -22,7 +22,7 @@ class StaffHomeScreen extends ConsumerWidget {
         .watch(requestsViewModelProvider)
         .where((r) => r.status == RequestStatus.pending)
         .length;
-    final unread = ref.watch(inboxViewModelProvider).where((i) => !i.read);
+    final unread = ref.watch(myUnreadCountProvider);
     return HomeScaffold(
       tabs: [
         HomeTab(
@@ -55,7 +55,7 @@ class StaffHomeScreen extends ConsumerWidget {
           selectedIcon: Icons.notifications,
           label: l10n.tabInbox,
           screen: const InboxScreen(),
-          badge: unread.length,
+          badge: unread,
         ),
       ],
     );

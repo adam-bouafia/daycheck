@@ -1,12 +1,9 @@
 /// What tapping a notification opens.
 enum InboxLink { none, child, request }
 
-/// One entry in the in-app notification inbox: an activity note posted,
-/// or a request submitted/approved/cancelled. Unlike a plain OS
-/// notification popup, this is a real screen the user can come back to -
-/// one of the real complaints this directly answers is "this app misses
-/// an essential feature: notifications" (meaning *in the app*, not just
-/// a popup that's gone once it's dismissed).
+/// One entry in the in-app notification list: an arrival, a pick-up, a
+/// note, a request or a decision on one. Unlike a pop-up, it stays, so
+/// the user can come back to it.
 class InboxItem {
   const InboxItem({
     required this.id,
@@ -14,7 +11,7 @@ class InboxItem {
     required this.body,
     required this.at,
     this.childId,
-    this.read = false,
+    this.readBy = const {},
     this.forStaff = true,
     this.link = InboxLink.none,
   });
@@ -24,23 +21,28 @@ class InboxItem {
   final String body;
   final DateTime at;
 
-  /// Which child this is about, so a parent only sees notifications for
-  /// their own child or children.
+  /// Which child this is about. A parent only sees items about their own
+  /// children.
   final String? childId;
-  final bool read;
+
+  /// Usernames that have read it. Per account, not per phone: Sanne
+  /// reading an item must not mark it read for Tom.
+  final Set<String> readBy;
 
   /// False for news meant for a family (a check-in, a photo staff posted):
   /// staff did that themselves and don't need telling.
   final bool forStaff;
   final InboxLink link;
 
-  InboxItem copyWith({bool? read}) => InboxItem(
+  bool isReadBy(String username) => readBy.contains(username);
+
+  InboxItem readFor(String username) => InboxItem(
     id: id,
     title: title,
     body: body,
     at: at,
     childId: childId,
-    read: read ?? this.read,
+    readBy: {...readBy, username},
     forStaff: forStaff,
     link: link,
   );
@@ -51,7 +53,7 @@ class InboxItem {
     'body': body,
     'at': at.toIso8601String(),
     'childId': childId,
-    'read': read,
+    'readBy': readBy.toList(),
     'forStaff': forStaff,
     'link': link.name,
   };
@@ -62,7 +64,7 @@ class InboxItem {
     body: json['body'] as String,
     at: DateTime.parse(json['at'] as String),
     childId: json['childId'] as String?,
-    read: json['read'] as bool? ?? false,
+    readBy: {...(json['readBy'] as List<dynamic>? ?? const []).cast<String>()},
     forStaff: json['forStaff'] as bool? ?? true,
     link: InboxLink.values.asNameMap()[json['link']] ?? InboxLink.none,
   );

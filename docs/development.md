@@ -18,7 +18,7 @@ on the login screen and in [Features](features.md#login).
 flutter test
 ```
 
-60 tests:
+62 tests:
 
 - the status rule and the schedule rule as pure functions;
 - every ViewModel with in-memory fakes: check-in and check-out, notes

@@ -12,25 +12,16 @@ import 'package:daycheck/features/roster/presentation/child_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Which of these items a parent is allowed to see: their own child's, or
-/// ones not about any particular child.
-List<InboxItem> visibleInboxItems(
-  List<InboxItem> items,
-  bool isStaff,
-  Set<String> myChildIds,
-) => isStaff
-    ? items.where((i) => i.forStaff).toList()
-    : items
-          .where((i) => i.childId == null || myChildIds.contains(i.childId))
-          .toList();
-
 class InboxScreen extends ConsumerWidget {
   const InboxScreen({super.key});
 
   /// Marks the item read and opens what it is about: the request list
   /// for a request, the child (staff) or that child's day (parent).
   void _open(BuildContext context, WidgetRef ref, InboxItem item, bool staff) {
-    ref.read(inboxViewModelProvider.notifier).markRead(item.id);
+    final username = ref.read(sessionViewModelProvider).account?.username;
+    if (username != null) {
+      ref.read(inboxViewModelProvider.notifier).markRead(item.id, username);
+    }
     final child = ref
         .read(rosterViewModelProvider)
         .children
@@ -54,19 +45,8 @@ class InboxScreen extends ConsumerWidget {
     final l10n = context.l10n;
     final session = ref.watch(sessionViewModelProvider);
     final isStaff = session.role == Role.staff;
-    final myChildIds = isStaff
-        ? <String>{}
-        : ref
-              .watch(rosterViewModelProvider)
-              .children
-              .where((c) => c.guardians.contains(session.guardianName))
-              .map((c) => c.id)
-              .toSet();
-    final items = visibleInboxItems(
-      ref.watch(inboxViewModelProvider),
-      isStaff,
-      myChildIds,
-    );
+    final username = session.account?.username ?? '';
+    final items = ref.watch(myInboxProvider);
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -74,10 +54,11 @@ class InboxScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(l10n.inboxTitle),
         actions: [
-          if (items.any((i) => !i.read))
+          if (items.any((i) => !i.isReadBy(username)))
             TextButton(
-              onPressed: () =>
-                  ref.read(inboxViewModelProvider.notifier).markAllRead(),
+              onPressed: () => ref
+                  .read(inboxViewModelProvider.notifier)
+                  .markAllRead(username, {for (final i in items) i.id}),
               child: Text(l10n.markAllRead),
             ),
           const SettingsButton(),
@@ -101,7 +82,7 @@ class InboxScreen extends ConsumerWidget {
                           padding: const EdgeInsets.all(14),
                           child: Row(
                             children: [
-                              if (!item.read)
+                              if (!item.isReadBy(username))
                                 Container(
                                   width: 8,
                                   height: 8,
@@ -120,7 +101,7 @@ class InboxScreen extends ConsumerWidget {
                                     Text(
                                       item.title,
                                       style: TextStyle(
-                                        fontWeight: item.read
+                                        fontWeight: item.isReadBy(username)
                                             ? FontWeight.normal
                                             : FontWeight.bold,
                                       ),
