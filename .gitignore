@@ -56,3 +56,6 @@ app.*.map.json
 # MkDocs
 /site/
 /docs/.venv/
+
+# Intermediate renders; the docs use the WebP versions
+/docs/img/screens/**/*.png

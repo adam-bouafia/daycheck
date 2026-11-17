@@ -6,11 +6,9 @@ const _channelDescription = 'New activity notes posted by staff';
 
 /// Shows a local notification when staff post a new activity note.
 ///
-/// This demonstrates the mechanism, not a real fix for the "no
-/// notifications" complaint it answers: a real fix needs a second device
-/// (the parent's own phone, separate from staff's) and a server to push
-/// to it. DayCheck is single-device and local-only by design, so this
-/// notification fires on the same device that posted the note.
+/// This shows the mechanism only: reaching a parent's own phone needs a
+/// server to push to it. DayCheck is local-only by design, so the
+/// notification fires on the device that posted the note.
 class NotificationService {
   final _plugin = FlutterLocalNotificationsPlugin();
 

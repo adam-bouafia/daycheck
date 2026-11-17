@@ -26,22 +26,35 @@ class FakeDocumentRepository extends DocumentRepository {
 
 /// The whole app from the login gate, with every repository faked.
 class TestApp {
-  final roster = FakeRosterRepository();
+  TestApp({FakeRosterRepository? roster})
+    : roster = roster ?? FakeRosterRepository();
+
+  final FakeRosterRepository roster;
+  final requests = FakeRequestRepository();
   final notifications = FakeNotificationService();
   final inbox = FakeInboxRepository();
   final session = FakeSessionRepository();
 
-  Widget build({Locale locale = const Locale('en')}) => ProviderScope(
+  Widget build({
+    Locale locale = const Locale('en'),
+    ThemeData? theme,
+    ThemeData? darkTheme,
+    ThemeMode themeMode = ThemeMode.light,
+  }) => ProviderScope(
     overrides: [
       rosterRepositoryProvider.overrideWithValue(roster),
       notificationServiceProvider.overrideWithValue(notifications),
       inboxRepositoryProvider.overrideWithValue(inbox),
-      requestRepositoryProvider.overrideWithValue(FakeRequestRepository()),
+      requestRepositoryProvider.overrideWithValue(requests),
       settingsRepositoryProvider.overrideWithValue(FakeSettingsRepository()),
       sessionRepositoryProvider.overrideWithValue(session),
       documentRepositoryProvider.overrideWithValue(FakeDocumentRepository()),
     ],
     child: MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: theme,
+      darkTheme: darkTheme,
+      themeMode: themeMode,
       locale: locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,

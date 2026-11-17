@@ -12,9 +12,11 @@ nine languages, and on older phones.
 
 <div class="grid" markdown>
 
-![Sign-in](img/signin-dark.png){ width="240" }
-![Child detail](img/detail-dark.png){ width="240" }
-![Settings with nine languages](img/settings-dark.png){ width="240" }
+![Staff home](img/screens/light/02-staff-children.webp){ width="220" }
+![A child's day](img/screens/dark/03-staff-child.webp){ width="220" }
+![Parent home](img/screens/light/11-parent-today.webp){ width="220" }
+
+Every screen in light and dark mode: [Screens](screens.md).
 
 </div>
 
@@ -32,10 +34,9 @@ nine languages, and on older phones.
 ## What is in this documentation
 
 - [Features](features.md): what staff and parents can do.
+- [Screens](screens.md): every screen in light and dark mode.
 - [Architecture](architecture.md): how the code is organised and why.
 - [Design](design.md): the visual system and how it adapts.
 - [Stack](stack.md): the packages used and what each one is for.
-- [User feedback](user-feedback.md): complaints from public app reviews in
-  this domain and how DayCheck answers them.
 - [Development](development.md): running, testing, CI and adding a
   language.

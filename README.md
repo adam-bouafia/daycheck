@@ -11,6 +11,15 @@ https://adam-bouafia.github.io/daycheck/
 Test accounts: `sara` / `sara123` (staff) and `amina` / `amina123`
 (parent); all of them are listed on the login screen.
 
+<p>
+<img src="docs/img/screens/light/02-staff-children.webp" width="160" alt="Staff home"> <img src="docs/img/screens/light/03-staff-child.webp" width="160" alt="A child's day"> <img src="docs/img/screens/light/11-parent-today.webp" width="160" alt="Parent home"> <img src="docs/img/screens/light/13-photo-viewer.webp" width="160" alt="Photo viewer"> <img src="docs/img/screens/light/08-documents.webp" width="160" alt="Documents">
+</p>
+<p>
+<img src="docs/img/screens/dark/02-staff-children.webp" width="160" alt="Staff home"> <img src="docs/img/screens/dark/03-staff-child.webp" width="160" alt="A child's day"> <img src="docs/img/screens/dark/11-parent-today.webp" width="160" alt="Parent home"> <img src="docs/img/screens/dark/13-photo-viewer.webp" width="160" alt="Photo viewer"> <img src="docs/img/screens/dark/08-documents.webp" width="160" alt="Documents">
+</p>
+
+Every screen in light and dark mode: https://adam-bouafia.github.io/daycheck/screens/
+
 ## What it does
 
 - **Roster**: every child with today's status (not arrived, present,
@@ -95,31 +104,27 @@ lib/
 Every repository is injected through a Riverpod provider, so tests swap
 in in-memory fakes and never touch device storage or the file system.
 
-## Why these choices
+## Design decisions
 
-Public Play Store reviews of daycare apps repeat the same complaints for
-years. Several of them come from the shape of the app, not from one bug:
-
-| Complaint | DayCheck's answer |
-| --- | --- |
-| The app shows old data until you refresh or clear its data | Every screen watches its ViewModel; when state changes the screen rebuilds. There is no refresh button because nothing can go stale |
-| A photo is in the log but missing from Media | One store: the photo is a field on the event in the log, and the gallery is a filtered view of that same log |
-| You can't see when a gallery photo was taken | The photo viewer shows date, time, author and caption on every photo |
-| Notifications only exist as pop-ups, or are noisy | An in-app notification list with unread count and mark-all-read, plus separate pop-up switches per kind |
-| Documents can't be opened in the app | PDFs attach to an activity note and open or share from the feed |
-| Missing or broken translations ("changed a one # diaper") | Nine languages through Flutter's `gen-l10n`, with real plural rules per language (Polish, Arabic and Hebrew have more than two forms) |
-| Slow on older phones | Android 7.0 and up, a reduce-effects mode, and thumbnail-size image decoding |
-
-Push notifications between two phones need a server, which this
-single-device demo doesn't have. The local notification shows the
-mechanism; the in-app list is the part that would stay the same with a
-backend behind it.
+- **One event log for attendance and the feed.** Status, the feed, the
+  gallery and the daily log are all views of the same list of events, so
+  they can't disagree.
+- **Screens watch state.** Every screen rebuilds from its ViewModel's
+  state with `ref.watch`; there is no refresh button because nothing can
+  go stale.
+- **Notifications are stored, not just shown.** Each one lands in the
+  in-app list with per-account read state; the pop-up is optional per
+  kind.
+- **Strings through `gen-l10n`,** with each language's own plural rules
+  (Polish, Arabic and Hebrew have more than two forms).
 
 ## Not built
 
 **Chat** between staff and parents is its own problem (delivery, read
 receipts, presence). **Admin** (billing, staff rosters, organisation
-settings) is a third role, not modelled here.
+settings) is a third role, not modelled here. **Push between two phones**
+needs a server; the local pop-up shows the mechanism, and the in-app list
+is the part that would stay the same with a backend behind it.
 
 ## Running it
 

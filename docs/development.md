@@ -54,6 +54,19 @@ request:
 A test checks that the language picker and the shipped translations
 match, so a language cannot be half added.
 
+## Screenshots
+
+```bash
+tool/screenshots/make.sh
+```
+
+Renders every screen in light and dark mode with demo data (fictional
+children, three demo photos in `tool/screenshots/photos/`) and stores
+them as WebP in `docs/img/screens/`. It runs the app's real widgets in
+Flutter's test renderer with the Roboto font, so no phone or emulator is
+needed. It lives outside `test/` because pixel output differs between
+machines, so CI never compares it.
+
 ## Documentation
 
 ```bash

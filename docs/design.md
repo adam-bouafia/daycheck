@@ -29,8 +29,8 @@ dark.
 
 <div class="grid" markdown>
 
-![Sign-in in dark mode](img/signin-dark.png){ width="240" }
-![Child detail in dark mode](img/detail-dark.png){ width="240" }
+![Parent home, light](img/screens/light/11-parent-today.webp){ width="220" }
+![Parent home, dark](img/screens/dark/11-parent-today.webp){ width="220" }
 
 </div>
 
@@ -62,6 +62,6 @@ to be special-cased.
 
 - In lists, photos are cropped to fill their tile and decoded at the
   size they are shown.
-- The viewer shows the photo uncropped on black, with a glass panel for
+- The viewer is always dark and shows the photo uncropped on black, with a glass panel for
   the time, author and description. A `Hero` animation carries the photo
   from its tile into the viewer.

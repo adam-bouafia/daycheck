@@ -8,11 +8,9 @@ import 'package:daycheck/features/roster/presentation/roster_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Every photo attached to one child's activity notes, newest first. A
-/// view over the same event log as the activity feed - there is no
-/// separate photo store to fall out of sync with it, unlike the
-/// "I see a photo in the log but it doesn't show under Media" complaint
-/// this is a direct answer to (see the README).
+/// Every photo attached to the children's notes, newest first. A view
+/// over the same event log as the activity feed: there is no separate
+/// photo store that could fall out of sync with it.
 class PhotoGalleryScreen extends ConsumerWidget {
   const PhotoGalleryScreen({
     super.key,

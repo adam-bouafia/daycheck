@@ -32,10 +32,10 @@ theme:
 nav:
   - Home: index.md
   - Features: features.md
+  - Screens: screens.md
   - Architecture: architecture.md
   - Design: design.md
   - Stack: stack.md
-  - User feedback: user-feedback.md
   - Development: development.md
 
 markdown_extensions:
@@ -54,6 +54,9 @@ markdown_extensions:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
+
+extra_css:
+  - css/extra.css
 
 exclude_docs: |
   serve.sh
